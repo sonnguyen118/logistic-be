@@ -61,7 +61,7 @@ orderController.uploadOrdersFromExcelFile = async (req, res) => {
 
 }
 
-orderController.getAll = async (req, res) => {
+orderController.getAllOrder = async (req, res) => {
     try {
         const orders = await orderModel.getAllOrder();
         res.status(200).json(response.successResponse(orders, "success"));
@@ -85,6 +85,15 @@ orderController.findOrderById = async (req, res) => {
     try {
         const order = await orderModel.findOrderById(req.params.id);
         res.status(200).json(response.successResponse(order, "success"));
+    } catch (err) {
+        res.status(500).json(response.errorResponse('Something went wrong'));
+    }
+}
+
+orderController.getAllOrderStatus = async (req, res) => {
+    try {
+        const orders = await orderModel.getAllOrderStatus();
+        res.status(200).json(response.successResponse(orders, "success"));
     } catch (err) {
         res.status(500).json(response.errorResponse('Something went wrong'));
     }

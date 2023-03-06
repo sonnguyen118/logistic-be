@@ -62,4 +62,18 @@ orderModel.findOrderById = (id) => {
         });
     });
 }
+
+orderModel.getAllOrderStatus = () => {
+    const query = 'SELECT * FROM status';
+    return new Promise((resolve, reject) => {
+        db.query(query, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+}
+
 module.exports = orderModel;
