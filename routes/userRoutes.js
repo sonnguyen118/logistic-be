@@ -4,10 +4,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-router.get('/users', authMiddleware.authenticateUser, userController.getAllUsers);
-router.get('/users/:id', authMiddleware.authenticateUser, userController.getUserById);
-router.get('/test', function handler(req, res) {
-    res.status(200).json({ name: 'John Doe' })
-  });
+router.get('/', authMiddleware.authenticateUser, userController.getAllUsers);
+router.get('/:id', authMiddleware.authenticateUser, userController.getUserById);
 
 module.exports = router;
