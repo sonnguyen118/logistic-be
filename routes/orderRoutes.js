@@ -8,7 +8,7 @@ const upload = multer();
 
 router.get('/', orderController.getAll);
 router.get('/update', orderController.updateOrder);
-router.get('/search/:code', orderController.findOrderByOrderCode);
+router.get('/search/:id', orderController.findOrderById);
 router.post('/upload', upload.single('file'), orderController.uploadOrdersFromExcelFile);
 
 module.exports = router;

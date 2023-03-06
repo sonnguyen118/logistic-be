@@ -36,10 +36,8 @@ orderModel.getAllOrder = () => {
     });
 }
 
-orderModel.updateOrder = (req, res) => {
+orderModel.updateOrder = (id, status) => {
     const query = 'UPDATE orders SET status = ? WHERE id = ?';
-    const id = req.body.id;
-    const status = req.body.status;
     return new Promise((resolve, reject) => {
         db.query(query, [status, id], (err, results) => {
             if (err) {
@@ -52,10 +50,10 @@ orderModel.updateOrder = (req, res) => {
     });
 }
 
-orderModel.findOrderByOrderCode = (orderCode) => {
-    const query = 'SELECT * FROM orders WHERE order_code = ?';
+orderModel.findOrderById = (id) => {
+    const query = 'SELECT * FROM orders WHERE id = ?';
     return new Promise((resolve, reject) => {
-        db.query(query, [orderCode], (err, results) => {
+        db.query(query, [id], (err, results) => {
             if (err) {
                 reject(err);
             } else {

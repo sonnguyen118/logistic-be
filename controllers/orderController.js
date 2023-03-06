@@ -72,16 +72,18 @@ orderController.getAll = async (req, res) => {
 
 orderController.updateOrder = async (req, res) => {
     try {
-        const orders = await orderModel.updateOrder(req, res);
+        const id = req.body.id;
+        const status = req.body.status;
+        const orders = await orderModel.updateOrder(id, status);
         res.status(200).json(response.successResponse(null, "success"));
     } catch (err) {
         res.status(500).json(response.errorResponse('Something went wrong'));
     }
 }
 
-orderController.findOrderByOrderCode = async (req, res) => {
+orderController.findOrderById = async (req, res) => {
     try {
-        const order = await orderModel.findOrderByOrderCode(req.params.orderCode);
+        const order = await orderModel.findOrderById(req.params.id);
         res.status(200).json(response.successResponse(order, "success"));
     } catch (err) {
         res.status(500).json(response.errorResponse('Something went wrong'));
