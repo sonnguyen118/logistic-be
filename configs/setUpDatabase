@@ -1,3 +1,11 @@
+
+CREATE TABLE IF NOT EXISTS status ( id int NOT NULL AUTO_INCREMENT, status_name varchar(255) NOT NULL, PRIMARY KEY (id) );
+INSERT INTO `status` (`id`, `status_name`) VALUES
+('1', 'Đã nhập kho Trung Quốc'),
+('2', 'Đang về kho Việt Nam'),
+('3', 'Đã nhập kho Việt nam'),
+('4', 'Đã trả khách');
+
 use logistic;
 CREATE TABLE IF NOT EXISTS orders (
     id int NOT NULL AUTO_INCREMENT,
@@ -7,11 +15,44 @@ CREATE TABLE IF NOT EXISTS orders (
     created_date date,
     updated_date date,
     PRIMARY KEY (id)
+    FOREIGN KEY (status) REFERENCES status(id)
+
 );
 
-CREATE TABLE IF NOT EXISTS status ( id int NOT NULL AUTO_INCREMENT, status_name varchar(255) NOT NULL, PRIMARY KEY (id) );
-INSERT INTO `status` (`id`, `status_name`) VALUES
-('1', 'Đã nhập kho Trung Quốc'),
-('2', 'Đang về kho Việt Nam'),
-('3', 'Đã nhập kho việt nam'),
-('4', 'Đã trả khách');
+CREATE TABLE users(
+    id INT NOT NULL AUTO_INCREMENT,
+    email VARCHAR(60) NOT NULL UNIQUE,
+    password VARCHAR(60) NOT NULL,
+    created_date DATE,
+    first_name VARCHAR(60) NOT NULL,
+    last_name VARCHAR(60) NOT NULL,
+    status INT NOT NULL,
+    role int NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY (role) REFERENCES role(id)
+)
+
+INSERT INTO `users` (`id`, `email`,`password`, `created_date`, `first_name`, `last_name`, `status`) VALUES ('1', 'canh@gmail.com', '2023-03-05', 'canh', 'trinh', '0','1');
+
+
+CREATE TABLE role (
+id int NOT NULL AUTO_INCREMENT,
+name varchar(20) NOT NULL,
+PRIMARY KEY(id)    
+);
+
+INSERT INTO `role` (`name`) VALUES ('ADMIN'),('USER');
+
+
+CREATE TABLE users(
+    id INT NOT NULL AUTO_INCREMENT,
+    email VARCHAR(60) NOT NULL UNIQUE,
+    password VARCHAR(60) NOT NULL,
+    created_date DATE,
+    first_name VARCHAR(60) NOT NULL,
+    last_name VARCHAR(60) NOT NULL,
+    status INT NOT NULL,
+    role int NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY (role) REFERENCES role(id)
+)

@@ -1,24 +1,18 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const response = require('../utils/response');
 
 dotenv.config();
 
 const authMiddleware = {};
 
-authMiddleware.authenticateUser = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    return res.status(401).json({ message: 'Authorization header missing' });
-  }
-
-  const token = authHeader.split(' ')[1];
+authMiddleware.authenticateRequest = async (req, res, next) => {
+  const token = req.cookies.access_token;
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
     next();
   } catch (err) {
-    console.log(err);
-    return res.status(401).json({ message: 'Invalid token' });
+    return res.status(401).json(response.errorResponse('Invalid token'));
   }
 };
 
