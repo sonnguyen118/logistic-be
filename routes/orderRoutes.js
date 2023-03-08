@@ -8,9 +8,9 @@ const upload = multer();
 
 
 router.get('/', authMiddleware.authenticateRequest, orderController.getAllOrder);
-router.get('/update', authMiddleware.authenticateRequest, orderController.updateOrder);
+router.get('/update', authMiddleware.authenticateRequest, authMiddleware.authorize, orderController.updateOrder);
 router.get('/search/:id', authMiddleware.authenticateRequest, orderController.findOrderById);
-router.post('/upload', authMiddleware.authenticateRequest, upload.single('file'), orderController.uploadOrdersFromExcelFile);
+router.post('/upload', authMiddleware.authenticateRequest, authMiddleware.authorize, upload.single('file'), orderController.uploadOrdersFromExcelFile);
 router.get('/status', authMiddleware.authenticateRequest, orderController.getAllOrderStatus);
 
 module.exports = router;
