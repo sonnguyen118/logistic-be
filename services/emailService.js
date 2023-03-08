@@ -28,16 +28,17 @@ email.sendEmailVerifyToAdmin = async (_user, _urlVerify) => {
   const mailOptions = {
     from: EMAIL_SEVER,
     to: EMAIL_ADMIN,
-    subject: "Confirmation Email",
-    text: user.username + " - " + urlVerify,
+    subject: "Xác thực tài khoản Viet-Sino logistic",
+    html: `<h1> Hi ADMIN, email: <strong>${user.email}<strong> muốn đăng ký, click vào link để xác thực ${urlVerify}</h1> `
   };
 
   const info = transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      // throw new Error(error.message);
       console.log(error.message);
     } else {
       console.log("Email sent: " + info.response);
+      console.log("Email: " + urlVerify);
+
     }
   });
 };

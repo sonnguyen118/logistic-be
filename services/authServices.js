@@ -38,8 +38,9 @@ authService.validateRegister = async (user) => {
 };
 authService.validateLoginForm = async (email, password) => {
   const user = await userModel.getUserByEmail(email);
+  console.log(user)
   if (user) {
-    if (user.confirmCode != 1) {
+    if (user.verify_code != 1) {
       throw new Error("Tài khoản chưa được kích hoạt");
     }
   } else {

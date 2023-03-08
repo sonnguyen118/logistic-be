@@ -18,7 +18,7 @@ userModel.getAllUsers = () => {
 userModel.getUserById = (id) => {
   return new Promise((resolve, reject) => {
     db.query(
-      "SELECT * FROM users WHERE id = ? AND verify_code = 1",
+      "SELECT * FROM users WHERE id = ?",
       [id],
       (err, results) => {
         if (err) {
@@ -38,12 +38,13 @@ userModel.getUserById = (id) => {
 userModel.getUserByEmail = (email) => {
   return new Promise((resolve, reject) => {
     db.query(
-      "SELECT * FROM users WHERE email = ? AND verify_code = 1",
+      "SELECT * FROM users WHERE email = ?",
       [email],
       (err, results) => {
         if (err) {
           reject(err);
         } else {
+          // console.log(results)
           if (results.length === 0) {
             resolve(null);
           } else {

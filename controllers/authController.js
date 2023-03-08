@@ -49,8 +49,8 @@ authController.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     // create verify code
     const verifyCode = crypto.randomBytes(20).toString("hex");
-    const hostPrefix = req.headers.host;
-    const urlVerify = authServices.createUrlVerifyUser(hostPrefix, verifyCode);
+    const hostPrefix = `${req.protocol}://${req.get('host')}`
+    const urlVerify = await authServices.createUrlVerifyUser(hostPrefix, verifyCode);
     user.password = hashedPassword;
     user.verifyCode = verifyCode;
     user.role = USER_ROLE;
@@ -94,9 +94,10 @@ authController.verifyRegister = async (req, res) => {
     const verifyCode = req.params.verifyCode;
     const user = await userModel.getUserByVerifyCode(verifyCode);
     if (!user) {
-      res
-        .status(500)
-        .json(response.errorResponse("tài khoản đã được kích hoạt rồi"));
+      throw new Error("tài khoản đã được kích hoạt rồi")
+      // res
+      //   .status(500)
+      //   .json(response.errorResponse("tài khoản đã được kích hoạt rồi"));
     }
     await userModel.updateVerifyCode(user.id);
     res.status(200).json(response.successResponse([], "verify success"));
