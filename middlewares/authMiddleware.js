@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
-const response = require('../utils/response');
-const userModel = require('../models/userModel');
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+const response = require("../utils/response");
+const userModel = require("../models/userModel");
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ authMiddleware.authenticateRequest = async (req, res, next) => {
     req.user = decoded;
     next();
   } catch (err) {
-    res.status(403).json(response.errorResponse('Invalid token'));
+    res.status(403).json(response.errorResponse("Invalid token"));
   }
 };
 
@@ -22,7 +22,7 @@ authMiddleware.authorize = async (req, res, next) => {
   try {
     const user = await userModel.getUserById(req.user.id);
     if (user.role != process.env.ADMIN_ROLE) {
-      return res.status(401).json(response.errorResponse('Lỗi phân quyền'));
+      return res.status(401).json(response.errorResponse("Lỗi phân quyền"));
     }
     next();
   } catch (err) {

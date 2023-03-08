@@ -1,4 +1,6 @@
 
+CREATE DATABASE IF NOT EXISTS logistic;
+
 CREATE TABLE IF NOT EXISTS status ( id int NOT NULL AUTO_INCREMENT, status_name varchar(255) NOT NULL, PRIMARY KEY (id) );
 INSERT INTO `status` (`id`, `status_name`) VALUES
 ('1', 'Đã nhập kho Trung Quốc'),
@@ -6,36 +8,24 @@ INSERT INTO `status` (`id`, `status_name`) VALUES
 ('3', 'Đã nhập kho Việt nam'),
 ('4', 'Đã trả khách');
 
-use logistic;
 CREATE TABLE IF NOT EXISTS orders (
     id int NOT NULL AUTO_INCREMENT,
     order_code varchar(30) NOT NULL,
     order_name varchar(30),
-    status varchar(255),
-    created_date date,
-    updated_date date,
-    PRIMARY KEY (id)
+    status int NOT NULL,
+    created_date DATETIME,
+    updated_date DATETIME,
+    PRIMARY KEY (id),
     FOREIGN KEY (status) REFERENCES status(id)
 
 );
 
-CREATE TABLE users(
-    id INT NOT NULL AUTO_INCREMENT,
-    email VARCHAR(60) NOT NULL UNIQUE,
-    password VARCHAR(60) NOT NULL,
-    created_date DATE,
-    first_name VARCHAR(60) NOT NULL,
-    last_name VARCHAR(60) NOT NULL,
-    status INT NOT NULL,
-    role int NOT NULL,
-    PRIMARY KEY(id),
-    FOREIGN KEY (role) REFERENCES role(id)
-)
-
-INSERT INTO `users` (`id`, `email`,`password`, `created_date`, `first_name`, `last_name`, `status`) VALUES ('1', 'canh@gmail.com', '2023-03-05', 'canh', 'trinh', '0','1');
 
 
-CREATE TABLE role (
+  INSERT INTO `users` (`id`, `email`,`password`, `created_date`, `first_name`, `last_name`, `status`, `role`) VALUES ('1', 'canh@gmail.com', '123456',current_time(), 'canh', 'trinh', 0,1);
+
+
+CREATE TABLE IF NOT EXISTS role (
 id int NOT NULL AUTO_INCREMENT,
 name varchar(20) NOT NULL,
 PRIMARY KEY(id)    
@@ -43,16 +33,16 @@ PRIMARY KEY(id)
 
 INSERT INTO `role` (`name`) VALUES ('ADMIN'),('USER');
 
-
-CREATE TABLE users(
+CREATE TABLE IF NOT EXISTS users(
     id INT NOT NULL AUTO_INCREMENT,
     email VARCHAR(60) NOT NULL UNIQUE,
     password VARCHAR(60) NOT NULL,
-    created_date DATE,
+    created_date DATETIME,
     first_name VARCHAR(60) NOT NULL,
     last_name VARCHAR(60) NOT NULL,
-    status INT NOT NULL,
-    role int NOT NULL,
+    verify_code VARCHAR(20),
+    role INT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY (role) REFERENCES role(id)
-)
+);
+

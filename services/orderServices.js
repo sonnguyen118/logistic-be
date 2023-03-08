@@ -41,7 +41,6 @@ orderService.readOrdersDataFromFileExcel = (req, res) => {
         let originalDate = new Date(row[0]);
         let inreaseOriginalDate = new Date(originalDate.getTime() + 24 * 60 * 60 * 1000);
         const date = inreaseOriginalDate.toISOString().substring(0, 19).replaceAll('T', ' ');
-        // console.log(date);
         rows.push({ date, orderCode, status })
         orderCodes.push(orderCode)
     }

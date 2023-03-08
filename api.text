@@ -1,0 +1,25 @@
+const domain = `http://localhost:5000`;
+//auth api
+POST: '/api/auth/register'
+{
+    "email": "canh1@gmail.com",
+    "password": "123456",
+    "rePassword": "123456",
+    "firstName": "canh",
+    "lastName": "trinh"
+}
+
+POST: '/api/auth/login'
+{email: "canh1@gmail.com",
+ password: "123456"
+};
+
+GET: '/api/auth/logout'
+
+GET: '/api/auth/:confirm'
+
+
+
+
+//order api
+'/api/orders'
