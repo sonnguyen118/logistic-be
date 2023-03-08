@@ -1,5 +1,4 @@
 const db = require('../configs/database');
-const response = require('../utils/response');
 
 const orderModel = {};
 
@@ -24,7 +23,7 @@ orderModel.createOrders = (orders) => {
 }
 
 orderModel.getAllOrder = () => {
-    const query = 'SELECT * FROM orders';
+    const query = 'SELECT *, DATE_FORMAT(created_date, \'%Y-%m-%d\') AS created_date_formatted FROM orders';
     return new Promise((resolve, reject) => {
         db.query(query, (err, results) => {
             if (err) {
@@ -62,4 +61,18 @@ orderModel.findOrderById = (id) => {
         });
     });
 }
+
+orderModel.getAllOrderStatus = () => {
+    const query = 'SELECT * FROM status';
+    return new Promise((resolve, reject) => {
+        db.query(query, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+}
+
 module.exports = orderModel;
