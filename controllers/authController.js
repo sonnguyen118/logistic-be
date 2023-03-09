@@ -55,10 +55,10 @@ authController.register = async (req, res) => {
     user.verifyCode = verifyCode;
     user.role = USER_ROLE;
     //save user
-    await userModel.createUser(user);
-    const savedUser = await userModel.getUserByEmail(user.email);
+    const insertId = await userModel.createUser(user);
     // create token
-    var token = jwt.sign({ id: savedUser.id }, ACCESS_TOKEN);
+    var token = jwt.sign({ id: insertId }, ACCESS_TOKEN);
+    console.log(insertId)
     res.cookie(ACCESS_TOKEN_KEY, token, {
       maxAge: 24 * 60 * 60 * 1000,
     });
@@ -67,9 +67,9 @@ authController.register = async (req, res) => {
     res.status(200).json(
       response.successResponse(
         {
-          email: savedUser.email,
-          firstName: savedUser.firstName,
-          lastName: savedUser.lastName,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
           token: token,
         },
         "success"

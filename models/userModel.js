@@ -17,42 +17,34 @@ userModel.getAllUsers = () => {
 
 userModel.getUserById = (id) => {
   return new Promise((resolve, reject) => {
-    db.query(
-      "SELECT * FROM users WHERE id = ?",
-      [id],
-      (err, results) => {
-        if (err) {
-          reject(err);
+    db.query("SELECT * FROM users WHERE id = ?", [id], (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        if (results.length === 0) {
+          resolve(null);
         } else {
-          if (results.length === 0) {
-            resolve(null);
-          } else {
-            resolve(results[0]);
-          }
+          resolve(results[0]);
         }
       }
-    );
+    });
   });
 };
 
 userModel.getUserByEmail = (email) => {
   return new Promise((resolve, reject) => {
-    db.query(
-      "SELECT * FROM users WHERE email = ?",
-      [email],
-      (err, results) => {
-        if (err) {
-          reject(err);
+    db.query("SELECT * FROM users WHERE email = ?", [email], (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        // console.log(results)
+        if (results.length === 0) {
+          resolve(null);
         } else {
-          // console.log(results)
-          if (results.length === 0) {
-            resolve(null);
-          } else {
-            resolve(results[0]);
-          }
+          resolve(results[0]);
         }
       }
-    );
+    });
   });
 };
 userModel.getUserByVerifyCode = (value) => {
@@ -106,14 +98,9 @@ userModel.createUser = (user) => {
       ],
       (err, results) => {
         if (err) {
-          console.log(err.message);
           reject(err);
         } else {
-          if (results.length === 0) {
-            resolve(null);
-          } else {
-            resolve(results[0]);
-          }
+          resolve(results.insertId);
         }
       }
     );

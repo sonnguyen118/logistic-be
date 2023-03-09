@@ -8,6 +8,8 @@ const dotenv = require('dotenv');
 const userRoutes = require('./routes/userRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const authRoutes = require('./routes/authRoutes');
+const menuRoutes = require('./routes/menuRoutes');
+
 var cookieParser = require('cookie-parser')
 
 
@@ -24,6 +26,7 @@ app.use(cookieParser());
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/menu', menuRoutes);
 
 
 
