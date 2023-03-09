@@ -10,7 +10,7 @@ INSERT INTO `status` (`id`, `status_name`) VALUES
 
 CREATE TABLE IF NOT EXISTS orders (
     id int NOT NULL AUTO_INCREMENT,
-    order_code varchar(30) NOT NULL,
+    order_code varchar(30) NOT NULL UNIQUE,
     order_name varchar(30),
     status int NOT NULL,
     created_date DATETIME,
@@ -21,8 +21,6 @@ CREATE TABLE IF NOT EXISTS orders (
 );
 
 
-
-  INSERT INTO `users` (`id`, `email`,`password`, `created_date`, `first_name`, `last_name`, `status`, `role`) VALUES ('1', 'canh@gmail.com', '123456',current_time(), 'canh', 'trinh', 0,1);
 
 
 CREATE TABLE IF NOT EXISTS role (
@@ -40,9 +38,37 @@ CREATE TABLE IF NOT EXISTS users(
     created_date DATETIME,
     first_name VARCHAR(60) NOT NULL,
     last_name VARCHAR(60) NOT NULL,
-    verify_code VARCHAR(20),
+    verify_code VARCHAR(60),
     role INT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY (role) REFERENCES role(id)
 );
 
+
+
+
+CREATE TABLE menu (
+id int NOT NULL auto_increment,
+name VARCHAR(255) not null,
+link VARCHAR(255) not null,
+description text,
+parent_id int, 
+primary key(id)
+);
+
+
+
+CREATE TABLE articles (
+id int NOT NULL auto_increment,
+title VARCHAR(255) not null,
+link VARCHAR(255) not null,
+menu_id int,
+content text,
+description text,
+isEnabled boolean not null,
+tag VARCHAR(255),
+create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+primary key(id),
+FOREIGN KEY (menu_id) REFERENCES menu(id)
+);
