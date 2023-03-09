@@ -22,7 +22,7 @@ authController.login = async (req, res) => {
     const user = await authServices.validateLoginForm(email, password);
     var token = jwt.sign({ id: user.id }, ACCESS_TOKEN);
     res.cookie(ACCESS_TOKEN_KEY, token, {
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000
     });
     res
       .status(200)
@@ -60,7 +60,7 @@ authController.register = async (req, res) => {
     var token = jwt.sign({ id: insertId }, ACCESS_TOKEN);
     console.log(insertId)
     res.cookie(ACCESS_TOKEN_KEY, token, {
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000
     });
     //send confirm email to admin
     emailService.sendEmailVerifyToAdmin(user, urlVerify);
