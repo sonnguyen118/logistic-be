@@ -19,7 +19,7 @@
 # localhost name resolution is handled within DNS itself.
 #	127.0.0.1       localhost
 #	::1             localhost
-    192.168.0.100  localhost
+    127.0.0.1  192.168.1.101
 # Added by Docker Desktop
 192.168.1.185 host.docker.internal
 192.168.1.185 gateway.docker.internal

@@ -7,7 +7,7 @@ articleController.getArticles = async (req, res) => {
         const articles = await articleModel.getArticles();
         res.status(200).json(response.successResponse(articles, "success"));
     } catch (error) {
-        res.status(500).json(response.errorResponse(error.message));
+        res.status(200).json(response.errorResponse(error.message));
     }
 }
 
@@ -17,7 +17,7 @@ articleController.addArticle = async (req, res) => {
         res.status(200).json(response.successResponse(insertId, "OK"));
     } catch (error) {
         console.log(error)
-        res.status(500).json(response.errorResponse(error.message));
+        res.status(200).json(response.errorResponse(error.message));
     }
 }
 
@@ -26,7 +26,7 @@ articleController.updateArticle = async (req, res) => {
         const insertId = await articleModel.updateArticleById(req.body);
         res.status(200).json(response.successResponse(insertId, "OK"));
     } catch (error) {
-        res.status(500).json(response.errorResponse(error.message));
+        res.status(200).json(response.errorResponse(error.message));
     }
 }
 

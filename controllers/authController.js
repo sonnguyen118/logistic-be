@@ -27,10 +27,10 @@ authController.login = async (req, res) => {
     res
       .status(200)
       .json(
-        response.successResponse({ email: user.email }, "LOGGED IN SUCCESS")
+        response.successResponse({ email: user.email, token: token }, "LOGGED IN SUCCESS")
       );
   } catch (err) {
-    res.status(500).json(response.errorResponse(err.message));
+    res.status(200).json(response.errorResponse(err.message));
   }
 };
 
@@ -76,7 +76,7 @@ authController.register = async (req, res) => {
       )
     );
   } catch (err) {
-    res.status(500).json(response.errorResponse(err.message));
+    res.status(200).json(response.errorResponse(err.message));
   }
 };
 
@@ -85,7 +85,7 @@ authController.logout = async (req, res) => {
     res.clearCookie(ACCESS_TOKEN_KEY);
     res.status(200).json(response.successResponse([], "LOGGED OUT"));
   } catch (err) {
-    res.status(500).json(response.errorResponse(err.message));
+    res.status(200).json(response.errorResponse(err.message));
   }
 };
 
@@ -95,14 +95,11 @@ authController.verifyRegister = async (req, res) => {
     const user = await userModel.getUserByVerifyCode(verifyCode);
     if (!user) {
       throw new Error("tài khoản đã được kích hoạt rồi")
-      // res
-      //   .status(500)
-      //   .json(response.errorResponse("tài khoản đã được kích hoạt rồi"));
     }
     await userModel.updateVerifyCode(user.id);
     res.status(200).json(response.successResponse([], "verify success"));
   } catch (err) {
-    res.status(500).json(response.errorResponse(err.message));
+    res.status(200).json(response.errorResponse(err.message));
   }
 };
 

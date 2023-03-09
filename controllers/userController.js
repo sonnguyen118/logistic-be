@@ -7,7 +7,7 @@ userController.getAllUsers = async (req, res) => {
     const users = await userModel.getAllUsers();
     res.json(users);
   } catch (err) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(200).json({ message: "Something went wrong" });
   }
 };
 
@@ -20,7 +20,7 @@ userController.getUserById = async (req, res) => {
     }
     res.json(user);
   } catch (err) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(200).json({ message: "Something went wrong" });
   }
 };
 
