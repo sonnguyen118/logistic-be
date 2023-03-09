@@ -15,11 +15,10 @@ menuModel.getMenu = () => {
   });
 };
 
-menuModel.addMenu = async (menu) => {
-  const query =
-    "INSERT INTO menu(name,path,description,parent_id) VALUE(?,?,?,?)";
+menuModel.addMenu = (menu) => {
+  const query = "INSERT INTO menu (name, link, description, parent_id) VALUE(?,?,?,?)";
   return new Promise((resolve, reject) => {
-    db.query(query, [menu.name, menu.parentId, menu.description, menu.parentId], (err, results) => {
+    db.query(query, [menu.name, menu.link, menu.description, menu.parentId], (err, results) => {
       if (err) {
         reject(err);
       } else {
@@ -29,20 +28,16 @@ menuModel.addMenu = async (menu) => {
   });
 };
 
-menuModel.updateMenuById = async (menu) => {
-  const result = null;
-  const query =
-    "UPDATE menu SET name =?, path =?,description =?, parent_id =? WHERE id = ?";
-  try {
-    result = await db.query(query, [
-      menu.name,
-      menu.path,
-      menu.description,
-      menu.parentId,
-      menu.id,
-    ]);
-  } catch (error) {
-    throw new Error(error.message);
-  }
+menuModel.updateMenuById = (menu) => {
+  const query = "UPDATE menu SET name =?, link =?,description =?, parent_id =? WHERE id = ?";
+  return new Promise((resolve, reject) => {
+    db.query(query, [menu.name, menu.link, menu.description, menu.parentId, menu.id], (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results.insertId);
+      }
+    });
+  });
 };
 module.exports = menuModel;

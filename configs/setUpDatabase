@@ -50,20 +50,24 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE TABLE menu (
 id int NOT NULL auto_increment,
 name VARCHAR(255) not null,
-url VARCHAR(255) not null,
+link VARCHAR(255) not null,
 description text,
 parent_id int, 
 primary key(id)
 );
 
-CREATE TABLE article (
+
+
+CREATE TABLE articles (
 id int NOT NULL auto_increment,
 title VARCHAR(255) not null,
-path VARCHAR(255) not null,
+link VARCHAR(255) not null,
 menu_id int,
 content text,
 description text,
-create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+isEnabled boolean not null,
+tag VARCHAR(255),
+create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
 update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 primary key(id),
 FOREIGN KEY (menu_id) REFERENCES menu(id)

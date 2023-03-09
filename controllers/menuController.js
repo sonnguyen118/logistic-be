@@ -1,5 +1,4 @@
 const menuModel = require("../models/menuModel");
-const articleModel = require("../models/articleModel");
 const response = require("../utils/response");
 
 const menuController = {};
@@ -22,6 +21,13 @@ menuController.addMenu = async (req, res) => {
   }
 };
 
-menuController.updateMenu = (req, res) => {};
+menuController.updateMenu = async (req, res) => {
+  try {
+    const insertId = await menuModel.updateMenuById(req.body);
+    res.status(200).json(response.successResponse(insertId, "OK"));
+  } catch (error) {
+    res.status(500).json(response.errorResponse(error.message));
+  }
+};
 
 module.exports = menuController;

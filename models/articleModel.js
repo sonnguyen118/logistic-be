@@ -1,33 +1,45 @@
 const db = require("../configs/database");
 
-const menuModel = {};
-menuModel.getMenu = async () => {
-  const menu = [];
-  try {
+const articleModel = {};
 
-  } catch (error) {
-    throw new Error(error.message);
-  }
+articleModel.getArticles = () => {
+  const query = "SELECT * FROM articles WHERE isEnabled = true";
+  return new Promise((resolve, reject) => {
+    db.query(query, (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results);
+      }
+    });
+  });
 };
 
+articleModel.addArticle = (article) => {
+  const query = "INSERT INTO articles (title, link, menu_id, content, description, isEnabled, tag) VALUE(?,?,?,?,?,?,?)";
+  article.isEnabled = true;
+  return new Promise((resolve, reject) => {
+    db.query(query, [article.title, article.link, article.menu_id, article.content, article.description, article.isEnabled, article.tag], (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results.insertId);
+      }
+    });
+  });
+};
 
-menuModel.addMenu = async () => {
-    const menu = [];
-    try {
-      
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  };
+articleModel.updateArticleById = (article) => {
+  const query = "UPDATE articles SET title =?, link =?,menu_id =?, content =?, description=?, isEnabled =?, tag =?   WHERE id = ?";
+  return new Promise((resolve, reject) => {
+    db.query(query, [article.title, article.link, article.menu_id, article.content, article.description, article.isEnabled, article.tag, article.id], (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results.insertId);
+      }
+    });
+  });
+};
 
-
-  
-menuModel.updateMenuById = async () => {
-    const menu = [];
-    try {
-      
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  };
-module.export = menuModel;
+module.exports = articleModel;
