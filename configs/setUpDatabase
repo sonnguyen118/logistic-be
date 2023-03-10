@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS orders (
     order_name varchar(30),
     status int NOT NULL,
     created_date DATETIME,
-    updated_date DATETIME,
+    updated_date DATETIME TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (status) REFERENCES status(id)
 
@@ -55,6 +55,8 @@ description text,
 parent_id int, 
 primary key(id)
 );
+
+INSERT INTO menu(id, name, link, description) VALUES(1,'MORE_INFORMATION', '/','{"email":"le-phuong@gmail.com","phone":"0339551901","timework":"08:20-17:20","link_logo":"https://lau-xanh.us/wp-content/uploads/2022/08/anh-sex-0522-22031039-001.jpg"}' );
 
 
 

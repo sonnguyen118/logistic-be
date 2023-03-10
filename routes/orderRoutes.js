@@ -12,5 +12,5 @@ router.get('/update', authMiddleware.authenticateRequest, authMiddleware.authori
 router.get('/search/:id', authMiddleware.authenticateRequest, orderController.findOrderById);
 router.post('/upload', authMiddleware.authenticateRequest, authMiddleware.authorize, upload.single('file'), orderController.uploadOrdersFromExcelFile);
 router.get('/status', authMiddleware.authenticateRequest, orderController.getAllOrderStatus);
-
+router.post('/search', authMiddleware.authenticateRequest, orderController.filterOrder);
 module.exports = router;

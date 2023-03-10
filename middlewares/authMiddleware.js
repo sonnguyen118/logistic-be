@@ -8,8 +8,12 @@ dotenv.config();
 const authMiddleware = {};
 
 authMiddleware.authenticateRequest = async (req, res, next) => {
-  const token = req.cookies.access_token;
   try {
+    let token = req.headers['authorization'];
+    if (token) {
+      token = token.replace('Bearer', '').trim();
+    }
+    // const token = req.cookies.access_token;
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
     req.user = decoded;
     next();
