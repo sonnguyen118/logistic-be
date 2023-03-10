@@ -40,6 +40,10 @@ CREATE TABLE IF NOT EXISTS users(
     last_name VARCHAR(60) NOT NULL,
     verify_code VARCHAR(60),
     role INT NOT NULL,
+    gender boolean ,
+    birthday date,
+    phone varchar(10),
+    avatar varchar(255),
     PRIMARY KEY(id),
     FOREIGN KEY (role) REFERENCES role(id)
 );

@@ -17,17 +17,21 @@ userModel.getAllUsers = () => {
 
 userModel.getUserById = (id) => {
   return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM users WHERE id = ?", [id], (err, results) => {
-      if (err) {
-        reject(err);
-      } else {
-        if (results.length === 0) {
-          resolve(null);
+    db.query(
+      "SELECT first_name, last_name, gender, birthday, phone, avatar FROM users WHERE id = ?",
+      [id],
+      (err, results) => {
+        if (err) {
+          reject(err);
         } else {
-          resolve(results[0]);
+          if (results.length === 0) {
+            resolve(null);
+          } else {
+            resolve(results[0]);
+          }
         }
       }
-    });
+    );
   });
 };
 
@@ -95,6 +99,31 @@ userModel.createUser = (user) => {
         user.verifyCode,
         new Date(),
         user.role,
+      ],
+      (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results.insertId);
+        }
+      }
+    );
+  });
+};
+
+userModel.updateUserInfo = (user) => {
+  const query = `UPDATE users SET first_name = ?, last_name= ?, gender= ?, phone= ?, birthday= ?, avatar= ? WHERE id = ?`;
+  return new Promise((resolve, reject) => {
+    db.query(
+      query,
+      [
+        user.firstName,
+        user.lastName,
+        user.gender,
+        user.phone,
+        user.birthday,
+        user.avatar,
+        user.id,
       ],
       (err, results) => {
         if (err) {
