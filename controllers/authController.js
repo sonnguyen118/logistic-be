@@ -27,7 +27,7 @@ authController.login = async (req, res) => {
     res
       .status(200)
       .json(
-        response.successResponse({ email: user.email, firstName: user.first_name, lastName: user.last_name, token: token }, "LOGGED IN SUCCESS")
+        response.successResponse({ id: user.id, email: user.email, firstName: user.first_name, lastName: user.last_name, token: token }, "LOGGED IN SUCCESS")
       );
   } catch (err) {
     res.status(200).json(response.errorResponse(err.message));
