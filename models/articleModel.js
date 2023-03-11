@@ -28,7 +28,7 @@ articleModel.updateArticleById = async (article, transaction) => {
   try {
     const result = await transaction.execute(query, [article.title, article.link, article.menu_id, article.content, article?.description, article.isEnabled, article?.tag, article.id])
     console.log(result)
-    return result.affectedRows > 0;
+    return result[0].affectedRows > 0;
   } catch (err) {
     throw err
   }

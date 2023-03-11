@@ -2,11 +2,7 @@ const orderModel = require("../models/orderModel");
 const response = require("../utils/response");
 const orderServices = require("../services/orderServices");
 const { fileConfig } = require('../configs/database');
-
 const mysql = require('mysql2/promise');
-const dotenv = require('dotenv');
-
-dotenv.config();
 
 const pool = mysql.createPool(fileConfig)
 

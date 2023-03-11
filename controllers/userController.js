@@ -1,6 +1,9 @@
 const userModel = require("../models/userModel");
 const response = require("../utils/response");
+const { fileConfig } = require('../configs/database');
+const mysql = require('mysql2/promise');
 
+const pool = mysql.createPool(fileConfig)
 const userController = {};
 
 userController.getAllUsers = async (req, res) => {
@@ -26,11 +29,17 @@ userController.getUserById = async (req, res) => {
 };
 
 userController.updateUserInfo = async (req, res) => {
+  const connection = await pool.getConnection();
   try {
-    const user = await userModel.updateUserInfo(req.body);
+    await connection.beginTransaction();
+    const user = await userModel.updateUserInfo(req.body, connection);
+    await connection.rollback();
     res.status(200).json(response.successResponse(user, "success"));
   } catch (err) {
+    connection.release();
     res.status(200).json(response.errorResponse(err.message));
+  } finally {
+    connection.release();
   }
 };
 

@@ -26,7 +26,7 @@ menuModel.updateMenuById = async (menu, transaction) => {
   const query = "UPDATE menu SET name =?, link =?,description =?, parent_id =? WHERE id = ?";
   try {
     const result = await transaction.execute(query, [menu.name, menu.link, menu.description, menu.parentId || null, menu.id])
-    return result.affectedRows > 0;
+    return result[0].affectedRows > 0;
   } catch (err) {
     throw err
   }
