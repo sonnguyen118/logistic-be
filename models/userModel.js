@@ -1,139 +1,94 @@
 const { query } = require("express");
-const db = require("../configs/database");
+const { pool } = require("../configs/database");
 
 const userModel = {};
 
-userModel.getAllUsers = () => {
-  return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM users", (err, results) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(results);
-      }
-    });
-  });
+userModel.getAllUsers = async () => {
+  const query = 'SELECT * FROM users';
+  try {
+    const [rows, fields] = await pool.query(query)
+    return rows
+  } catch (err) {
+    throw err
+  }
 };
 
-userModel.getUserById = (id) => {
-  return new Promise((resolve, reject) => {
-    db.query(
-      "SELECT first_name, last_name, gender, birthday, phone, avatar FROM users WHERE id = ?",
-      [id],
-      (err, results) => {
-        if (err) {
-          reject(err);
-        } else {
-          if (results.length === 0) {
-            resolve(null);
-          } else {
-            resolve(results[0]);
-          }
-        }
-      }
-    );
-  });
+userModel.getUserById = async (id) => {
+  const query = "SELECT first_name, last_name, gender, birthday, phone, avatar FROM users WHERE id = ?"
+  try {
+    const [rows, fields] = await pool.execute(query, [id])
+    return rows[0];
+  } catch (err) {
+    throw err
+  }
 };
 
-userModel.getUserByEmail = (email) => {
-  return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM users WHERE email = ?", [email], (err, results) => {
-      if (err) {
-        reject(err);
-      } else {
-        // console.log(results)
-        if (results.length === 0) {
-          resolve(null);
-        } else {
-          resolve(results[0]);
-        }
-      }
-    });
-  });
+userModel.getUserRoleById = async (id) => {
+  try {
+    const [rows, fields] = await pool.execute("SELECT id,role FROM users WHERE id = ?", [id])
+    return rows[0];
+  }
+  catch (err) {
+    throw err
+  }
 };
-userModel.getUserByVerifyCode = (value) => {
+userModel.isActiveUser = async (id) => {
+  try {
+    const [rows, fields] = await pool.execute("SELECT id, verify_code FROM users WHERE id = ? AND verify_code = ?", [id, 1])
+    return rows[0]?.verify_code == 1;
+  }
+  catch (err) {
+    throw err
+  }
+};
+
+userModel.getUserByEmail = async (email) => {
+  try {
+    const [rows, fields] = await pool.execute("SELECT * FROM users WHERE email = ?", [email])
+    return rows[0];
+  } catch (e) {
+    throw e;
+  }
+};
+userModel.getUserByVerifyCode = async (value) => {
   var query = "SELECT * FROM users WHERE verify_code = ?";
-  return new Promise((resolve, reject) => {
-    db.query(query, [value], (err, results) => {
-      if (err) {
-        reject(err);
-      } else {
-        if (results.length === 0) {
-          resolve(null);
-        } else {
-          resolve(results[0]);
-        }
-      }
-    });
-  });
-};
+  try {
+    const [rows, fields] = await pool.execute(query, [value]);
+    return rows[0];
+  } catch (err) {
+    throw err;
+  }
+}
 
-userModel.updateVerifyCode = (id) => {
+userModel.updateVerifyCode = async (id, transaction) => {
   var query = "UPDATE users SET verify_code = 1 WHERE id = ?";
-  return new Promise((resolve, reject) => {
-    db.query(query, [id], (err, results) => {
-      if (err) {
-        reject(err);
-      } else {
-        if (results.length === 0) {
-          resolve(null);
-        } else {
-          resolve(results[0]);
-        }
-      }
-    });
-  });
+  try {
+    const result = await transaction.execute(query, [id])
+    return result.affectedRows > 0;
+  } catch (err) {
+    throw err
+  }
 };
 
-userModel.createUser = (user) => {
+userModel.createUser = async (user, connection) => {
   const query =
-    "INSERT INTO `users` (`email`, `password`, `first_name`, `last_name`, `verify_code`,`created_date`,`role`) VALUES (?,?,?,?,?,?,?)";
-  return new Promise((resolve, reject) => {
-    db.query(
-      query,
-      [
-        user.email,
-        user.password,
-        user.firstName,
-        user.lastName,
-        user.verifyCode,
-        new Date(),
-        user.role,
-      ],
-      (err, results) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(results.insertId);
-        }
-      }
-    );
-  });
+    "INSERT INTO `users` (`email`, `password`, `first_name`, `last_name`, `verify_code`,`role`) VALUES (?,?,?,?,?,?)";
+  try {
+    const [rows, fields] = await connection.execute(query, [user.email, user.password, user.firstName, user.lastName, user.verifyCode, user.role])
+    return rows.insertId;
+  } catch (err) {
+    throw err
+  }
 };
 
-userModel.updateUserInfo = (user) => {
+userModel.updateUserInfo = async (user, transaction) => {
   const query = `UPDATE users SET first_name = ?, last_name= ?, gender= ?, phone= ?, birthday= ?, avatar= ? WHERE id = ?`;
-  return new Promise((resolve, reject) => {
-    db.query(
-      query,
-      [
-        user.firstName,
-        user.lastName,
-        user.gender,
-        user.phone,
-        user.birthday,
-        user.avatar,
-        user.id,
-      ],
-      (err, results) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(results.insertId);
-        }
-      }
-    );
-  });
+  try {
+    const result = await transaction.execute(query, [user.firstName, user.lastName, user.gender, user.phone, user.birthday, user.avatar, user.id])
+    return result.affectedRows > 0;
+  } catch (error) {
+    throw err
+  }
 };
 
 module.exports = userModel;

@@ -6,7 +6,7 @@ const userController = {};
 userController.getAllUsers = async (req, res) => {
   try {
     const users = await userModel.getAllUsers();
-    res.json(users);
+    res.status(200).json(response.successResponse(users, "success"));
   } catch (err) {
     res.status(200).json({ message: "Something went wrong" });
   }
@@ -19,10 +19,9 @@ userController.getUserById = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    // res.json(user);
     res.status(200).json(response.successResponse(user, "success"));
   } catch (err) {
-    res.status(200).json({ message: "Something went wrong" });
+    res.status(200).json(response.errorResponse(err.message));
   }
 };
 

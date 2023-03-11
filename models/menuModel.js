@@ -1,43 +1,34 @@
-const db = require("../configs/database");
+const { pool } = require("../configs/database");
 
 const menuModel = {};
 
-menuModel.getMenu = () => {
+menuModel.getMenu = async () => {
   const query = "SELECT * FROM menu";
-  return new Promise((resolve, reject) => {
-    db.query(query, (err, results) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(results);
-      }
-    });
-  });
+  try {
+    const [rows, fields] = await pool.query(query)
+    return rows
+  } catch (err) {
+    throw err
+  }
 };
 
-menuModel.addMenu = (menu) => {
+menuModel.addMenu = async (menu, transaction) => {
   const query = "INSERT INTO menu (name, link, description, parent_id) VALUE(?,?,?,?)";
-  return new Promise((resolve, reject) => {
-    db.query(query, [menu.name, menu.link, menu.description, menu.parentId], (err, results) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(results.insertId);
-      }
-    });
-  });
+  try {
+    const [rows, fields] = await transaction.query(query, [menu.name, menu.link, menu?.description, menu?.parentId])
+    return rows.insertId
+  } catch (err) {
+    throw err
+  }
 };
 
-menuModel.updateMenuById = (menu) => {
+menuModel.updateMenuById = async (menu, transaction) => {
   const query = "UPDATE menu SET name =?, link =?,description =?, parent_id =? WHERE id = ?";
-  return new Promise((resolve, reject) => {
-    db.query(query, [menu.name, menu.link, menu.description, menu.parentId, menu.id], (err, results) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(results.insertId);
-      }
-    });
-  });
+  try {
+    const result = await transaction.execute(query, [menu.name, menu.link, menu.description, menu.parentId || null, menu.id])
+    return result.affectedRows > 0;
+  } catch (err) {
+    throw err
+  }
 };
 module.exports = menuModel;
