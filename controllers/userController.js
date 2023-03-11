@@ -33,10 +33,10 @@ userController.updateUserInfo = async (req, res) => {
   try {
     await connection.beginTransaction();
     const user = await userModel.updateUserInfo(req.body, connection);
-    await connection.rollback();
+    await connection.commit();
     res.status(200).json(response.successResponse(user, "success"));
   } catch (err) {
-    connection.release();
+    await connection.rollback();
     res.status(200).json(response.errorResponse(err.message));
   } finally {
     connection.release();
