@@ -5,9 +5,13 @@ const response = require("../utils/response");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const dotenv = require("dotenv");
+const mysql = require('mysql2/promise');
+const dotenv = require('dotenv');
+const { fileConfig } = require('../configs/database');
 
 dotenv.config();
+
+const pool = mysql.createPool(fileConfig)
 
 const authController = {};
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN_SECRET_KEY;
@@ -22,20 +26,22 @@ authController.login = async (req, res) => {
     const user = await authServices.validateLoginForm(email, password);
     var token = jwt.sign({ id: user.id }, ACCESS_TOKEN);
     res.cookie(ACCESS_TOKEN_KEY, token, {
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000
     });
     res
       .status(200)
       .json(
-        response.successResponse({ email: user.email }, "LOGGED IN SUCCESS")
+        response.successResponse({ id: user.id, email: user.email, firstName: user.first_name, lastName: user.last_name, token: token }, "LOGGED IN SUCCESS")
       );
   } catch (err) {
-    res.status(500).json(response.errorResponse(err.message));
+    res.status(200).json(response.errorResponse(err.message));
   }
 };
 
 authController.register = async (req, res) => {
+  const connection = await pool.getConnection();
   try {
+    await connection.beginTransaction();
     const user = {
       email: req.body.email,
       password: req.body.password,
@@ -54,16 +60,18 @@ authController.register = async (req, res) => {
     user.password = hashedPassword;
     user.verifyCode = verifyCode;
     user.role = USER_ROLE;
+
     //save user
-    const insertId = await userModel.createUser(user);
+    const insertId = await userModel.createUser(user, connection);
+    console.log('insertId', insertId)
     // create token
     var token = jwt.sign({ id: insertId }, ACCESS_TOKEN);
-    console.log(insertId)
     res.cookie(ACCESS_TOKEN_KEY, token, {
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000
     });
     //send confirm email to admin
     emailService.sendEmailVerifyToAdmin(user, urlVerify);
+    await connection.commit();
     res.status(200).json(
       response.successResponse(
         {
@@ -76,33 +84,31 @@ authController.register = async (req, res) => {
       )
     );
   } catch (err) {
-    res.status(500).json(response.errorResponse(err.message));
+    await connection.rollback();
+    res.status(200).json(response.errorResponse(err.message));
+  } finally {
+    connection.release();
   }
 };
 
-authController.logout = async (req, res) => {
-  try {
-    res.clearCookie(ACCESS_TOKEN_KEY);
-    res.status(200).json(response.successResponse([], "LOGGED OUT"));
-  } catch (err) {
-    res.status(500).json(response.errorResponse(err.message));
-  }
-};
 
 authController.verifyRegister = async (req, res) => {
+  const connection = await pool.getConnection()
   try {
+    await connection.beginTransaction()
     const verifyCode = req.params.verifyCode;
-    const user = await userModel.getUserByVerifyCode(verifyCode);
+    const user = await userModel.getUserByVerifyCode(verifyCode, connection);
     if (!user) {
       throw new Error("tài khoản đã được kích hoạt rồi")
-      // res
-      //   .status(500)
-      //   .json(response.errorResponse("tài khoản đã được kích hoạt rồi"));
     }
-    await userModel.updateVerifyCode(user.id);
+    await userModel.updateVerifyCode(user.id, connection);
+    await connection.commit()
     res.status(200).json(response.successResponse([], "verify success"));
   } catch (err) {
-    res.status(500).json(response.errorResponse(err.message));
+    await connection.rollback()
+    res.status(200).json(response.errorResponse(err.message));
+  } finally {
+    connection.release()
   }
 };
 

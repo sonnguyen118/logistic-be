@@ -1,10 +1,11 @@
 const express = require("express");
 const articleController = require("../controllers/articleController");
+const authMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-router.get("/", articleController.getArticles);
-router.post("/add", articleController.addArticle);
-router.post("/update", articleController.updateArticle);
+router.get("/", authMiddleware.authenticateRequest, articleController.getArticles);
+router.post("/add", authMiddleware.authenticateRequest, authMiddleware.authorize, articleController.addArticle);
+router.post("/update", authMiddleware.authenticateRequest, authMiddleware.authorize, articleController.updateArticle);
 
 module.exports = router;

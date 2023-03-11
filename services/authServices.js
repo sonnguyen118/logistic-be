@@ -38,15 +38,14 @@ authService.validateRegister = async (user) => {
 };
 authService.validateLoginForm = async (email, password) => {
   const user = await userModel.getUserByEmail(email);
-  console.log(user)
   if (user) {
-    if (user.verify_code != 1) {
-      throw new Error("Tài khoản chưa được kích hoạt");
-    }
+    // if (user.verify_code != 1) {
+    //   throw new Error("Tài khoản chưa được kích hoạt");
+    // }
   } else {
     throw new Error("Email không tồn tại");
   }
-  const isPasswordValid = bcrypt.compare(password, user.password);
+  const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
     throw new Error("Mật khẩu không chính xác");
   }
