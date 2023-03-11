@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS users(
     id INT NOT NULL AUTO_INCREMENT,
     email VARCHAR(60) NOT NULL UNIQUE,
     password VARCHAR(60) NOT NULL,
-    created_date DATETIME,
+    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
     first_name VARCHAR(60) NOT NULL,
     last_name VARCHAR(60) NOT NULL,
     verify_code VARCHAR(60),

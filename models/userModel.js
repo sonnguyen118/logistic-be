@@ -85,6 +85,7 @@ userModel.updateUserInfo = async (user, transaction) => {
   const query = `UPDATE users SET first_name = ?, last_name= ?, gender= ?, phone= ?, birthday= ?, avatar= ? WHERE id = ?`;
   try {
     const result = await transaction.execute(query, [user?.firstName, user?.lastName, user?.gender, user?.phone, user?.birthday, user?.avatar, user.id])
+
     return result[0].affectedRows > 0;
   } catch (err) {
     throw err
