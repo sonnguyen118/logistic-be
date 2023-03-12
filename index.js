@@ -27,7 +27,6 @@ app.use('/api/menu/article', articleRoutes);
 
 
 
-
 app.listen(5000, () => {
   console.log('Server running at http://www.api.critistudio.top/');
 });

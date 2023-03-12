@@ -64,7 +64,7 @@ userModel.updateVerifyCode = async (id, transaction) => {
   var query = "UPDATE users SET verify_code = 1 WHERE id = ?";
   try {
     const result = await transaction.execute(query, [id])
-    return result.affectedRows > 0;
+    return result[0].affectedRows > 0;
   } catch (err) {
     throw err
   }

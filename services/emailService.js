@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const dotenv = require("dotenv");
-const emailTemplate = require("../configs/emailTemplate");
+const emailTemplate = require("../template/emailTemplate");
 
 dotenv.config();
 

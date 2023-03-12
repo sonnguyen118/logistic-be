@@ -6,7 +6,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const mysql = require("mysql2/promise");
+const path = require('path');
 const dotenv = require("dotenv");
+const succeedAfterVerify = require("../template/succeedAfterVerify");
+const account_verified_template = require("../template/account_verified_template");
+
 const { fileConfig } = require("../configs/database");
 
 dotenv.config();
@@ -25,9 +29,6 @@ authController.login = async (req, res) => {
     const { email, password } = req.body;
     const user = await authServices.validateLoginForm(email, password);
     var token = jwt.sign({ id: user.id }, ACCESS_TOKEN);
-    res.cookie(ACCESS_TOKEN_KEY, token, {
-      maxAge: 24 * 60 * 60 * 1000,
-    });
     res.status(200).json(
       response.successResponse(
         {
@@ -82,17 +83,11 @@ authController.register = async (req, res) => {
     //send confirm email to admin
     emailService.sendEmailVerifyToAdmin(user, urlVerify);
     await connection.commit();
-    res.status(200).json(
-      response.successResponse(
-        {
-          email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          token: token,
-        },
-        "success"
+    res.status(200)
+      .json(response.successResponse(
+        { id: insertId, email: user.email, firstName: user.firstName, lastName: user.lastName, token: token }, "success"
       )
-    );
+      );
   } catch (err) {
     await connection.rollback();
     res.status(200).json(response.errorResponse(err.message));
@@ -106,14 +101,16 @@ authController.verifyRegister = async (req, res) => {
   try {
     await connection.beginTransaction();
     const verifyCode = req.params.verifyCode;
+    let htmlAfterVerify = account_verified_template;
     const user = await userModel.getUserByVerifyCode(verifyCode, connection);
-    if (!user) {
-      throw new Error("tài khoản đã được kích hoạt rồi");
+    if (user) {
+      const result = await userModel.updateVerifyCode(user.id, connection);
+      if (result) {
+        htmlAfterVerify = succeedAfterVerify
+      }
     }
-    await userModel.updateVerifyCode(user.id, connection);
+    res.status(200).send(htmlAfterVerify);
     await connection.commit();
-    // res.status(200).json(response.successResponse([], "verify success"));
-    res.sendFile("../config/succeedAfterEmail.html");
   } catch (err) {
     await connection.rollback();
     res.status(200).json(response.errorResponse(err.message));
