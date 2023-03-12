@@ -43,6 +43,26 @@ articleController.updateArticle = async (req, res) => {
     }
 }
 
+articleController.getArticleByLink = async (req, res) => {
+    const link = req.params.link
+    try {
+        const articles = await articleModel.getArticleByLink(link);
+        res.status(200).json(response.successResponse(articles, "success"));
+    } catch (error) {
+        res.status(200).json(response.errorResponse(error.message));
+    }
+}
+
+articleController.getArticleById = async (req, res) => {
+    const link = req.body.link
+    try {
+        const articles = await articleModel.getArticleById(id);
+        res.status(200).json(response.successResponse(articles, "success"));
+    } catch (error) {
+        res.status(200).json(response.errorResponse(error.message));
+    }
+}
+
 
 
 module.exports = articleController;

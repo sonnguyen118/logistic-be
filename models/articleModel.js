@@ -34,4 +34,23 @@ articleModel.updateArticleById = async (article, transaction) => {
   }
 };
 
+articleModel.getArticleByLink = async (link) => {
+  const query = "SELECT * FROM articles WHERE isEnabled = true AND link = ?";
+  try {
+    const [rows, fields] = await pool.execute(query, [link])
+    return rows
+  } catch (err) {
+    throw err
+  }
+};
+articleModel.getArticleById = async (id) => {
+  const query = "SELECT * FROM articles WHERE isEnabled = true AND id = ?";
+  try {
+    const [rows, fields] = await pool.execute(query, [id])
+    return rows
+  } catch (err) {
+    throw err
+  }
+};
+
 module.exports = articleModel;

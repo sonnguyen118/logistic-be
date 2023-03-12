@@ -48,4 +48,13 @@ menuController.updateMenu = async (req, res) => {
   }
 };
 
+menuController.getArticlesByMenuId = async (req, res) => {
+  try {
+    const menu = await menuModel.getArticlesByMenuId(req.body.id);
+    res.status(200).json(response.successResponse(menu, "OK"));
+  } catch (error) {
+    res.status(200).json(response.errorResponse(error.message));
+  }
+};
+
 module.exports = menuController;
