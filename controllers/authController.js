@@ -6,7 +6,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const mysql = require("mysql2/promise");
-const path = require('path');
 const dotenv = require("dotenv");
 const succeedAfterVerify = require("../template/succeedAfterVerify");
 const account_verified_template = require("../template/account_verified_template");
@@ -21,8 +20,6 @@ const authController = {};
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN_SECRET_KEY;
 const ACCESS_TOKEN_KEY = process.env.ACCESS_TOKEN_KEY;
 const USER_ROLE = process.env.USER_ROLE;
-const CHUA_KICH_HOAT_TAI_KHOAN = process.env.CHUA_KICH_HOAT_TAI_KHOAN;
-const EMAIL_ADMIN = "canhtx95@gmail.com";
 
 authController.login = async (req, res) => {
   try {
@@ -70,7 +67,6 @@ authController.register = async (req, res) => {
     );
     user.password = hashedPassword;
     user.verifyCode = verifyCode;
-    user.role = USER_ROLE;
 
     //save user
     const insertId = await userModel.createUser(user, connection);

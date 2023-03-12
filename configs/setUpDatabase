@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS orders (
 
 CREATE TABLE IF NOT EXISTS role (
 id int NOT NULL AUTO_INCREMENT,
-name varchar(20) NOT NULL,
+name varchar(20) NOT NULL UNIQUE,
 PRIMARY KEY(id)    
 );
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS users(
     first_name VARCHAR(60) NOT NULL,
     last_name VARCHAR(60) NOT NULL,
     verify_code VARCHAR(60),
-    role INT NOT NULL,
+    role INT,
     gender boolean ,
     birthday date,
     phone varchar(10),
@@ -57,16 +57,20 @@ name VARCHAR(255) not null,
 link VARCHAR(255) not null,
 description text,
 role int,
-FOREIGN KEY (role) REFERENCES role(id),
 parent_id int, 
-primary key(id)
+primary key(id),
+FOREIGN KEY (role) REFERENCES role(id)
 );
 
-INSERT IGNORE INTO menu(id, name, link, description) 
-VALUES
-(1,'MORE_INFORMATION', '/','{"email":"le-phuong@gmail.com","phone":"0339551901","timework":"08:20-17:20","link_logo":"https://lau-xanh.us/wp-content/uploads/2022/08/anh-sex-0522-22031039-001.jpg"}' ),
-(2,'Trang chủ','/',null ),
-(3,'Giới thiệu','/about',null );
+INSERT INTO `menu` (`id`, `name`, `link`, `description`,`role`, `parent_id`) VALUES
+(1, 'MORE_INFORMATION', '/', '{\"email\":\"le-phuong@gmail.com\",\"phone\":\"0339551901\",\"timework\":\"08:20-17:20\",\"link_logo\":\"https://seeklogo.com/images/C/corporate-company-logo-749CEE6ADC-seeklogo.com.png\"}',NULL, NULL),
+(2, 'Trang Chủ', '/', NULL, NULL, NULL),
+(3, 'Biểu phí', '/tariffs', NULL,2, NULL),
+(4, 'Các sản phẩm', '/products', NULL, NULL, NULL),
+(5, 'Giới thiệu', '/about', NULL, NULL, NULL),
+(6, 'Chính sách', '/policys', NULL, NULL, NULL),
+(7, 'Hướng dẫn', '/instructs', NULL, NULL, NULL),
+(8, 'Thông báo', '/notification', NULL,2, NULL);
 
 
 CREATE TABLE IF NOT EXISTS articles (
@@ -83,7 +87,6 @@ role int,
 create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
 update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 primary key(id),
-FOREIGN KEY (menu_id) REFERENCES menu(id)
+FOREIGN KEY (menu_id) REFERENCES menu(id),
 FOREIGN KEY (role) REFERENCES role(id)
-
 );

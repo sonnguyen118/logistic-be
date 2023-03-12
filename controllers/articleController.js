@@ -2,6 +2,14 @@ const articleModel = require("../models/articleModel");
 const response = require("../utils/response");
 const mysql = require('mysql2/promise');
 const { fileConfig } = require('../configs/database');
+const userRoleService = require("../services/userRoleServices");
+const userModel = require("../models/userModel");
+
+const dotenv = require("dotenv");
+
+dotenv.config();
+const USER_ROLE = process.env.USER_ROLE;
+const ADMIN_ROLE = process.env.ADMIN_ROLE;
 
 const pool = mysql.createPool(fileConfig)
 
@@ -44,9 +52,11 @@ articleController.updateArticle = async (req, res) => {
 }
 
 articleController.getArticleByLink = async (req, res) => {
-    const link = req.params.link
+    const userId = req.body.userId;
+    const link = '/' + req.params.link;
     try {
         const articles = await articleModel.getArticleByLink(link);
+        await userRoleService.checkUserHavePermission(userId, articles.role, [USER_ROLE, ADMIN_ROLE])
         res.status(200).json(response.successResponse(articles, "success"));
     } catch (error) {
         res.status(200).json(response.errorResponse(error.message));
@@ -54,15 +64,15 @@ articleController.getArticleByLink = async (req, res) => {
 }
 
 articleController.getArticleById = async (req, res) => {
-    const link = req.body.link
+    const { userId, id } = req.body
     try {
         const articles = await articleModel.getArticleById(id);
+        await userRoleService.checkUserHavePermission(userId, articles.role, [USER_ROLE, ADMIN_ROLE])
         res.status(200).json(response.successResponse(articles, "success"));
     } catch (error) {
         res.status(200).json(response.errorResponse(error.message));
     }
 }
-
 
 
 module.exports = articleController;
