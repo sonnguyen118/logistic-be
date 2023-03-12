@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS users(
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
     first_name VARCHAR(60) NOT NULL,
     last_name VARCHAR(60) NOT NULL,
+    other_name VARCHAR(60),
     verify_code VARCHAR(60),
     role INT,
     gender boolean ,

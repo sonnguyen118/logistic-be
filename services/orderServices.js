@@ -1,4 +1,5 @@
 const xlsx = require('xlsx');
+const path = require('path');
 
 const orderService = {};
 
@@ -15,7 +16,14 @@ function convertStatusStringToValue(statusString) {
         default: 0
     }
 }
+function validateFileInput(file) {
+    if (!file) throw new Error("Không thấy file cần upload")
+    const fileName = file.originalname;
+    const ext = path.extname(fileName);
+    if (!['xlsx', 'xls'].some(e => e == ext)) throw new Error("Định dạng file không phải excel")
+}
 orderService.readOrdersDataFromFileExcel = (req, res) => {
+    validateFileInput(req.file)
     const buffer = req.file.buffer;
     const workbook = xlsx.read(buffer, { type: 'buffer', cellDates: true });
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];

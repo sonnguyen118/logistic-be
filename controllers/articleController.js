@@ -3,7 +3,6 @@ const response = require("../utils/response");
 const mysql = require('mysql2/promise');
 const { fileConfig } = require('../configs/database');
 const userRoleService = require("../services/userRoleServices");
-const userModel = require("../models/userModel");
 
 const dotenv = require("dotenv");
 
@@ -52,11 +51,15 @@ articleController.updateArticle = async (req, res) => {
 }
 
 articleController.getArticleByLink = async (req, res) => {
-    const userId = req.body.userId;
+    let userId = req.body.userId;
+    userId = !userId ? null : userId;
     const link = '/' + req.params.link;
     try {
         const articles = await articleModel.getArticleByLink(link);
-        await userRoleService.checkUserHavePermission(userId, articles.role, [USER_ROLE, ADMIN_ROLE])
+        if (!articles) {
+            throw new Error("Bài viết không tồn tại")
+        }
+        await userRoleService.checkUserHavePermission(userId, articles?.role, [USER_ROLE, ADMIN_ROLE])
         res.status(200).json(response.successResponse(articles, "success"));
     } catch (error) {
         res.status(200).json(response.errorResponse(error.message));
@@ -67,6 +70,9 @@ articleController.getArticleById = async (req, res) => {
     const { userId, id } = req.body
     try {
         const articles = await articleModel.getArticleById(id);
+        if (!articles) {
+            throw new Error("Bài viết không tồn tại")
+        }
         await userRoleService.checkUserHavePermission(userId, articles.role, [USER_ROLE, ADMIN_ROLE])
         res.status(200).json(response.successResponse(articles, "success"));
     } catch (error) {

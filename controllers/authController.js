@@ -19,7 +19,6 @@ const pool = mysql.createPool(fileConfig);
 const authController = {};
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN_SECRET_KEY;
 const ACCESS_TOKEN_KEY = process.env.ACCESS_TOKEN_KEY;
-const USER_ROLE = process.env.USER_ROLE;
 
 authController.login = async (req, res) => {
   try {
@@ -70,7 +69,6 @@ authController.register = async (req, res) => {
 
     //save user
     const insertId = await userModel.createUser(user, connection);
-    console.log("insertId", insertId);
     // create token
     var token = jwt.sign({ id: insertId }, ACCESS_TOKEN);
     res.cookie(ACCESS_TOKEN_KEY, token, {

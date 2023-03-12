@@ -5,10 +5,10 @@ const emailTemplate = require("../template/emailTemplate");
 
 dotenv.config();
 
-const SERVICE_GMAIL = "gmail";
-const EMAIL_SEVER = "canh3108@gmail.com";
-const PASSWORD_EMAIL_SEVER = "nofsuhfvylpgrhpp";
-const EMAIL_ADMIN = "canhtx95@gmail.com";
+const SERVICE_MAIL = "gmail";
+const EMAIL_SEVER = process.env.EMAIL_MAY_CHU;
+const PASSWORD_EMAIL_SEVER = process.env.MK_EMAIL_MAY_CHU;
+const EMAIL_ADMIN = process.env.EMAIL_ADMIN;
 const email = {};
 
 email.sendEmailVerifyToAdmin = async (_user, _urlVerify) => {
@@ -16,7 +16,7 @@ email.sendEmailVerifyToAdmin = async (_user, _urlVerify) => {
   const urlVerify = await _urlVerify;
   // Generate confirmation token
   const transporter = nodemailer.createTransport({
-    service: SERVICE_GMAIL,
+    service: SERVICE_MAIL,
     auth: {
       user: EMAIL_SEVER,
       pass: PASSWORD_EMAIL_SEVER,

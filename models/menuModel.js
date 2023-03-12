@@ -23,10 +23,13 @@ menuModel.addMenu = async (menu, transaction) => {
 };
 
 menuModel.updateMenuById = async (menu, transaction) => {
-  const queryUpdateMenu = "UPDATE menu SET name =?, link =?,description =?,role = ?, parent_id =? WHERE id = ?";
+  //Cập nhật menu và quyền các bài viết thuộc menu
+  const queryUpdateMenu = "UPDATE menu SET name =?, link =?,description =?,role = ? WHERE id = ?";
+  const queryUpdateArticle = "UPDATE articles SET role = ? WHERE menu_id = ?";
   try {
-    const result = await transaction.execute(queryUpdateMenu, [menu.name, menu.link, menu.description, menu?.role, menu?.parentId, menu.id])
-    return result[0].affectedRows > 0;
+    const updateMenu = await transaction.execute(queryUpdateMenu, [menu.name, menu.link, menu.description, menu?.role, menu.id])
+    const updateArticles = await transaction.execute(queryUpdateArticle, [menu?.role, menu.id])
+    return updateMenu[0].affectedRows > 0;
   } catch (err) {
     throw err
   }

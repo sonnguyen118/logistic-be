@@ -3,7 +3,6 @@ const response = require("../utils/response");
 const { fileConfig } = require('../configs/database');
 const mysql = require('mysql2/promise');
 const dotenv = require("dotenv");
-const userModel = require("../models/userModel");
 const userRoleService = require("../services/userRoleServices");
 
 dotenv.config();

@@ -34,7 +34,6 @@ orderModel.updateOrder = async (id, status, transaction) => {
     const query = 'UPDATE orders SET status = ? WHERE id = ?';
     try {
         const result = await transaction.execute(query, [status, id])
-        console.log(result)
         return result[0].affectedRows > 0;
     } catch (error) {
         throw err

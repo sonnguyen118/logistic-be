@@ -5,7 +5,7 @@ const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-router.get("/", authMiddleware.authenticateRequest, userController.getAllUsers);
+router.get("/", authMiddleware.authenticateRequest, authMiddleware.authorize, userController.getAllUsers);
 router.get("/:id", authMiddleware.authenticateRequest, userController.getUserById);
 router.post("/update", authMiddleware.authenticateRequest, userController.updateUserInfo);
 
