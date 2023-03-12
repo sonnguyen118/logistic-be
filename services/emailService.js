@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const dotenv = require("dotenv");
+const emailTemplate = require("../configs/emailTemplate");
 
 dotenv.config();
 
@@ -25,11 +26,25 @@ email.sendEmailVerifyToAdmin = async (_user, _urlVerify) => {
     },
   });
 
+  // thêm thông tin thời gian khi gửi
+  const date = new Date();
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  };
+  const formattedDate = date.toLocaleDateString("vi-VN", options);
+  // template html email
+
   const mailOptions = {
     from: EMAIL_SEVER,
     to: EMAIL_ADMIN,
     subject: "Xác thực tài khoản Viet-Sino logistic",
-    html: `<h1> Hi ADMIN, email: <strong>${user.email}<strong> muốn đăng ký, click vào link để xác thực ${urlVerify}</h1> `
+    html: emailTemplate(formattedDate, user, urlVerify),
   };
 
   const info = transporter.sendMail(mailOptions, function (error, info) {

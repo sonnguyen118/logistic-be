@@ -5,13 +5,13 @@ const response = require("../utils/response");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const mysql = require('mysql2/promise');
-const dotenv = require('dotenv');
-const { fileConfig } = require('../configs/database');
+const mysql = require("mysql2/promise");
+const dotenv = require("dotenv");
+const { fileConfig } = require("../configs/database");
 
 dotenv.config();
 
-const pool = mysql.createPool(fileConfig)
+const pool = mysql.createPool(fileConfig);
 
 const authController = {};
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN_SECRET_KEY;
@@ -26,13 +26,20 @@ authController.login = async (req, res) => {
     const user = await authServices.validateLoginForm(email, password);
     var token = jwt.sign({ id: user.id }, ACCESS_TOKEN);
     res.cookie(ACCESS_TOKEN_KEY, token, {
-      maxAge: 24 * 60 * 60 * 1000
+      maxAge: 24 * 60 * 60 * 1000,
     });
-    res
-      .status(200)
-      .json(
-        response.successResponse({ id: user.id, email: user.email, firstName: user.first_name, lastName: user.last_name, token: token }, "LOGGED IN SUCCESS")
-      );
+    res.status(200).json(
+      response.successResponse(
+        {
+          id: user.id,
+          email: user.email,
+          firstName: user.first_name,
+          lastName: user.last_name,
+          token: token,
+        },
+        "LOGGED IN SUCCESS"
+      )
+    );
   } catch (err) {
     res.status(200).json(response.errorResponse(err.message));
   }
@@ -55,19 +62,22 @@ authController.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     // create verify code
     const verifyCode = crypto.randomBytes(20).toString("hex");
-    const hostPrefix = `${req.protocol}://${req.get('host')}`
-    const urlVerify = await authServices.createUrlVerifyUser(hostPrefix, verifyCode);
+    const hostPrefix = `${req.protocol}://${req.get("host")}`;
+    const urlVerify = await authServices.createUrlVerifyUser(
+      hostPrefix,
+      verifyCode
+    );
     user.password = hashedPassword;
     user.verifyCode = verifyCode;
     user.role = USER_ROLE;
 
     //save user
     const insertId = await userModel.createUser(user, connection);
-    console.log('insertId', insertId)
+    console.log("insertId", insertId);
     // create token
     var token = jwt.sign({ id: insertId }, ACCESS_TOKEN);
     res.cookie(ACCESS_TOKEN_KEY, token, {
-      maxAge: 24 * 60 * 60 * 1000
+      maxAge: 24 * 60 * 60 * 1000,
     });
     //send confirm email to admin
     emailService.sendEmailVerifyToAdmin(user, urlVerify);
@@ -91,24 +101,24 @@ authController.register = async (req, res) => {
   }
 };
 
-
 authController.verifyRegister = async (req, res) => {
-  const connection = await pool.getConnection()
+  const connection = await pool.getConnection();
   try {
-    await connection.beginTransaction()
+    await connection.beginTransaction();
     const verifyCode = req.params.verifyCode;
     const user = await userModel.getUserByVerifyCode(verifyCode, connection);
     if (!user) {
-      throw new Error("tài khoản đã được kích hoạt rồi")
+      throw new Error("tài khoản đã được kích hoạt rồi");
     }
     await userModel.updateVerifyCode(user.id, connection);
-    await connection.commit()
-    res.status(200).json(response.successResponse([], "verify success"));
+    await connection.commit();
+    // res.status(200).json(response.successResponse([], "verify success"));
+    res.sendFile("../config/succeedAfterEmail.html");
   } catch (err) {
-    await connection.rollback()
+    await connection.rollback();
     res.status(200).json(response.errorResponse(err.message));
   } finally {
-    connection.release()
+    connection.release();
   }
 };
 
