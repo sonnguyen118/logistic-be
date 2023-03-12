@@ -3,6 +3,7 @@ const response = require("../utils/response");
 const mysql = require('mysql2/promise');
 const { fileConfig } = require('../configs/database');
 const userRoleService = require("../services/userRoleServices");
+const log = require("../utils/log");
 
 const dotenv = require("dotenv");
 
@@ -18,6 +19,7 @@ articleController.getArticles = async (req, res) => {
         const articles = await articleModel.getArticles();
         res.status(200).json(response.successResponse(articles, "success"));
     } catch (error) {
+        log.writeErrorLog(error.message)
         res.status(200).json(response.errorResponse(error.message));
     }
 }
@@ -30,6 +32,7 @@ articleController.addArticle = async (req, res) => {
         await connection.commit();
         res.status(200).json(response.successResponse(insertId, "OK"));
     } catch (error) {
+        log.writeErrorLog(error.message)
         res.status(200).json(response.errorResponse(error.message));
     } finally {
         connection.release();
@@ -44,6 +47,7 @@ articleController.updateArticle = async (req, res) => {
         await connection.commit();
         res.status(200).json(response.successResponse(isSuccess, "OK"));
     } catch (error) {
+        log.writeErrorLog(error.message)
         res.status(200).json(response.errorResponse(error.message));
     } finally {
         connection.release();
@@ -62,6 +66,7 @@ articleController.getArticleByLink = async (req, res) => {
         await userRoleService.checkUserHavePermission(userId, articles?.role, [USER_ROLE, ADMIN_ROLE])
         res.status(200).json(response.successResponse(articles, "success"));
     } catch (error) {
+        log.writeErrorLog(error.message)
         res.status(200).json(response.errorResponse(error.message));
     }
 }
@@ -76,6 +81,7 @@ articleController.getArticleById = async (req, res) => {
         await userRoleService.checkUserHavePermission(userId, articles.role, [USER_ROLE, ADMIN_ROLE])
         res.status(200).json(response.successResponse(articles, "success"));
     } catch (error) {
+        log.writeErrorLog(error.message)
         res.status(200).json(response.errorResponse(error.message));
     }
 }

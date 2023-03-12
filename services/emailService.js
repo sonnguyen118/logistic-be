@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const dotenv = require("dotenv");
 const emailTemplate = require("../template/emailTemplate");
+const log = require("../utils/log");
 
 dotenv.config();
 
@@ -49,10 +50,10 @@ email.sendEmailVerifyToAdmin = async (_user, _urlVerify) => {
 
   const info = transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      console.log(error.message);
+      log.writeErrorLog(error.message)
     } else {
-      console.log("Email sent: " + info.response);
-      console.log("Email: " + urlVerify);
+      log.writeLog("Email sent: " + info.response)
+      log.writeLog("Email veify code: " + urlVerify);
     }
   });
 };

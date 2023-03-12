@@ -2,7 +2,7 @@ const userModel = require("../models/userModel");
 const response = require("../utils/response");
 const { fileConfig } = require('../configs/database');
 const mysql = require('mysql2/promise');
-
+const log = require("../utils/log");
 const pool = mysql.createPool(fileConfig)
 const userController = {};
 
@@ -11,6 +11,7 @@ userController.getAllUsers = async (req, res) => {
     const users = await userModel.getAllUsers();
     res.status(200).json(response.successResponse(users, "success"));
   } catch (err) {
+    log.writeErrorLog(err.message)
     res.status(200).json({ message: "Something went wrong" });
   }
 };
@@ -20,10 +21,12 @@ userController.getUserById = async (req, res) => {
   try {
     const user = await userModel.getUserById(id);
     if (!user) {
+      log.writeErrorLog('User not found')
       return res.status(404).json({ message: "User not found" });
     }
     res.status(200).json(response.successResponse(user, "success"));
   } catch (err) {
+    log.writeErrorLog(err.message)
     res.status(200).json(response.errorResponse(err.message));
   }
 };
@@ -37,6 +40,7 @@ userController.updateUserInfo = async (req, res) => {
     res.status(200).json(response.successResponse(user, "success"));
   } catch (err) {
     await connection.rollback();
+    log.writeErrorLog(err.message)
     res.status(200).json(response.errorResponse(err.message));
   } finally {
     connection.release();

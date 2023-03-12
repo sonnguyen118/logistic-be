@@ -9,7 +9,7 @@ const mysql = require("mysql2/promise");
 const dotenv = require("dotenv");
 const succeedAfterVerify = require("../template/succeedAfterVerify");
 const account_verified_template = require("../template/account_verified_template");
-
+const log = require("../utils/log");
 const { fileConfig } = require("../configs/database");
 
 dotenv.config();
@@ -38,6 +38,7 @@ authController.login = async (req, res) => {
       )
     );
   } catch (err) {
+    log.writeErrorLog(err.message)
     res.status(200).json(response.errorResponse(err.message));
   }
 };
@@ -84,6 +85,7 @@ authController.register = async (req, res) => {
       );
   } catch (err) {
     await connection.rollback();
+    log.writeErrorLog(err.message)
     res.status(200).json(response.errorResponse(err.message));
   } finally {
     connection.release();
@@ -107,6 +109,7 @@ authController.verifyRegister = async (req, res) => {
     await connection.commit();
   } catch (err) {
     await connection.rollback();
+    log.writeErrorLog(err.message)
     res.status(200).json(response.errorResponse(err.message));
   } finally {
     connection.release();
