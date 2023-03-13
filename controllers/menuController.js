@@ -69,5 +69,22 @@ menuController.getArticlesByMenuId = async (req, res) => {
   }
 };
 
+menuController.orderByMenu = async (req, res) => {
+  const { first_position, second_position } = req.body
+  const connection = await pool.getConnection();
+  try {
+    await connection.beginTransaction();
+    const menu = await menuModel.orderByMenu(first_position, second_position, connection);
+    await connection.commit();
+    res.status(200).json(response.successResponse(menu, "OK"));
+  } catch (error) {
+    await connection.rollback();
+    log.writeErrorLog(error.message)
+    res.status(200).json(response.errorResponse(error.message));
+  } finally {
+    connection.release();
+  }
+};
+
 
 module.exports = menuController;

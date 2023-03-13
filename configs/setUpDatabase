@@ -58,20 +58,21 @@ name VARCHAR(255) not null,
 link VARCHAR(255) not null,
 description text,
 role int,
+priority_id int NOT NULL UNIQUE,
 parent_id int, 
 primary key(id),
 FOREIGN KEY (role) REFERENCES role(id)
 );
 
-INSERT INTO `menu` (`id`, `name`, `link`, `description`,`role`, `parent_id`) VALUES
-(1, 'MORE_INFORMATION', '/', '{\"email\":\"le-phuong@gmail.com\",\"phone\":\"0339551901\",\"timework\":\"08:20-17:20\",\"link_logo\":\"https://seeklogo.com/images/C/corporate-company-logo-749CEE6ADC-seeklogo.com.png\"}',NULL, NULL),
-(2, 'Trang Chủ', '/', NULL, NULL, NULL),
-(3, 'Biểu phí', '/tariffs', NULL,2, NULL),
-(4, 'Các sản phẩm', '/products', NULL, NULL, NULL),
-(5, 'Giới thiệu', '/about', NULL, NULL, NULL),
-(6, 'Chính sách', '/policys', NULL, NULL, NULL),
-(7, 'Hướng dẫn', '/instructs', NULL, NULL, NULL),
-(8, 'Thông báo', '/notification', NULL,2, NULL);
+INSERT INTO `menu` (`id`, `name`, `link`, `description`,`role`,`priority_id`, `parent_id`) VALUES
+(1, 'MORE_INFORMATION', '/', '{\"email\":\"sinovietlogistics@gmail.com\",\"phone\":\"08339999095\",\"timework\":\"08:00-24:00\",\"link_logo\":\"https://seeklogo.com/images/C/corporate-company-logo-749CEE6ADC-seeklogo.com.png\"}',NULL, 1, NULL),
+(2, 'Trang Chủ', '/', NULL, NULL,2, NULL),
+(3, 'Biểu phí', '/tariffs', NULL,2,3, NULL),
+(4, 'Các sản phẩm', '/products', NULL,NULL, 4, NULL),
+(5, 'Giới thiệu', '/about', NULL, NULL,5, NULL),
+(6, 'Chính sách', '/policys', NULL, NULL,6, NULL),
+(7, 'Hướng dẫn', '/instructs', NULL, NULL,7, NULL),
+(8, 'Thông báo', '/notification', NULL,2,8, NULL);
 
 
 CREATE TABLE IF NOT EXISTS articles (

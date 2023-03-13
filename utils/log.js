@@ -30,7 +30,6 @@ log.writeRequest = (req) => {
         API: ${req.url} \n params: ${JSON.stringify(req.params)} \n body: ${JSON.stringify(req.body)}
         `
         fs.appendFileSync('log.txt', msg);
-        console.log(JSON.stringify(req.params))
     } catch (error) {
     }
 

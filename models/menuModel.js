@@ -3,7 +3,7 @@ const { pool } = require("../configs/database");
 const menuModel = {};
 
 menuModel.getMenu = async () => {
-  const query = "SELECT * FROM menu";
+  const query = "SELECT * FROM menu ORDER BY priority_id";
   try {
     const [rows, fields] = await pool.query(query)
     return rows
@@ -56,5 +56,25 @@ menuModel.getRoleMenuById = async (id) => {
     throw err
   }
 };
+menuModel.orderByMenu = async (firsId, secondId, transaction) => {
+  const query1 = "UPDATE menu SET priority_id = -1 WHERE priority_id = ?"
+  const [result1, fields1] = await transaction.execute(query1, [firsId])
+  if (result1.affectedRows == 0) {
+    throw new Error("Lỗi vị trí bản ghi")
+  }
+  const query2 = "UPDATE menu SET priority_id = ? WHERE priority_id = ?"
+  const [result2, fields2] = await transaction.execute(query2, [firsId, secondId])
+  if (result2.affectedRows == 0) {
+    throw new Error("Lỗi vị trí bản ghi")
+  }
+  const query3 = "UPDATE menu SET priority_id = ? WHERE priority_id = -1"
+  const [rows, fields3] = await transaction.execute(query3, [secondId])
+  try {
+    return rows.affectedRows > 0;
+  } catch (err) {
+    throw err
+  }
+};
+
 
 module.exports = menuModel;
