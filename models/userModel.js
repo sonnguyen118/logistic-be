@@ -14,7 +14,7 @@ userModel.getAllUsers = async () => {
 };
 
 userModel.getUserById = async (id) => {
-  const query = "SELECT first_name, last_name, gender, birthday, phone, avatar FROM users WHERE id = ?"
+  const query = "SELECT first_name, last_name, gender, birthday, phone, avatar, role FROM users WHERE id = ?"
   try {
     const [rows, fields] = await pool.execute(query, [id])
     return rows[0];
@@ -25,7 +25,7 @@ userModel.getUserById = async (id) => {
 
 userModel.getUserRoleById = async (id) => {
   try {
-    const [rows, fields] = await pool.execute("SELECT id,role FROM users WHERE id = ?", [id])
+    const [rows, fields] = await pool.execute("SELECT role FROM users WHERE id = ?", [id])
     return rows[0];
   }
   catch (err) {
@@ -61,10 +61,10 @@ userModel.getUserByVerifyCode = async (value) => {
 }
 
 userModel.updateVerifyCode = async (id, transaction) => {
-  var query = "UPDATE users SET verify_code = 1 WHERE id = ?";
+  var query = "UPDATE users SET verify_code = 1 , role = 2 WHERE id = ?";
   try {
     const result = await transaction.execute(query, [id])
-    return result.affectedRows > 0;
+    return result[0].affectedRows > 0;
   } catch (err) {
     throw err
   }
@@ -72,9 +72,9 @@ userModel.updateVerifyCode = async (id, transaction) => {
 
 userModel.createUser = async (user, connection) => {
   const query =
-    "INSERT INTO `users` (`email`, `password`, `first_name`, `last_name`, `verify_code`,`role`) VALUES (?,?,?,?,?,?)";
+    "INSERT INTO `users` (`email`, `password`, `first_name`, `last_name`, `verify_code`) VALUES (?,?,?,?,?)";
   try {
-    const [rows, fields] = await connection.execute(query, [user.email, user.password, user.firstName, user.lastName, user.verifyCode, user.role])
+    const [rows, fields] = await connection.execute(query, [user.email, user.password, user.firstName, user.lastName, user.verifyCode])
     return rows.insertId;
   } catch (err) {
     throw err
@@ -82,9 +82,9 @@ userModel.createUser = async (user, connection) => {
 };
 
 userModel.updateUserInfo = async (user, transaction) => {
-  const query = `UPDATE users SET first_name = ?, last_name= ?, gender= ?, phone= ?, birthday= ?, avatar= ? WHERE id = ?`;
+  const query = `UPDATE users SET first_name = ?, last_name= ?, other_name =?, gender= ?, phone= ?, birthday= ?, avatar= ? WHERE id = ?`;
   try {
-    const result = await transaction.execute(query, [user?.firstName, user?.lastName, user?.gender, user?.phone, user?.birthday, user?.avatar, user.id])
+    const result = await transaction.execute(query, [user?.firstName, user?.lastName, user?.otherName, user?.gender, user?.phone, user?.birthday, user?.avatar, user.id])
 
     return result[0].affectedRows > 0;
   } catch (err) {

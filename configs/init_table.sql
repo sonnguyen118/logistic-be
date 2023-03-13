@@ -75,10 +75,13 @@ menu_id int,
 content text,
 description text,
 isEnabled boolean not null,
+role int,
 image_url varchar(255),
 tag VARCHAR(255),
 create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
 update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 primary key(id),
 FOREIGN KEY (menu_id) REFERENCES menu(id)
+FOREIGN KEY (role) REFERENCES role(id)
+
 );

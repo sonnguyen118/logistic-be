@@ -1,13 +1,15 @@
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const dotenv = require("dotenv");
+const emailTemplate = require("../template/emailTemplate");
+const log = require("../utils/log");
 
 dotenv.config();
 
-const SERVICE_GMAIL = "gmail";
-const EMAIL_SEVER = "canh3108@gmail.com";
-const PASSWORD_EMAIL_SEVER = "nofsuhfvylpgrhpp";
-const EMAIL_ADMIN = "canhtx95@gmail.com";
+const SERVICE_MAIL = "gmail";
+const EMAIL_SEVER = process.env.EMAIL_MAY_CHU;
+const PASSWORD_EMAIL_SEVER = process.env.MK_EMAIL_MAY_CHU;
+const EMAIL_ADMIN = process.env.EMAIL_ADMIN;
 const email = {};
 
 email.sendEmailVerifyToAdmin = async (_user, _urlVerify) => {
@@ -15,7 +17,7 @@ email.sendEmailVerifyToAdmin = async (_user, _urlVerify) => {
   const urlVerify = await _urlVerify;
   // Generate confirmation token
   const transporter = nodemailer.createTransport({
-    service: SERVICE_GMAIL,
+    service: SERVICE_MAIL,
     auth: {
       user: EMAIL_SEVER,
       pass: PASSWORD_EMAIL_SEVER,
@@ -25,20 +27,33 @@ email.sendEmailVerifyToAdmin = async (_user, _urlVerify) => {
     },
   });
 
+  // thêm thông tin thời gian khi gửi
+  const date = new Date();
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  };
+  const formattedDate = date.toLocaleDateString("vi-VN", options);
+  // template html email
+
   const mailOptions = {
     from: EMAIL_SEVER,
     to: EMAIL_ADMIN,
     subject: "Xác thực tài khoản Viet-Sino logistic",
-    html: `<h1> Hi ADMIN, email: <strong>${user.email}<strong> muốn đăng ký, click vào link để xác thực ${urlVerify}</h1> `
+    html: emailTemplate(formattedDate, user, urlVerify),
   };
 
   const info = transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      console.log(error.message);
+      log.writeErrorLog(error.message)
     } else {
-      console.log("Email sent: " + info.response);
-      console.log("Email: " + urlVerify);
-
+      log.writeLog("Email sent: " + info.response)
+      log.writeLog("Email veify code: " + urlVerify);
     }
   });
 };

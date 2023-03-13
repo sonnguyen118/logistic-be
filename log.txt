@@ -1,0 +1,614 @@
+
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:29:02 GMT+0700 (Indochina Time)
+
+        API: /api/menu/update 
+ params: {} 
+ body: {"id":3,"name":"Biểu phí 1","link":"/tariffs","description":"alo","role":2}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:29:06 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {"userId":"12121","menuId":3}
+        ERROR: Mon Mar 13 2023 04:29:06 GMT+0700 (Indochina Time) - user does not have permission to access
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:29:09 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {"userId":"12121","menuId":3}
+        ERROR: Mon Mar 13 2023 04:29:09 GMT+0700 (Indochina Time) - user does not have permission to access
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:29:09 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {"userId":"12121","menuId":3}
+        ERROR: Mon Mar 13 2023 04:29:09 GMT+0700 (Indochina Time) - user does not have permission to access
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:30:09 GMT+0700 (Indochina Time)
+
+        API: /api/menu/article 
+ params: {} 
+ body: {"userId":"5","id":3}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:30:11 GMT+0700 (Indochina Time)
+
+        API: /api/menu/article 
+ params: {} 
+ body: {"userId":"5","id":2}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:30:15 GMT+0700 (Indochina Time)
+
+        API: /api/menu/article 
+ params: {} 
+ body: {"userId":"5","id":8}
+        ERROR: Mon Mar 13 2023 04:30:15 GMT+0700 (Indochina Time) - Bài viết không tồn tại
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:30:19 GMT+0700 (Indochina Time)
+
+        API: /api/menu/article 
+ params: {} 
+ body: {"userId":"5","id":8}
+        ERROR: Mon Mar 13 2023 04:30:19 GMT+0700 (Indochina Time) - Bài viết không tồn tại
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:30:44 GMT+0700 (Indochina Time)
+
+        API: /api/menu/article 
+ params: {} 
+ body: {"userId":"11","id":8}
+        ERROR: Mon Mar 13 2023 04:30:44 GMT+0700 (Indochina Time) - Bài viết không tồn tại
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:32:01 GMT+0700 (Indochina Time)
+
+        API: /api/users/3 
+ params: {} 
+ body: {}
+        ERROR: Mon Mar 13 2023 04:32:01 GMT+0700 (Indochina Time) - jwt must be provided
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:32:17 GMT+0700 (Indochina Time)
+
+        API: /api/users/3 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:32:34 GMT+0700 (Indochina Time)
+
+        API: /api/users/3 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:33:56 GMT+0700 (Indochina Time)
+
+        API: /api/users/3 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:34:31 GMT+0700 (Indochina Time)
+
+        API: /api/users/311 
+ params: {} 
+ body: {}
+        ERROR: Mon Mar 13 2023 04:34:31 GMT+0700 (Indochina Time) - User not found
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:39:44 GMT+0700 (Indochina Time)
+
+        API: /api/auth/register 
+ params: {} 
+ body: {"email":"test1@gmail.com","password":"1234561","rePassword":"123456","firstName":"canh","lastName":"trinh"}
+        ERROR: Mon Mar 13 2023 04:39:45 GMT+0700 (Indochina Time) - email đã tồn tại
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:39:48 GMT+0700 (Indochina Time)
+
+        API: /api/auth/register 
+ params: {} 
+ body: {"email":"test144@gmail.com","password":"1234561","rePassword":"123456","firstName":"canh","lastName":"trinh"}
+        ERROR: Mon Mar 13 2023 04:39:48 GMT+0700 (Indochina Time) - rePassword phải trùng với password
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 04:39:53 GMT+0700 (Indochina Time)
+
+        API: /api/auth/register 
+ params: {} 
+ body: {"email":"test144@gmail.com","password":"123456","rePassword":"123456","firstName":"canh","lastName":"trinh"}
+        Mon Mar 13 2023 04:39:57 GMT+0700 (Indochina Time)
+Email sent: 250 2.0.0 OK  1678657196 n1-20020a6546c1000000b004fc1d91e695sm3206775pgr.79 - gsmtpMon Mar 13 2023 04:39:57 GMT+0700 (Indochina Time)
+Email veify code: http://localhost:5000/api/auth/verify/24a5ee2f7b9fd6e81a12a1e635d3c892dc2e8a03
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 10:47:38 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        ERROR: Mon Mar 13 2023 10:47:38 GMT+0700 (Indochina Time) - Unknown column 'priority_id' in 'order clause'
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 10:55:36 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:18:07 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_menuId":2,"second_menuId":5}
+        ERROR: Mon Mar 13 2023 11:18:07 GMT+0700 (Indochina Time) - jwt must be provided
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:18:21 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_menuId":2,"second_menuId":5}
+        ERROR: Mon Mar 13 2023 11:18:21 GMT+0700 (Indochina Time) - Cannot delete or update a parent row: a foreign key constraint fails (`logistic`.`articles`, CONSTRAINT `articles_ibfk_1` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`))
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:34:43 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_menuId":2,"second_menuId":5}
+        ERROR: Mon Mar 13 2023 11:34:43 GMT+0700 (Indochina Time) - Cannot read properties of undefined (reading 'affectedRows')
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:35:22 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_menuId":2,"second_menuId":5}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:38:21 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_position":2,"second_position":5}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:38:36 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:39:01 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_position":3,"second_position":8}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:39:17 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_position":3,"second_position":9}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:40:30 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_position":2,"second_position":10}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:43:12 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_position":2,"second_position":10}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:43:50 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_position":2,"second_position":10}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:44:55 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_position":111,"second_position":10}
+        ERROR: Mon Mar 13 2023 11:44:55 GMT+0700 (Indochina Time) - Lỗi vị trí bản ghi
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:46:45 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_position":8,"second_position":4}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:47:03 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_position":111,"second_position":9}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:47:11 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_position":1111,"second_position":9}
+        ERROR: Mon Mar 13 2023 11:47:11 GMT+0700 (Indochina Time) - Lỗi vị trí bản ghi
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:47:16 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_position":1,"second_position":9}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 11:47:27 GMT+0700 (Indochina Time)
+
+        API: /api/menu/order-by 
+ params: {} 
+ body: {"first_position":1,"second_position":91}
+        ERROR: Mon Mar 13 2023 11:47:27 GMT+0700 (Indochina Time) - Lỗi vị trí bản ghi
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 17:36:24 GMT+0700 (Indochina Time)
+
+        API: /api/users 
+ params: {} 
+ body: {"name":"aloalo","link":"/","description":"asd"}
+        ERROR: Mon Mar 13 2023 17:36:24 GMT+0700 (Indochina Time) - Lỗi phân quyền
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 17:36:30 GMT+0700 (Indochina Time)
+
+        API: / 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 17:36:41 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 17:36:55 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Mon Mar 13 2023 17:36:55 GMT+0700 (Indochina Time)
+
+ extFile: .sql 
+ERROR: Mon Mar 13 2023 17:36:55 GMT+0700 (Indochina Time) - Định dạng file không phải excel
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 17:37:14 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        ERROR: Mon Mar 13 2023 17:37:14 GMT+0700 (Indochina Time) - Không thấy file cần upload
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 17:37:25 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        ERROR: Mon Mar 13 2023 17:37:25 GMT+0700 (Indochina Time) - invalid signature
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 17:40:18 GMT+0700 (Indochina Time)
+
+        API: /api/auth/login 
+ params: {} 
+ body: {"email":"test1@gmail.com","password":"1234516"}
+        ERROR: Mon Mar 13 2023 17:40:19 GMT+0700 (Indochina Time) - Mật khẩu không chính xác
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 17:46:24 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {"menuId":1}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 17:49:11 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {"menuId":2}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:17:37 GMT+0700 (Indochina Time)
+
+        API: /api/users/update/img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:18:19 GMT+0700 (Indochina Time)
+
+        API: /api/users/update/img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:22:36 GMT+0700 (Indochina Time)
+
+        API: /api/users/update/img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:24:10 GMT+0700 (Indochina Time)
+
+        API: /api/users/update/img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:26:20 GMT+0700 (Indochina Time)
+
+        API: /api/users/update/img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:26:32 GMT+0700 (Indochina Time)
+
+        API: /api/users/update/img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:27:42 GMT+0700 (Indochina Time)
+
+        API: /api/users/update/img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:28:00 GMT+0700 (Indochina Time)
+
+        API: /uploads/avatar/2 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:28:06 GMT+0700 (Indochina Time)
+
+        API: /uploads/avatar/2.png 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:29:41 GMT+0700 (Indochina Time)
+
+        API: /uploads/avatar/2.png 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:29:59 GMT+0700 (Indochina Time)
+
+        API: /uploads/avatar/2.png 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:30:14 GMT+0700 (Indochina Time)
+
+        API: /uploads/avatar/2.png 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:30:15 GMT+0700 (Indochina Time)
+
+        API: /uploads/avatar/2.png 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:30:15 GMT+0700 (Indochina Time)
+
+        API: /uploads/avatar/2.png 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:30:31 GMT+0700 (Indochina Time)
+
+        API: /uploads/avatar/2.png 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:30:32 GMT+0700 (Indochina Time)
+
+        API: /uploads/avatar/2.png 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:31:37 GMT+0700 (Indochina Time)
+
+        API: /uploads/avatar/2.png 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:31:37 GMT+0700 (Indochina Time)
+
+        API: /uploads/avatar/2.png 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:34:20 GMT+0700 (Indochina Time)
+
+        API: /uploads/2.png 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:35:04 GMT+0700 (Indochina Time)
+
+        API: /favicon.ico 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:36:22 GMT+0700 (Indochina Time)
+
+        API: /api/users/update/img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:36:33 GMT+0700 (Indochina Time)
+
+        API: /api/users/update/img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:36:38 GMT+0700 (Indochina Time)
+
+        API: /api/users/update/img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:37:21 GMT+0700 (Indochina Time)
+
+        API: /uploads/224.png 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:43:58 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {}
+        ERROR: Mon Mar 13 2023 18:43:58 GMT+0700 (Indochina Time) - Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:47:49 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {"id":"1","firstName":"Buồi1","lastName":"Bú1","otherName":"oc cho","gender":1,"phone":"0976644162","birthday":"1995-11-11T00:00:00.000Z","avatar":"82519360_1512110088942550_4769502543019507712_n.jpg"}
+        ERROR: Mon Mar 13 2023 18:47:49 GMT+0700 (Indochina Time) - Cannot read properties of undefined (reading 'originalname')
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:51:30 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {"id":"1","firstName":"Buồi1","lastName":"Bú1","otherName":"oc cho","gender":1,"phone":"0976644162","birthday":"1995-11-11T00:00:00.000Z","avatar":"82519360_1512110088942550_4769502543019507712_n.jpg"}
+        ERROR: Mon Mar 13 2023 18:51:30 GMT+0700 (Indochina Time) - Cannot read properties of undefined (reading 'originalName')
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:51:54 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {"id":"1","firstName":"Buồi1","lastName":"Bú1","otherName":"oc cho","gender":1,"phone":"0976644162","birthday":"1995-11-11T00:00:00.000Z","avatar":"82519360_1512110088942550_4769502543019507712_n.jpg"}
+        ERROR: Mon Mar 13 2023 18:51:54 GMT+0700 (Indochina Time) - Cannot read properties of undefined (reading 'originalName')
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:52:10 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {"id":"1","firstName":"Buồi1","lastName":"Bú1","otherName":"oc cho","gender":1,"phone":"0976644162","birthday":"1995-11-11T00:00:00.000Z","avatar":""}
+        ERROR: Mon Mar 13 2023 18:52:10 GMT+0700 (Indochina Time) - Cannot read properties of undefined (reading 'originalName')
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:52:50 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {"id":"1","firstName":"Buồi1","lastName":"Bú1","otherName":"oc cho","gender":1,"phone":"0976644162","birthday":"1995-11-11T00:00:00.000Z","avatar":""}
+        ERROR: Mon Mar 13 2023 18:52:50 GMT+0700 (Indochina Time) - Cannot read properties of undefined (reading 'originalName')
+_____________________________________________________________________________________ 
+ 
+        Mon Mar 13 2023 18:53:16 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {"id":"1","firstName":"Buồi1","lastName":"Bú1","otherName":"oc cho","gender":1,"phone":"0976644162","birthday":"1995-11-11T00:00:00.000Z","avatar":""}
+        
