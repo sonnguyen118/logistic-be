@@ -55,11 +55,12 @@ menuController.updateMenu = async (req, res) => {
   }
 };
 
-menuController.getArticlesByMenuId = async (req, res) => {
-  const { userId, menuId } = req.body;
+menuController.getArticlesByMenuLink = async (req, res) => {
+  const { userId, link } = req.body;
   try {
-    const menu = await menuModel.getRoleMenuById(menuId);
+    const menu = await menuModel.getRoleMenuByLink(link);
     const roleMenu = menu.role;
+    const menuId = menu.id;
     await userRoleService.checkUserHavePermission(userId, roleMenu, [USER_ROLE, ADMIN_ROLE]);
     const articles = await menuModel.getArticlesByMenuId(menuId);
     res.status(200).json(response.successResponse(articles, "OK"));
@@ -68,6 +69,8 @@ menuController.getArticlesByMenuId = async (req, res) => {
     res.status(200).json(response.errorResponse(error.message));
   }
 };
+
+
 
 menuController.orderByMenu = async (req, res) => {
   const { first_position, second_position } = req.body
@@ -86,5 +89,26 @@ menuController.orderByMenu = async (req, res) => {
   }
 };
 
+menuController.getMenuById = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const menu = await menuModel.getMenuById(id);
+    res.status(200).json(response.successResponse(menu, "OK"));
+  } catch (error) {
+    log.writeErrorLog(error.message)
+    res.status(200).json(response.errorResponse(error.message));
+  }
+};
+
+menuController.getMenuByLink = async (req, res) => {
+  const link = '/' + req.params.link;
+  try {
+    const menu = await menuModel.getMenuByLink(link);
+    res.status(200).json(response.successResponse(menu, "OK"));
+  } catch (error) {
+    log.writeErrorLog(error.message)
+    res.status(200).json(response.errorResponse(error.message));
+  }
+};
 
 module.exports = menuController;

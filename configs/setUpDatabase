@@ -1,7 +1,9 @@
 
 -- CREATE DATABASE IF NOT EXISTS logistic;
 
-CREATE TABLE IF NOT EXISTS status ( id int NOT NULL AUTO_INCREMENT, status_name varchar(255) NOT NULL, PRIMARY KEY (id) );
+CREATE TABLE IF NOT EXISTS status
+( id int NOT NULL AUTO_INCREMENT, status_name varchar(255) NOT NULL, PRIMARY KEY (id) )
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 INSERT IGNORE INTO `status` (`id`, `status_name`) VALUES
 ('1', 'Đã nhập kho Trung Quốc'),
 ('2', 'Đang về kho Việt Nam'),
@@ -17,8 +19,7 @@ CREATE TABLE IF NOT EXISTS orders (
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (status) REFERENCES status(id)
-
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 
@@ -27,7 +28,7 @@ CREATE TABLE IF NOT EXISTS role (
 id int NOT NULL AUTO_INCREMENT,
 name varchar(20) NOT NULL UNIQUE,
 PRIMARY KEY(id)    
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `role` (`name`) VALUES ('ADMIN'),('USER');
 
@@ -47,7 +48,7 @@ CREATE TABLE IF NOT EXISTS users(
     avatar varchar(255),
     PRIMARY KEY(id),
     FOREIGN KEY (role) REFERENCES role(id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 
@@ -62,10 +63,10 @@ priority_id int NOT NULL UNIQUE,
 parent_id int, 
 primary key(id),
 FOREIGN KEY (role) REFERENCES role(id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `menu` (`id`, `name`, `link`, `description`,`role`,`priority_id`, `parent_id`) VALUES
-(1, 'MORE_INFORMATION', '/', '{\"email\":\"sinovietlogistics@gmail.com\",\"phone\":\"08339999095\",\"timework\":\"08:00-24:00\",\"link_logo\":\"https://seeklogo.com/images/C/corporate-company-logo-749CEE6ADC-seeklogo.com.png\"}',NULL, 1, NULL),
+(1, 'MORE_INFORMATION', '/', '{\"exchane_rate\":\"3,55\",\"email\":\"sinovietlogistics@gmail.com\",\"phone\":\"08339999095\",\"timework\":\"08:00-24:00\",\"link_logo\":\"https://seeklogo.com/images/C/corporate-company-logo-749CEE6ADC-seeklogo.com.png\"}',NULL, 1, NULL),
 (2, 'Trang Chủ', '/', NULL, NULL,2, NULL),
 (3, 'Biểu phí', '/tariffs', NULL,2,3, NULL),
 (4, 'Các sản phẩm', '/products', NULL,NULL, 4, NULL),
@@ -91,4 +92,4 @@ update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 primary key(id),
 FOREIGN KEY (menu_id) REFERENCES menu(id),
 FOREIGN KEY (role) REFERENCES role(id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

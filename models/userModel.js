@@ -14,7 +14,7 @@ userModel.getAllUsers = async () => {
 };
 
 userModel.getUserById = async (id) => {
-  const query = "SELECT first_name, last_name, gender, birthday, phone, avatar FROM users WHERE id = ?"
+  const query = "SELECT first_name, last_name, gender, birthday, phone, avatar, role FROM users WHERE id = ?"
   try {
     const [rows, fields] = await pool.execute(query, [id])
     return rows[0];
@@ -84,7 +84,7 @@ userModel.createUser = async (user, connection) => {
 userModel.updateUserInfo = async (user, transaction) => {
   const query = `UPDATE users SET first_name = ?, last_name= ?, other_name =?, gender= ?, phone= ?, birthday= ?, avatar= ? WHERE id = ?`;
   try {
-    const result = await transaction.execute(query, [user?.firstName, user?.lastName, user.otherName, user?.gender, user?.phone, user?.birthday, user?.avatar, user.id])
+    const result = await transaction.execute(query, [user?.firstName, user?.lastName, user?.otherName, user?.gender, user?.phone, user?.birthday, user?.avatar, user.id])
 
     return result[0].affectedRows > 0;
   } catch (err) {

@@ -56,6 +56,36 @@ menuModel.getRoleMenuById = async (id) => {
     throw err
   }
 };
+
+
+menuModel.getRoleMenuByLink = async (link) => {
+  const query = "SELECT role,id FROM menu WHERE link = ?"
+  try {
+    const [rows, fields] = await pool.execute(query, [link])
+    return rows[0]
+  } catch (err) {
+    throw err
+  }
+};
+
+menuModel.getMenuById = async (id) => {
+  const query = "SELECT * FROM menu WHERE id = ?"
+  try {
+    const [rows, fields] = await pool.execute(query, [id])
+    return rows[0]
+  } catch (err) {
+    throw err
+  }
+};
+menuModel.getMenuByLink = async (link) => {
+  const query = "SELECT * FROM menu WHERE link = ?"
+  try {
+    const [rows, fields] = await pool.execute(query, [link])
+    return rows[0]
+  } catch (err) {
+    throw err
+  }
+};
 menuModel.orderByMenu = async (firsId, secondId, transaction) => {
   const query1 = "UPDATE menu SET priority_id = -1 WHERE priority_id = ?"
   const [result1, fields1] = await transaction.execute(query1, [firsId])
