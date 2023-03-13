@@ -25,6 +25,7 @@ authController.login = async (req, res) => {
     const { email, password } = req.body;
     const user = await authServices.validateLoginForm(email, password);
     var token = jwt.sign({ id: user.id }, ACCESS_TOKEN);
+    log.writeLog("LOGGED IN SUCCESS")
     res.status(200).json(
       response.successResponse(
         {
