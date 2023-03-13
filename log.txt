@@ -612,3 +612,20 @@ ________________________________________________________________________________
  params: {} 
  body: {"id":"1","firstName":"Buồi1","lastName":"Bú1","otherName":"oc cho","gender":1,"phone":"0976644162","birthday":"1995-11-11T00:00:00.000Z","avatar":""}
         
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 00:57:40 GMT+0700 (Indochina Time)
+
+        API: /api/manager/upload-logo 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 01:05:16 GMT+0700 (Indochina Time)
+
+        API: /api/auth/login 
+ params: {} 
+ body: {"email":"test3@gmail.com","password":"123456"}
+        Tue Mar 14 2023 01:05:17 GMT+0700 (Indochina Time)
+LOGGED IN SUCCESS

@@ -8,6 +8,8 @@ const orderRoutes = require('./routes/orderRoutes');
 const authRoutes = require('./routes/authRoutes');
 const menuRoutes = require('./routes/menuRoutes');
 const articleRoutes = require('./routes/articleRoutes');
+const managerRoutes = require('./routes/managerRoutes');
+
 const log = require('./utils/log');
 
 
@@ -31,6 +33,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/menu', menuRoutes);
 app.use('/api/menu/article', articleRoutes);
+app.use('/api/manager', managerRoutes);
 
 
 
