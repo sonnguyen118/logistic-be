@@ -1,16 +1,23 @@
 const multer = require('multer');
+const dotenv = require('dotenv');
+dotenv.config();
 
-// var uploadImages = {}
+avatar = process.env.AVATAR_USER_STORAGE_PATH
+article = process.env.ARTICLE_IMAGES_STORAGE_PATH
 
-var avatarStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/avatar/')
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname)
-    }
-})
+function setUpStoragePath(path) {
+    return multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, path)
+        },
+        filename: function (req, file, cb) {
+            cb(null, file.originalname)
+        }
+    })
+}
 
-const uploadImages = multer({ storage: avatarStorage })
+const uploadAvatar = multer({ storage: setUpStoragePath(process.env.AVATAR_USER_STORAGE_PATH) })
+const uploadArticle = multer({ storage: setUpStoragePath(process.env.ARTICLE_IMAGES_STORAGE_PATH) })
+const uploadLogo = multer({ storage: setUpStoragePath('') })
 
-module.exports = uploadImages;
+module.exports = { uploadAvatar, uploadLogo, uploadArticle };

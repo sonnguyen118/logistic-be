@@ -70,8 +70,6 @@ menuController.getArticlesByMenuLink = async (req, res) => {
   }
 };
 
-
-
 menuController.orderByMenu = async (req, res) => {
   const { first_position, second_position } = req.body
   const connection = await pool.getConnection();
