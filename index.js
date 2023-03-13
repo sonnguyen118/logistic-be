@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(helmet());
 app.use(cookieParser());
-
+app.use("/uploads", express.static('uploads'));
 app.use('/', function (req, res, next) {
   log.writeRequest(req)
   next();
