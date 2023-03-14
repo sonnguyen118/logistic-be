@@ -12,8 +12,8 @@ const managerController = {};
 
 managerController.getTextByName = async (req, res) => {
   try {
-    // const menu = await menuModel.getMenu();
-    res.status(200).json(response.successResponse('null', "OK"));
+    const content = await managerModel.getTextContentByName(req.body.names);
+    res.status(200).json(response.successResponse(content, "OK"));
   } catch (error) {
     log.writeErrorLog(error.message)
     res.status(200).json(response.errorResponse(error.message));
@@ -24,8 +24,9 @@ managerController.addText = async (req, res) => {
   const connection = await pool.getConnection();
   try {
     await connection.beginTransaction();
+    const content = await managerModel.addTextContent(req.body, connection);
     await connection.commit();
-    res.status(200).json(response.successResponse('insertId', "OK"));
+    res.status(200).json(response.successResponse(content, "OK"));
   } catch (error) {
     await connection.rollback();
     log.writeErrorLog(error.message)
@@ -39,8 +40,9 @@ managerController.updateText = async (req, res) => {
   const connection = await pool.getConnection();
   try {
     await connection.beginTransaction();
+    const content = await managerModel.updateTextContentByName(req.body, connection);
     await connection.commit();
-    res.status(200).json(response.successResponse('result', "OK"));
+    res.status(200).json(response.successResponse(content, "OK"));
   } catch (error) {
     await connection.rollback();
     log.writeErrorLog(error.message)

@@ -1,4 +1,5 @@
 const { pool } = require("../configs/database");
+const avoidUndefined = require("../utils/handleUndefinedValue");
 
 const menuModel = {};
 
@@ -15,7 +16,9 @@ menuModel.getMenu = async () => {
 menuModel.addMenu = async (menu, transaction) => {
   const query = "INSERT INTO menu (name, link, description, parent_id) VALUE(?,?,?,?)";
   try {
-    const [rows, fields] = await transaction.query(query, [menu.name, menu.link, menu?.description, menu?.parentId])
+    const params = [menu.name, menu.link, menu.description, menu.parentId]
+    avoidUndefined(params)
+    const [rows, fields] = await transaction.query(query, params)
     return rows.insertId
   } catch (err) {
     throw err
@@ -27,7 +30,9 @@ menuModel.updateMenuById = async (menu, transaction) => {
   const queryUpdateMenu = "UPDATE menu SET name =?, link =?,description =?,role = ? WHERE id = ?";
   const queryUpdateArticle = "UPDATE articles SET role = ? WHERE menu_id = ?";
   try {
-    const updateMenu = await transaction.execute(queryUpdateMenu, [menu.name, menu.link, menu.description, menu?.role, menu.id])
+    const params = [menu.name, menu.link, menu.description, menu.role, menu.id]
+    avoidUndefined(params)
+    const updateMenu = await transaction.execute(queryUpdateMenu, params)
     const updateArticles = await transaction.execute(queryUpdateArticle, [menu?.role, menu.id])
     return updateMenu[0].affectedRows > 0;
   } catch (err) {

@@ -10,5 +10,4 @@ router.post("/update", authMiddleware.authenticateRequest, authMiddleware.author
 router.post("/add", authMiddleware.authenticateRequest, authMiddleware.authorize, managerController.addText);
 router.post("/", authMiddleware.authenticateRequest, authMiddleware.authorize, managerController.getTextByName);
 
-
 module.exports = router;
