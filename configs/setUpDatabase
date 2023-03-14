@@ -67,7 +67,7 @@ FOREIGN KEY (role) REFERENCES role(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `menu` (`id`, `name`, `link`, `description`,`role`,`priority_id`, `parent_id`) VALUES
-(1, 'MORE_INFORMATION', '', '{\"exchane_rate\":\"3,55\",\"email\":\"sinovietlogistics@gmail.com\",\"phone\":\"08339999095\",\"timework\":\"08:00-24:00\",\"link_logo\":\"https://seeklogo.com/images/C/corporate-company-logo-749CEE6ADC-seeklogo.com.png\"}',NULL, 1, NULL),
+(1, 'MORE_INFORMATION', '', '{\"exchage_rate\":\"3,55\",\"email\":\"sinovietlogistics@gmail.com\",\"phone\":\"08339999095\",\"timework\":\"08:00-24:00\",\"link_logo\":\"https://seeklogo.com/images/C/corporate-company-logo-749CEE6ADC-seeklogo.com.png\"}',NULL, 1, NULL),
 (2, 'Trang Chủ', '/', NULL, NULL,2, NULL),
 (3, 'Biểu phí', '/tariffs', NULL,2,3, NULL),
 (4, 'Các sản phẩm', '/products', NULL,NULL, 4, NULL),
@@ -97,7 +97,7 @@ FOREIGN KEY (role) REFERENCES role(id)
 
 CREATE TABLE manager (
     id int not null AUTO_INCREMENT,
-    name varchar(255) not null, UNIQUE,
+    name varchar(255) not null UNIQUE,
     content varchar(255),
     description varchar(255),
     PRIMARY KEY (id)
@@ -107,4 +107,10 @@ insert into manager(`name`,`content`, `description`)
 VALUES
 ('COMPANY_NAME', 'SinoVietLogistics',NULL),
 ('SLOGAN','giao hang gia re',NULL),
-('CONTACT','',NULL)
+('exchage_rate', '3,55',NULL),
+('email','sinovietlogistics@gmail.com',NULL),
+('phone','08339999095',NULL),
+('timework','sinovietlogistics@gmail.com',NULL),
+('link_logo','https://seeklogo.com/images/C/corporate-company-logo-749CEE6ADC-seeklogo.com.png',NULL),
+('MORE_INFORMATION','{\"exchage_rate\":\"3,55\",\"email\":\"sinovietlogistics@gmail.com\",\"phone\":\"08339999095\",\"timework\":\"08:00-24:00\",\"link_logo\":\"https://seeklogo.com/images/C/corporate-company-logo-749CEE6ADC-seeklogo.com.png\"}',NULL)
+

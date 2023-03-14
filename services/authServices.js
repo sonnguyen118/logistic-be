@@ -19,21 +19,19 @@ authService.validateRegister = async (user) => {
   }
   if (user.password) {
     if (user.password.length < PASSWORD_LENGTH) {
-      throw new Error(
-        `password không được phép nhỏ hơn ${PASSWORD_LENGTH} kí tự`
-      );
+      throw new Error(`Mật khẩu không được ít hơn ${PASSWORD_LENGTH} kí tự`);
     }
   } else {
-    throw new Error("password không được phép trống");
+    throw new Error("Mật khẩu không được phép trống");
   }
   if (user.password != user.rePassword) {
-    throw new Error("rePassword phải trùng với password");
+    throw new Error("Mật khẩu nhập lại không khớp");
   }
   if (!user.firstName) {
-    throw new Error("firstName không được phép trống");
+    throw new Error("Tên không được phép trống");
   }
   if (!user.lastName) {
-    throw new Error("lastName không được phép trống");
+    throw new Error("Họ không được phép trống");
   }
 };
 authService.validateLoginForm = async (email, password) => {
