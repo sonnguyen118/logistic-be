@@ -1,5 +1,6 @@
 const { query } = require("express");
 const { pool } = require("../configs/database");
+const avoidUndefined = require("../utils/handleUndefinedValue");
 
 const userModel = {};
 
@@ -74,6 +75,8 @@ userModel.createUser = async (user, connection) => {
   const query =
     "INSERT INTO `users` (`email`, `password`, `first_name`, `last_name`, `verify_code`) VALUES (?,?,?,?,?)";
   try {
+    const params = [user.email, user.password, user.firstName, user.lastName, user.verifyCode]
+    avoidUndefined(params)
     const [rows, fields] = await connection.execute(query, [user.email, user.password, user.firstName, user.lastName, user.verifyCode])
     return rows.insertId;
   } catch (err) {
@@ -84,8 +87,9 @@ userModel.createUser = async (user, connection) => {
 userModel.updateUserInfo = async (user, transaction) => {
   const query = `UPDATE users SET first_name = ?, last_name= ?, other_name =?, gender= ?, phone= ?, birthday= ?, avatar= ? WHERE id = ?`;
   try {
-    const result = await transaction.execute(query, [user?.firstName, user?.lastName, user?.otherName, user?.gender, user?.phone, user?.birthday, user?.avatar, user.id])
-
+    const params = [user.firstName, user.lastName, user.otherName, user.gender, user.phone, user.birthday, user.avatar, user.id]
+    avoidUndefined(params);
+    const result = await transaction.execute(query, params)
     return result[0].affectedRows > 0;
   } catch (err) {
     throw err

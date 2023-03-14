@@ -22,6 +22,16 @@ menuController.getMenu = async (req, res) => {
     res.status(200).json(response.errorResponse(error.message));
   }
 };
+menuController.toggleEnabledMenu = async (req, res) => {
+  console.log(req);
+  try {
+    const result = await menuModel.toggleEnabledMenu(req.params.id);
+    res.status(200).json(response.successResponse(result, "OK"));
+  } catch (error) {
+    log.writeErrorLog(error.message)
+    res.status(200).json(response.errorResponse(error.message));
+  }
+};
 
 menuController.addMenu = async (req, res) => {
   const connection = await pool.getConnection();
@@ -69,8 +79,6 @@ menuController.getArticlesByMenuLink = async (req, res) => {
     res.status(200).json(response.errorResponse(error.message));
   }
 };
-
-
 
 menuController.orderByMenu = async (req, res) => {
   const { first_position, second_position } = req.body
