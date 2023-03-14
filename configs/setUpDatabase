@@ -107,7 +107,7 @@ insert into manager(`name`,`content`, `description`)
 VALUES
 ('COMPANY_NAME', 'SinoVietLogistics',NULL),
 ('SLOGAN','giao hang gia re',NULL),
-('exchage_rate', '3,55',NULL),
+('exchange_rate', '3,55',NULL),
 ('email','sinovietlogistics@gmail.com',NULL),
 ('phone','08339999095',NULL),
 ('timework','sinovietlogistics@gmail.com',NULL),

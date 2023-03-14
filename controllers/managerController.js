@@ -3,6 +3,7 @@ const response = require("../utils/response");
 const { fileConfig } = require('../configs/database');
 const mysql = require('mysql2/promise');
 const dotenv = require("dotenv");
+const getImagesServices = require("../services/getImagesServices");
 const log = require("../utils/log");
 
 dotenv.config();
@@ -57,5 +58,16 @@ managerController.updateText = async (req, res) => {
 };
 
 
+managerController.getAllImages = async (req, res) => {
+  try {
+    const path = 'uploads'
+    let collection = []
+    let a = await getImagesServices.collectImages(path, collection)
+    res.status(200).json(response.successResponse(a, "OK"));
+  } catch (error) {
+    log.writeErrorLog(error.message)
+    res.status(200).json(response.errorResponse(error.message));
+  }
+};
 
 module.exports = managerController;

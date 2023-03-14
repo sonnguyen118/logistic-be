@@ -2,8 +2,6 @@ const multer = require('multer');
 const dotenv = require('dotenv');
 dotenv.config();
 
-avatar = process.env.AVATAR_USER_STORAGE_PATH
-article = process.env.ARTICLE_IMAGES_STORAGE_PATH
 
 function setUpStoragePath(path) {
     return multer.diskStorage({
@@ -18,6 +16,6 @@ function setUpStoragePath(path) {
 
 const uploadAvatar = multer({ storage: setUpStoragePath(process.env.AVATAR_USER_STORAGE_PATH) })
 const uploadArticle = multer({ storage: setUpStoragePath(process.env.ARTICLE_IMAGES_STORAGE_PATH) })
-const uploadLogo = multer({ storage: setUpStoragePath('') })
+const uploadLogo = multer({ storage: setUpStoragePath(process.env.LOGO_IMAGES_STORAGE_PATH) })
 
 module.exports = { uploadAvatar, uploadLogo, uploadArticle };
