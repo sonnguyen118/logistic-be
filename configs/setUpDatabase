@@ -76,6 +76,7 @@ INSERT INTO `menu` (`id`, `name`, `link`, `description`,`role`,`priority_id`, `p
 (7, 'Thông báo', '/notification', NULL,2,7, NULL);
 
 
+
 CREATE TABLE IF NOT EXISTS articles (
 id int NOT NULL auto_increment,
 title VARCHAR(255) not null,
