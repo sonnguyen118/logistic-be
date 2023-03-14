@@ -12,6 +12,18 @@ menuModel.getMenu = async () => {
     throw err
   }
 };
+menuModel.toggleEnabledMenu = async (id) => {
+  const query = "UPDATE menu SET isEnabled = !isEnabled WHERE id = ?";
+  const queryUpdateArticle = "UPDATE articles SET isEnabled = !isEnabled WHERE menu_id = ?";
+
+  try {
+    const [rows, fields] = await pool.query(query, [id])
+    await pool.query(queryUpdateArticle, [id])
+    return rows.affectedRows
+  } catch (err) {
+    throw err
+  }
+};
 
 menuModel.addMenu = async (menu, transaction) => {
   const query = "INSERT INTO menu (name, link, description, parent_id) VALUE(?,?,?,?)";
@@ -30,10 +42,12 @@ menuModel.updateMenuById = async (menu, transaction) => {
   const queryUpdateMenu = "UPDATE menu SET name =?, link =?,description =?,role = ? WHERE id = ?";
   const queryUpdateArticle = "UPDATE articles SET role = ? WHERE menu_id = ?";
   try {
-    const params = [menu.name, menu.link, menu.description, menu.role, menu.id]
-    avoidUndefined(params)
-    const updateMenu = await transaction.execute(queryUpdateMenu, params)
-    const updateArticles = await transaction.execute(queryUpdateArticle, [menu?.role, menu.id])
+    const paramsUpdateMenu = [menu.name, menu.link, menu.description, menu.role, menu.id]
+    avoidUndefined(paramsUpdateMenu)
+    const updateMenu = await transaction.execute(queryUpdateMenu, paramsUpdateMenu)
+    const paramsUpdateArticle = [menu.role, menu.id]
+    avoidUndefined(paramsUpdateArticle)
+    const updateArticles = await transaction.execute(queryUpdateArticle, paramsUpdateArticle)
     return updateMenu[0].affectedRows > 0;
   } catch (err) {
     throw err
@@ -43,7 +57,7 @@ menuModel.updateMenuById = async (menu, transaction) => {
 menuModel.getArticlesByMenuId = async (id) => {
   const query = "SELECT m.*, a.id as articleId,a.title,a.link,a.description,a.create_at,a.update_at, a.tag" +
     " FROM (" +
-    "( SELECT * FROM `menu` WHERE id = ? ) as m JOIN articles a ON m.id = a.menu_id );"
+    "( SELECT * FROM `menu` WHERE id = ? AND isEnabled = 1) as m JOIN articles a ON m.id = a.menu_id );"
   try {
     const [rows, fields] = await pool.execute(query, [id])
     return rows

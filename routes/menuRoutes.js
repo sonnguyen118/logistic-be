@@ -11,5 +11,6 @@ router.post('/', menuController.getArticlesByMenuLink);
 router.post('/update', authMiddleware.authenticateRequest, authMiddleware.authorize, menuController.updateMenu);
 router.post('/add', authMiddleware.authenticateRequest, authMiddleware.authorize, menuController.addMenu);
 router.post('/order-by', authMiddleware.authenticateRequest, authMiddleware.authorize, menuController.orderByMenu);
+router.get('/:id/toggle-enabled', authMiddleware.authenticateRequest, authMiddleware.authorize, menuController.toggleEnabledMenu);
 
 module.exports = router;
