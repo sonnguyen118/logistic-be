@@ -1,8 +1,6 @@
 const userModel = require("../models/userModel");
 
 const userRoleService = {}
-
-
 // role: role đối tượng cần xét
 // rolesCanAccess: danh sách role có thể truy cập
 userRoleService.checkUserHavePermission = async (userId, role, rolesCanAccess) => {
@@ -12,7 +10,6 @@ userRoleService.checkUserHavePermission = async (userId, role, rolesCanAccess) =
             throw new Error('user does not have permission to access')
         }
     }
-
 }
 
 module.exports = userRoleService

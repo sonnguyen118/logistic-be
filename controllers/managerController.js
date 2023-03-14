@@ -12,7 +12,11 @@ const managerController = {};
 
 managerController.getTextByName = async (req, res) => {
   try {
-    const content = await managerModel.getTextContentByName(req.body.names);
+    let names = req.body.names
+    if (!Array.isArray(names) || names.length == 0) {
+      throw new Error("params is invalid")
+    }
+    const content = await managerModel.getTextContentByName(names);
     res.status(200).json(response.successResponse(content, "OK"));
   } catch (error) {
     log.writeErrorLog(error.message)

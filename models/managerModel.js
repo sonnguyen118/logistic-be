@@ -4,7 +4,8 @@ const avoidUndefined = require("../utils/handleUndefinedValue");
 const menuModel = {};
 
 menuModel.getTextContentByName = async (names) => {
-  const query = "SELECT * FROM manager WHERE name IN (?,?)";
+  const params = names.map(e => '?');
+  const query = `SELECT * FROM manager WHERE name IN (${params})`;
   try {
     const [rows, fields] = await pool.query(query, names)
     return rows

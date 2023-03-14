@@ -108,6 +108,19 @@ menuController.getMenuById = async (req, res) => {
   }
 };
 
+
+menuController.updateMenuRoleById = async (req, res) => {
+  const { menuId, role } = req.body
+  try {
+    const menu = await menuModel.updateMenuRole(menuId, role);
+    res.status(200).json(response.successResponse(menu, "OK"));
+  } catch (error) {
+    log.writeErrorLog(error.message)
+    res.status(200).json(response.errorResponse(error.message));
+  }
+};
+
+
 menuController.getMenuByLink = async (req, res) => {
   const link = '/' + req.params.link;
   try {
