@@ -12,5 +12,6 @@ router.post('/update', authMiddleware.authenticateRequest, authMiddleware.author
 router.post('/add', authMiddleware.authenticateRequest, authMiddleware.authorize, menuController.addMenu);
 router.post('/order-by', authMiddleware.authenticateRequest, authMiddleware.authorize, menuController.orderByMenu);
 router.get('/:id/toggle-enabled', authMiddleware.authenticateRequest, authMiddleware.authorize, menuController.toggleEnabledMenu);
+router.post('/update-role', authMiddleware.authenticateRequest, authMiddleware.authorize, menuController.updateMenuRoleById);
 
 module.exports = router;
