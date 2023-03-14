@@ -12,4 +12,24 @@ router.post("/upload-img", authMiddleware.authenticateRequest, uploadArticle.sin
 router.post("/:link", articleController.getArticleByLink);
 router.post("/", articleController.getArticleById);
 
+router.post("/ckeditor_image", async (req, res) => {
+    try {
+        if (req.files.upload != undefined) {
+            var adress_file = "/upload/article/" + file.name;
+            return res
+                .status(201)
+                .send(
+                    "<script>window.parent.CKEDITOR.tools.callFunction('" +
+                    req.query.CKEditorFuncNum +
+                    "','" +
+                    adress_file +
+                    "');</script>"
+                );
+        }
+    } catch (error) {
+        res.send("Error uploading file");
+        return;
+    }
+});
+
 module.exports = router;
