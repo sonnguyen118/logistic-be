@@ -5,7 +5,8 @@ const { uploadLogo } = require("../services/uploadImageService");
 
 const router = express.Router();
 
-router.post("/upload-logo", authMiddleware.authenticateRequest, authMiddleware.authorize, uploadLogo.single('logo'), function (req, res) { res.json("upload") });
+router.get("/all-image", authMiddleware.authenticateRequest, authMiddleware.authorize, managerController.getAllImages);
+router.post("/upload-logo", authMiddleware.authenticateRequest, authMiddleware.authorize, uploadLogo.single('logo'), function (req, res) { res.status(200).json({ success: true, message: "success" }) });
 router.post("/update", authMiddleware.authenticateRequest, authMiddleware.authorize, managerController.updateText);
 router.post("/add", authMiddleware.authenticateRequest, authMiddleware.authorize, managerController.addText);
 router.post("/", managerController.getTextByName);

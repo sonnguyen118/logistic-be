@@ -584,3 +584,603 @@ ________________________________________________________________________________
  params: {} 
  body: {}
         ERROR: Tue Mar 14 2023 18:18:02 GMT+0700 (Indochina Time) - User not found
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:18:17 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        ERROR: Tue Mar 14 2023 19:18:17 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:18:17 GMT+0700 (Indochina Time)
+
+        API: /api/manager 
+ params: {} 
+ body: {"names":["INFORMATION_HEADER"]}
+        ERROR: Tue Mar 14 2023 19:18:17 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:18:17 GMT+0700 (Indochina Time)
+
+        API: /api/manager 
+ params: {} 
+ body: {"names":["HOME_PAGE"]}
+        ERROR: Tue Mar 14 2023 19:18:17 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:18:17 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        ERROR: Tue Mar 14 2023 19:18:17 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:18:20 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        ERROR: Tue Mar 14 2023 19:18:20 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:18:20 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        ERROR: Tue Mar 14 2023 19:18:20 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:18:20 GMT+0700 (Indochina Time)
+
+        API: /api/manager 
+ params: {} 
+ body: {"names":["INFORMATION_HEADER"]}
+        ERROR: Tue Mar 14 2023 19:18:20 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:18:20 GMT+0700 (Indochina Time)
+
+        API: /api/manager 
+ params: {} 
+ body: {"names":["HOME_PAGE"]}
+        ERROR: Tue Mar 14 2023 19:18:20 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:22:01 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        ERROR: Tue Mar 14 2023 19:22:01 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:22:01 GMT+0700 (Indochina Time)
+
+        API: /api/manager 
+ params: {} 
+ body: {"names":["INFORMATION_HEADER"]}
+        ERROR: Tue Mar 14 2023 19:22:01 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:22:01 GMT+0700 (Indochina Time)
+
+        API: /api/manager 
+ params: {} 
+ body: {"names":["HOME_PAGE"]}
+        ERROR: Tue Mar 14 2023 19:22:01 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:22:01 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        ERROR: Tue Mar 14 2023 19:22:01 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:22:10 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        ERROR: Tue Mar 14 2023 19:22:10 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:22:10 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        ERROR: Tue Mar 14 2023 19:22:10 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:22:10 GMT+0700 (Indochina Time)
+
+        API: /api/manager 
+ params: {} 
+ body: {"names":["INFORMATION_HEADER"]}
+        ERROR: Tue Mar 14 2023 19:22:10 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:22:10 GMT+0700 (Indochina Time)
+
+        API: /api/manager 
+ params: {} 
+ body: {"names":["HOME_PAGE"]}
+        ERROR: Tue Mar 14 2023 19:22:10 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:22:12 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        ERROR: Tue Mar 14 2023 19:22:12 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:22:12 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        ERROR: Tue Mar 14 2023 19:22:12 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:22:12 GMT+0700 (Indochina Time)
+
+        API: /api/manager 
+ params: {} 
+ body: {"names":["INFORMATION_HEADER"]}
+        ERROR: Tue Mar 14 2023 19:22:12 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:22:12 GMT+0700 (Indochina Time)
+
+        API: /api/manager 
+ params: {} 
+ body: {"names":["HOME_PAGE"]}
+        ERROR: Tue Mar 14 2023 19:22:12 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:23:02 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        ERROR: Tue Mar 14 2023 19:23:02 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:23:02 GMT+0700 (Indochina Time)
+
+        API: /api/manager 
+ params: {} 
+ body: {"names":["INFORMATION_HEADER"]}
+        ERROR: Tue Mar 14 2023 19:23:02 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:23:02 GMT+0700 (Indochina Time)
+
+        API: /api/manager 
+ params: {} 
+ body: {"names":["HOME_PAGE"]}
+        ERROR: Tue Mar 14 2023 19:23:02 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 19:23:02 GMT+0700 (Indochina Time)
+
+        API: /api/menu 
+ params: {} 
+ body: {}
+        ERROR: Tue Mar 14 2023 19:23:02 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 22:43:14 GMT+0700 (Indochina Time)
+
+        API: /api/menu/article/upload-img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 22:43:25 GMT+0700 (Indochina Time)
+
+        API: /api/users/upload-avatar 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 22:44:37 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-images 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 22:44:42 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-images 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 22:44:50 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 22:45:52 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 22:56:32 GMT+0700 (Indochina Time)
+
+        API: /api/menu/article/upload-img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 22:56:56 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 23:34:18 GMT+0700 (Indochina Time)
+
+        API: /api/menu/article/upload-img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 23:34:34 GMT+0700 (Indochina Time)
+
+        API: /api/users/upload-avatar 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 23:47:39 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 23:49:01 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 23:49:45 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 23:50:47 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 23:52:27 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 23:52:55 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 23:53:18 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 23:56:31 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Tue Mar 14 2023 23:57:52 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:02:06 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:02:30 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:03:11 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:03:36 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:04:05 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:04:25 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:05:35 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:11:55 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:12:10 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:14:52 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:15:11 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:25:17 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        ERROR: Wed Mar 15 2023 00:25:17 GMT+0700 (Indochina Time) - getImagesServices.getAllImages is not a function
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:26:05 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:26:47 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:28:33 GMT+0700 (Indochina Time)
+
+        API: /api/manager/upload-logo 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:28:52 GMT+0700 (Indochina Time)
+
+        API: /223 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:29:12 GMT+0700 (Indochina Time)
+
+        API: /223.png 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:29:33 GMT+0700 (Indochina Time)
+
+        API: /favicon.ico 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:29:57 GMT+0700 (Indochina Time)
+
+        API: /223.png 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:30:57 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        ERROR: Wed Mar 15 2023 00:30:57 GMT+0700 (Indochina Time) - ENOENT: no such file or directory, scandir 'uploadsarticle'
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:31:29 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:32:29 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:35:34 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:39:45 GMT+0700 (Indochina Time)
+
+        API: /api/manager/upload-logo 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:40:02 GMT+0700 (Indochina Time)
+
+        API: /api/menu/article/upload-img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:40:11 GMT+0700 (Indochina Time)
+
+        API: /api/menu/article/upload-img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:41:02 GMT+0700 (Indochina Time)
+
+        API: /api/menu/article/upload-img 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:46:25 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:46:56 GMT+0700 (Indochina Time)
+
+        API: /api/users/upload-avatar 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:47:30 GMT+0700 (Indochina Time)
+
+        API: /api/manager/all-image 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:48:21 GMT+0700 (Indochina Time)
+
+        API: /api/manager/upload-logo 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 00:48:41 GMT+0700 (Indochina Time)
+
+        API: /api/manager/upload-logo 
+ params: {} 
+ body: {}
+        
