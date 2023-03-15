@@ -20,7 +20,7 @@ orderModel.createOrders = async (orders, connection) => {
 }
 
 orderModel.getAllOrder = async () => {
-    const query = `SELECT o.id, o.order_code, o.created_date, s.id as status_id,s.status_name FROM orders o JOIN (SELECT * FROM status WHERE id != -1) s ON o.status = s.id ORDER BY o.id DESC;`;
+    const query = `SELECT o.id, o.order_code, DATE_FORMAT(o.created_date, '%Y-%m-%d') as created_date, s.id as status_id,s.status_name FROM orders o JOIN (SELECT * FROM status WHERE id != -1) s ON o.status = s.id ORDER BY o.id DESC;`;
     try {
         const [rows, fields] = await pool.query(query)
         return rows
@@ -41,7 +41,7 @@ orderModel.updateOrder = async (id, status, transaction) => {
 }
 
 orderModel.findOrderById = async (id) => {
-    const query = 'SELECT o.id, o.order_code, o.created_date, o.status as status_id, s.status_name FROM ((SELECT * FROM orders WHERE id = ?) as o JOIN status s ON o.status = s.id)';
+    const query = `SELECT o.id, o.order_code, DATE_FORMAT(o.created_date, '%Y-%m-%d') as created_date, o.status as status_id, s.status_name FROM ((SELECT * FROM orders WHERE id = ?) as o JOIN status s ON o.status = s.id)`;
     try {
         const [rows, fields] = await pool.execute(query, [id])
         return rows[0]
@@ -79,16 +79,16 @@ orderModel.getAllOrderStatus = async () => {
 
 orderModel.findFlexible = async (orderCode, status) => {
     const params = []
-    let query = 'SELECT o.id, o.order_code, o.created_date, o.status as status_id, s.status_name FROM ( (SELECT id, order_code, status, created_date FROM orders WHERE 1=1 AND status != -1 ';
+    let query = `SELECT o.id, o.order_code, DATE_FORMAT(o.created_date, '%Y-%m-%d') as created_date, o.status as status_id, s.status_name FROM ( (SELECT id, order_code, status, created_date FROM orders WHERE 1=1 AND status != -1 `;
     if (orderCode) {
-        query += ' AND order_code = ?';
+        query += ` AND order_code = ?`;
         params.push(orderCode)
     }
     if (status) {
-        query += ' AND status = ?';
+        query += ` AND status = ?`;
         params.push(status)
     }
-    query += ') AS o  JOIN status s ON s.id = o.status) ORDER BY o.id DESC;'
+    query += `) AS o  JOIN status s ON s.id = o.status) ORDER BY o.id DESC;`
     try {
         const [rows, fields] = await pool.query(query, params)
         return rows
