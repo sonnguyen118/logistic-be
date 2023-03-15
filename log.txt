@@ -1,0 +1,314 @@
+
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 21:44:28 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {}
+        ERROR: Wed Mar 15 2023 21:44:28 GMT+0700 (Indochina Time) - connect ECONNREFUSED 127.0.0.1:3306
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 21:45:59 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 21:46:11 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 21:51:38 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 21:51:45 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 21:52:21 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 21:52:43 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 21:53:09 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 21:58:11 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {"status":"1"}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 21:59:16 GMT+0700 (Indochina Time)
+
+        API: /api/orders/search 
+ params: {} 
+ body: {"status":"1"}
+        ERROR: Wed Mar 15 2023 21:59:16 GMT+0700 (Indochina Time) - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND status = '?') AS o  JOIN status s ON s.id = o.status) ORDER BY o.id DESC' at line 1
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 21:59:45 GMT+0700 (Indochina Time)
+
+        API: /api/orders/search 
+ params: {} 
+ body: {"status":"1"}
+        ERROR: Wed Mar 15 2023 21:59:45 GMT+0700 (Indochina Time) - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND status = '?') AS o  JOIN status s ON s.id = o.status) ORDER BY o.id DESC' at line 1
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:00:23 GMT+0700 (Indochina Time)
+
+        API: /api/orders/search 
+ params: {} 
+ body: {"status":"1"}
+        ERROR: Wed Mar 15 2023 22:00:23 GMT+0700 (Indochina Time) - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND status = '1') AS o  JOIN status s ON s.id = o.status) ORDER BY o.id DESC' at line 1
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:00:43 GMT+0700 (Indochina Time)
+
+        API: /api/orders/search 
+ params: {} 
+ body: {"status":1}
+        ERROR: Wed Mar 15 2023 22:00:43 GMT+0700 (Indochina Time) - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND status = 1) AS o  JOIN status s ON s.id = o.status) ORDER BY o.id DESC' at line 1
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:01:19 GMT+0700 (Indochina Time)
+
+        API: /api/orders/search 
+ params: {} 
+ body: {"orderCode":"JT3025901027389"}
+        ERROR: Wed Mar 15 2023 22:01:19 GMT+0700 (Indochina Time) - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND order_code = 'JT3025901027389') AS o  JOIN status s ON s.id = o.status) O...' at line 1
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:01:45 GMT+0700 (Indochina Time)
+
+        API: /api/orders/search 
+ params: {} 
+ body: {"orderCode":"JT3025901027389"}
+        ERROR: Wed Mar 15 2023 22:01:45 GMT+0700 (Indochina Time) - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AND order_code = 'JT3025901027389') AS o  JOIN status s ON s.id = o.status) O...' at line 1
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:01:55 GMT+0700 (Indochina Time)
+
+        API: /api/orders/search 
+ params: {} 
+ body: {"orderCode":"JT3025901027389"}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:02:06 GMT+0700 (Indochina Time)
+
+        API: /api/orders/search 
+ params: {} 
+ body: {"status":1}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:07:29 GMT+0700 (Indochina Time)
+
+        API: /api/orders 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:07:59 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:09:57 GMT+0700 (Indochina Time)
+
+        API: /api/users/update 
+ params: {} 
+ body: {}
+        
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:10:38 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Wed Mar 15 2023 22:10:38 GMT+0700 (Indochina Time)
+
+ extFile: .xlsx 
+
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:10:57 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Wed Mar 15 2023 22:10:57 GMT+0700 (Indochina Time)
+
+ extFile: .xlsx 
+ERROR: Wed Mar 15 2023 22:10:57 GMT+0700 (Indochina Time) - Cannot add or update a child row: a foreign key constraint fails (`logistic`.`orders`, CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`status`) REFERENCES `status` (`id`))
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:16:48 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Wed Mar 15 2023 22:16:48 GMT+0700 (Indochina Time)
+
+ extFile: .xlsx 
+ERROR: Wed Mar 15 2023 22:16:48 GMT+0700 (Indochina Time) - Cannot add or update a child row: a foreign key constraint fails (`logistic`.`orders`, CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`status`) REFERENCES `status` (`id`))
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:20:23 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Wed Mar 15 2023 22:20:23 GMT+0700 (Indochina Time)
+
+ extFile: .xlsx 
+ERROR: Wed Mar 15 2023 22:20:23 GMT+0700 (Indochina Time) - Cannot add or update a child row: a foreign key constraint fails (`logistic`.`orders`, CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`status`) REFERENCES `status` (`id`))
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:20:37 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Wed Mar 15 2023 22:20:37 GMT+0700 (Indochina Time)
+
+ extFile: .xlsx 
+
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:22:16 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Wed Mar 15 2023 22:22:16 GMT+0700 (Indochina Time)
+
+ extFile: .xlsx 
+
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:27:48 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Wed Mar 15 2023 22:27:48 GMT+0700 (Indochina Time)
+
+ extFile: .xlsx 
+
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:28:07 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Wed Mar 15 2023 22:28:07 GMT+0700 (Indochina Time)
+
+ extFile: .xlsx 
+ERROR: Wed Mar 15 2023 22:28:07 GMT+0700 (Indochina Time) - Trạng thái đơn hàng JT3025901027389 không hợp lệ
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:29:07 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Wed Mar 15 2023 22:29:07 GMT+0700 (Indochina Time)
+
+ extFile: .xlsx 
+ERROR: Wed Mar 15 2023 22:29:07 GMT+0700 (Indochina Time) - Trạng thái Đã trả hàng đơn hàng JT3025901027389 không tồn tại
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:29:38 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Wed Mar 15 2023 22:29:38 GMT+0700 (Indochina Time)
+
+ extFile: .xlsx 
+ERROR: Wed Mar 15 2023 22:29:38 GMT+0700 (Indochina Time) - Trạng thái "Đã trả hàng" của đơn hàng JT3025901027389 không tồn tại
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:30:25 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Wed Mar 15 2023 22:30:25 GMT+0700 (Indochina Time)
+
+ extFile: .xlsx 
+ERROR: Wed Mar 15 2023 22:30:25 GMT+0700 (Indochina Time) - Trạng thái 'Đã trả hàng' của đơn hàng JT3025901027389 không tồn tại
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:31:16 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Wed Mar 15 2023 22:31:16 GMT+0700 (Indochina Time)
+
+ extFile: .xlsx 
+
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:35:43 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Wed Mar 15 2023 22:35:43 GMT+0700 (Indochina Time)
+
+ extFile: .xlsx 
+
+_____________________________________________________________________________________ 
+ 
+        Wed Mar 15 2023 22:35:50 GMT+0700 (Indochina Time)
+
+        API: /api/orders/upload 
+ params: {} 
+ body: {}
+        Wed Mar 15 2023 22:35:50 GMT+0700 (Indochina Time)
+
+ extFile: .xlsx 

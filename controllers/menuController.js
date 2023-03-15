@@ -23,7 +23,6 @@ menuController.getMenu = async (req, res) => {
   }
 };
 menuController.toggleEnabledMenu = async (req, res) => {
-  console.log(req);
   try {
     const result = await menuModel.toggleEnabledMenu(req.params.id);
     res.status(200).json(response.successResponse(result, "OK"));

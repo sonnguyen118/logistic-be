@@ -9,7 +9,7 @@ INSERT IGNORE INTO `status` (`id`, `status_name`) VALUES
 ('1', 'Đã nhập kho Trung Quốc'),
 ('2', 'Đang về kho Việt Nam'),
 ('3', 'Đã nhập kho Việt nam'),
-('4', 'Đã trả khách');
+('4', 'Đã trả hàng');
 
 CREATE TABLE IF NOT EXISTS orders (
     id int NOT NULL AUTO_INCREMENT,
