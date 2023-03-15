@@ -110,12 +110,9 @@ menuController.getMenuById = async (req, res) => {
 
 
 menuController.updateMenuRoleById = async (req, res) => {
-  const {menuId, roleId} = req.body
-  if(roleId == null){
-
-  }
+  const { menuId, role } = req.body
   try {
-    const menu = await menuModel.updateMenuRole(menuId,roleId);
+    const menu = await menuModel.updateMenuRole(menuId, role);
     res.status(200).json(response.successResponse(menu, "OK"));
   } catch (error) {
     log.writeErrorLog(error.message)

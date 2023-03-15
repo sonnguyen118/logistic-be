@@ -31,6 +31,24 @@ userController.getUserById = async (req, res) => {
   }
 };
 
+userController.getUserRoleById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await userModel.getUserRoleById(id);
+    if (!result) {
+      log.writeErrorLog('User not found')
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (result.role == undefined) {
+      throw new Error("Tài khoản chưa kích hoạt")
+    }
+    res.status(200).json(response.successResponse(result, "success"));
+  } catch (err) {
+    log.writeErrorLog(err.message)
+    res.status(200).json(response.errorResponse(err.message));
+  }
+};
+
 userController.updateUserInfo = async (req, res) => {
   const connection = await pool.getConnection();
   try {

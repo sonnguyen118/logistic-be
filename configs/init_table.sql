@@ -1,7 +1,9 @@
 
 -- CREATE DATABASE IF NOT EXISTS logistic;
 
-CREATE TABLE IF NOT EXISTS status ( id int NOT NULL AUTO_INCREMENT, status_name varchar(255) NOT NULL, PRIMARY KEY (id) );
+CREATE TABLE IF NOT EXISTS status
+( id int NOT NULL AUTO_INCREMENT, status_name varchar(255) NOT NULL, PRIMARY KEY (id) )
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 INSERT IGNORE INTO `status` (`id`, `status_name`) VALUES
 ('1', 'Đã nhập kho Trung Quốc'),
 ('2', 'Đang về kho Việt Nam'),
@@ -17,17 +19,16 @@ CREATE TABLE IF NOT EXISTS orders (
     updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (status) REFERENCES status(id)
-
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 
 
 CREATE TABLE IF NOT EXISTS role (
 id int NOT NULL AUTO_INCREMENT,
-name varchar(20) NOT NULL,
+name varchar(20) NOT NULL UNIQUE,
 PRIMARY KEY(id)    
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `role` (`name`) VALUES ('ADMIN'),('USER');
 
@@ -35,18 +36,19 @@ CREATE TABLE IF NOT EXISTS users(
     id INT NOT NULL AUTO_INCREMENT,
     email VARCHAR(60) NOT NULL UNIQUE,
     password VARCHAR(60) NOT NULL,
-    created_date DATETIME,
+    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
     first_name VARCHAR(60) NOT NULL,
     last_name VARCHAR(60) NOT NULL,
+    other_name VARCHAR(60),
     verify_code VARCHAR(60),
-    role INT NOT NULL,
+    role INT,
     gender boolean ,
     birthday date,
     phone varchar(10),
     avatar varchar(255),
     PRIMARY KEY(id),
     FOREIGN KEY (role) REFERENCES role(id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 
@@ -56,15 +58,22 @@ id int NOT NULL auto_increment,
 name VARCHAR(255) not null,
 link VARCHAR(255) not null,
 description text,
+role int,
+isEnabled boolean NOT NULL DEFAULT true,
+priority_id int NOT NULL UNIQUE,
 parent_id int, 
-primary key(id)
-);
+primary key(id),
+FOREIGN KEY (role) REFERENCES role(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT IGNORE INTO menu(id, name, link, description) 
-VALUES
-(1,'MORE_INFORMATION', '/','{"email":"le-phuong@gmail.com","phone":"0339551901","timework":"08:20-17:20","link_logo":"https://lau-xanh.us/wp-content/uploads/2022/08/anh-sex-0522-22031039-001.jpg"}' ),
-(2,'Trang chủ','/',null ),
-(3,'Giới thiệu','/about',null );
+INSERT INTO `menu` (`id`, `name`, `link`, `description`,`role`,`priority_id`, `parent_id`) VALUES
+(1, 'Trang Chủ', '/', NULL, NULL,1, NULL),
+(2, 'Biểu phí', '/tariffs', NULL,2,2, NULL),
+(3, 'Các sản phẩm', '/products', NULL,NULL, 3, NULL),
+(4, 'Giới thiệu', '/about', NULL, NULL,4, NULL),
+(5, 'Chính sách', '/policys', NULL, NULL,5, NULL),
+(6, 'Hướng dẫn', '/instructs', NULL, NULL,6, NULL),
+(7, 'Thông báo', '/notification', NULL,2,7, NULL);
 
 
 CREATE TABLE IF NOT EXISTS articles (
@@ -75,13 +84,32 @@ menu_id int,
 content text,
 description text,
 isEnabled boolean not null,
-role int,
 image_url varchar(255),
 tag VARCHAR(255),
+role int, 
 create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
 update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 primary key(id),
-FOREIGN KEY (menu_id) REFERENCES menu(id)
+FOREIGN KEY (menu_id) REFERENCES menu(id),
 FOREIGN KEY (role) REFERENCES role(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-);
+CREATE TABLE manager (
+    id int not null AUTO_INCREMENT,
+    name varchar(255) not null UNIQUE,
+    content varchar(255),
+    description varchar(255),
+    PRIMARY KEY (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+insert into manager(`name`,`content`, `description`) 
+VALUES
+('COMPANY_NAME', 'SinoVietLogistics',NULL),
+('SLOGAN','giao hang gia re',NULL),
+('exchage_rate', '3,55',NULL),
+('email','sinovietlogistics@gmail.com',NULL),
+('phone','08339999095',NULL),
+('timework','sinovietlogistics@gmail.com',NULL),
+('link_logo','https://seeklogo.com/images/C/corporate-company-logo-749CEE6ADC-seeklogo.com.png',NULL),
+('MORE_INFORMATION','{\"exchage_rate\":\"3,55\",\"email\":\"sinovietlogistics@gmail.com\",\"phone\":\"08339999095\",\"timework\":\"08:00-24:00\",\"link_logo\":\"https://seeklogo.com/images/C/corporate-company-logo-749CEE6ADC-seeklogo.com.png\"}',NULL)
+

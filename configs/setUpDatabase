@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS status
 ( id int NOT NULL AUTO_INCREMENT, status_name varchar(255) NOT NULL, PRIMARY KEY (id) )
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 INSERT IGNORE INTO `status` (`id`, `status_name`) VALUES
+('-1', 'remove'),
 ('1', 'Đã nhập kho Trung Quốc'),
 ('2', 'Đang về kho Việt Nam'),
 ('3', 'Đã nhập kho Việt nam'),
@@ -67,14 +68,14 @@ FOREIGN KEY (role) REFERENCES role(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `menu` (`id`, `name`, `link`, `description`,`role`,`priority_id`, `parent_id`) VALUES
-(1, 'MORE_INFORMATION', '', '{\"exchane_rate\":\"3,55\",\"email\":\"sinovietlogistics@gmail.com\",\"phone\":\"08339999095\",\"timework\":\"08:00-24:00\",\"link_logo\":\"https://seeklogo.com/images/C/corporate-company-logo-749CEE6ADC-seeklogo.com.png\"}',NULL, 1, NULL),
-(2, 'Trang Chủ', '/', NULL, NULL,2, NULL),
-(3, 'Biểu phí', '/tariffs', NULL,2,3, NULL),
-(4, 'Các sản phẩm', '/products', NULL,NULL, 4, NULL),
-(5, 'Giới thiệu', '/about', NULL, NULL,5, NULL),
-(6, 'Chính sách', '/policys', NULL, NULL,6, NULL),
-(7, 'Hướng dẫn', '/instructs', NULL, NULL,7, NULL),
-(8, 'Thông báo', '/notification', NULL,2,8, NULL);
+(1, 'Trang Chủ', '/', NULL, NULL,1, NULL),
+(2, 'Biểu phí', '/tariffs', NULL,2,2, NULL),
+(3, 'Các sản phẩm', '/products', NULL,NULL, 3, NULL),
+(4, 'Giới thiệu', '/about', NULL, NULL,4, NULL),
+(5, 'Chính sách', '/policys', NULL, NULL,5, NULL),
+(6, 'Hướng dẫn', '/instructs', NULL, NULL,6, NULL),
+(7, 'Thông báo', '/notification', NULL,2,7, NULL);
+
 
 
 CREATE TABLE IF NOT EXISTS articles (
@@ -107,4 +108,10 @@ insert into manager(`name`,`content`, `description`)
 VALUES
 ('COMPANY_NAME', 'SinoVietLogistics',NULL),
 ('SLOGAN','giao hang gia re',NULL),
-('CONTACT','',NULL)
+('exchange_rate', '3,55',NULL),
+('email','sinovietlogistics@gmail.com',NULL),
+('phone','08339999095',NULL),
+('timework','sinovietlogistics@gmail.com',NULL),
+('link_logo','https://seeklogo.com/images/C/corporate-company-logo-749CEE6ADC-seeklogo.com.png',NULL),
+('MORE_INFORMATION','{\"exchage_rate\":\"3,55\",\"email\":\"sinovietlogistics@gmail.com\",\"phone\":\"08339999095\",\"timework\":\"08:00-24:00\",\"link_logo\":\"https://seeklogo.com/images/C/corporate-company-logo-749CEE6ADC-seeklogo.com.png\"}',NULL)
+

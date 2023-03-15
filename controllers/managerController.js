@@ -3,6 +3,7 @@ const response = require("../utils/response");
 const { fileConfig } = require('../configs/database');
 const mysql = require('mysql2/promise');
 const dotenv = require("dotenv");
+const getImagesServices = require("../services/getImagesServices");
 const log = require("../utils/log");
 
 dotenv.config();
@@ -12,7 +13,11 @@ const managerController = {};
 
 managerController.getTextByName = async (req, res) => {
   try {
-    const content = await managerModel.getTextContentByName(req.body.names);
+    let names = req.body.names
+    if (!Array.isArray(names) || names.length == 0) {
+      throw new Error("params is invalid")
+    }
+    const content = await managerModel.getTextContentByName(names);
     res.status(200).json(response.successResponse(content, "OK"));
   } catch (error) {
     log.writeErrorLog(error.message)
@@ -53,5 +58,16 @@ managerController.updateText = async (req, res) => {
 };
 
 
+managerController.getAllImages = async (req, res) => {
+  try {
+    const path = 'uploads'
+    let collection = []
+    let a = await getImagesServices.collectImages(path, collection)
+    res.status(200).json(response.successResponse(a, "OK"));
+  } catch (error) {
+    log.writeErrorLog(error.message)
+    res.status(200).json(response.errorResponse(error.message));
+  }
+};
 
 module.exports = managerController;
