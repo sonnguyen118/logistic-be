@@ -100,8 +100,6 @@ orderModel.findFlexible = async (orderCode, status) => {
 orderModel.softDelete = async (id) => {
     const params = id.map(e => '?');
     const query = `UPDATE orders SET status = -1 WHERE id IN (${params})`;
-
-    console.log(query)
     try {
         const [rows, fields] = await pool.execute(query, id)
         return rows

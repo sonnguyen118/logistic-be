@@ -4,7 +4,10 @@ const log = require("../utils/log");
 
 const orderService = {};
 
-function convertStatusStringToValue(statusString) {
+function convertStatusStringToValue(row) {
+    const orderCode = row[1]
+    const statusString = row[2]
+
     switch (statusString.toLowerCase()) {
         case 'đã nhập kho trung quốc':
             return 1;
@@ -12,10 +15,11 @@ function convertStatusStringToValue(statusString) {
             return 2;
         case 'đã nhập kho việt nam':
             return 3;
-        case 'đã trả khách':
+        case 'đã trả hàng':
             return 4;
-        default: 0
+        default: throw new Error(`Trạng thái '${row[2]}' của đơn hàng '${orderCode}' không tồn tại`)
     }
+
 }
 function validateFileInput(file) {
     if (!file) throw new Error("Không thấy file cần upload")
@@ -43,10 +47,7 @@ orderService.readOrdersDataFromFileExcel = (req, res) => {
         if (!orderCode) {
             break;
         }
-        let status = convertStatusStringToValue(row[2]);
-        if (status === 0) {
-            continue
-        }
+        let status = convertStatusStringToValue(row);
         //+ thêm 8 giờ
         let originalDate = new Date(row[0]);
         let inreaseOriginalDate = new Date(originalDate.getTime() + 24 * 60 * 60 * 1000);
