@@ -10,7 +10,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const USER_ROLE = process.env.USER_ROLE;
 const ADMIN_ROLE = process.env.ADMIN_ROLE;
-
+const articleStoragePath = process.env.ARTICLE_IMAGES_STORAGE_PATH;
 const pool = mysql.createPool(fileConfig)
 
 const articleController = {}
@@ -85,6 +85,22 @@ articleController.getArticleById = async (req, res) => {
         res.status(200).json(response.errorResponse(error.message));
     }
 }
+articleController.handleCkeditor = async (req, res) => {
+    try {
+      const file = req.file;
+      if (!file) {
+        throw new Error('No image file uploaded');
+      }
+  
+      const address_file = `/${articleStoragePath}/${file.filename}`;
+      const callback_function = req.query.CKEditorFuncNum;
+      const response = `<script>window.parent.CKEDITOR.tools.callFunction('${callback_function}', '${address_file}');</script>`;
+      return res.status(201).send(response);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  }
+
 
 
 module.exports = articleController;
