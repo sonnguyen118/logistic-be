@@ -60,17 +60,37 @@ orderModel.getAllOrderStatus = async () => {
     }
 }
 
+// orderModel.findFlexible = async (orderCode, status) => {
+//     let query = 'SELECT o.id, o.order_code, o.created_date, o.status as status_id, s.status_name FROM ( (SELECT id, order_code, status, created_date FROM orders WHERE 1=1 AND status != -1';
+//     if (orderCode) {
+//         query += ` AND order_code LIKE '${orderCode}%'`;
+//     }
+//     if (status) {
+//         query += ' AND status = ' + status;
+//     }
+//     query += ') AS o  JOIN status s ON s.id = o.status) ORDER BY o.id DESC;'
+//     try {
+//         const [rows, fields] = await pool.query(query)
+//         return rows
+//     } catch (err) {
+//         throw err
+//     }
+// }
+
 orderModel.findFlexible = async (orderCode, status) => {
-    let query = 'SELECT o.id, o.order_code, o.created_date, o.status as status_id, s.status_name FROM ( (SELECT id, order_code, status, created_date FROM orders WHERE 1=1 AND status != -1';
+    const params = []
+    let query = 'SELECT o.id, o.order_code, o.created_date, o.status as status_id, s.status_name FROM ( (SELECT id, order_code, status, created_date FROM orders WHERE 1=1 AND status != -1 ';
     if (orderCode) {
-        query += ` AND order_code LIKE '${orderCode}%'`;
+        query += ' AND order_code = ?';
+        params.push(orderCode)
     }
     if (status) {
-        query += ' AND status = ' + status;
+        query += ' AND status = ?';
+        params.push(status)
     }
     query += ') AS o  JOIN status s ON s.id = o.status) ORDER BY o.id DESC;'
     try {
-        const [rows, fields] = await pool.query(query)
+        const [rows, fields] = await pool.query(query, params)
         return rows
     } catch (err) {
         throw err
