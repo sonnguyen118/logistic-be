@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS status
 ( id int NOT NULL AUTO_INCREMENT, status_name varchar(255) NOT NULL, PRIMARY KEY (id) )
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 INSERT IGNORE INTO `status` (`id`, `status_name`) VALUES
+('-1', 'remove'),
 ('1', 'Đã nhập kho Trung Quốc'),
 ('2', 'Đang về kho Việt Nam'),
 ('3', 'Đã nhập kho Việt nam'),

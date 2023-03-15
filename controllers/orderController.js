@@ -83,5 +83,18 @@ orderController.filterOrder = async (req, res) => {
     res.status(200).json(response.errorResponse(err.message));
   }
 };
+orderController.softDelete = async (req, res) => {
+  try {
+    const id = req.body.id
+    if (!Array.isArray(id) || id.length == 0) {
+      throw new Error("params is invalid")
+    }
+    const order = await orderModel.softDelete(id);
+    res.status(200).json(response.successResponse(order, "success"));
+  } catch (err) {
+    log.writeErrorLog(err.message)
+    res.status(200).json(response.errorResponse(err.message));
+  }
+};
 
 module.exports = orderController;

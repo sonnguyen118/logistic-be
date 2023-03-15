@@ -13,4 +13,6 @@ router.get('/search/:id', authMiddleware.authenticateRequest, orderController.fi
 router.post('/upload', authMiddleware.authenticateRequest, authMiddleware.authorize, upload.single('file'), orderController.uploadOrdersFromExcelFile);
 router.get('/status', authMiddleware.authenticateRequest, orderController.getAllOrderStatus);
 router.post('/search', authMiddleware.authenticateRequest, orderController.filterOrder);
+router.post('/remove', authMiddleware.authenticateRequest, authMiddleware.authorize, orderController.softDelete);
+
 module.exports = router;

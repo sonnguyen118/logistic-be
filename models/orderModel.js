@@ -20,7 +20,7 @@ orderModel.createOrders = async (orders, connection) => {
 }
 
 orderModel.getAllOrder = async () => {
-    const query = `SELECT o.id, o.order_code, o.created_date, s.id as status_id,s.status_name FROM orders o JOIN status s ON o.status = s.id ORDER BY o.id DESC;`;
+    const query = `SELECT o.id, o.order_code, o.created_date, s.id as status_id,s.status_name FROM orders o JOIN (SELECT * FROM status WHERE id != -1) s ON o.status = s.id ORDER BY o.id DESC;`;
     try {
         const [rows, fields] = await pool.query(query)
         return rows
@@ -51,7 +51,7 @@ orderModel.findOrderById = async (id) => {
 }
 
 orderModel.getAllOrderStatus = async () => {
-    const query = 'SELECT * FROM status';
+    const query = 'SELECT * FROM status WHERE id != -1';
     try {
         const [rows, fields] = await pool.query(query)
         return rows
@@ -61,7 +61,7 @@ orderModel.getAllOrderStatus = async () => {
 }
 
 orderModel.findFlexible = async (orderCode, status) => {
-    let query = 'SELECT o.id, o.order_code, o.created_date, o.status as status_id, s.status_name FROM ( (SELECT id, order_code, status, created_date FROM orders WHERE 1=1 ';
+    let query = 'SELECT o.id, o.order_code, o.created_date, o.status as status_id, s.status_name FROM ( (SELECT id, order_code, status, created_date FROM orders WHERE 1=1 AND status != -1';
     if (orderCode) {
         query += ` AND order_code LIKE '${orderCode}%'`;
     }
@@ -77,4 +77,16 @@ orderModel.findFlexible = async (orderCode, status) => {
     }
 }
 
+orderModel.softDelete = async (id) => {
+    const params = id.map(e => '?');
+    const query = `UPDATE orders SET status = -1 WHERE id IN (${params})`;
+
+    console.log(query)
+    try {
+        const [rows, fields] = await pool.execute(query, id)
+        return rows
+    } catch (err) {
+        throw err
+    }
+}
 module.exports = orderModel;
