@@ -17,5 +17,4 @@ function setUpStoragePath(path) {
 const uploadAvatar = multer({ storage: setUpStoragePath(process.env.AVATAR_USER_STORAGE_PATH) })
 const uploadArticle = multer({ storage: setUpStoragePath(process.env.ARTICLE_IMAGES_STORAGE_PATH) })
 const uploadLogo = multer({ storage: setUpStoragePath(process.env.LOGO_IMAGES_STORAGE_PATH) })
-
 module.exports = { uploadAvatar, uploadLogo, uploadArticle };
