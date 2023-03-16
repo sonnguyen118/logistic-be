@@ -12,13 +12,12 @@ menuModel.getMenu = async () => {
     throw err
   }
 };
+
 menuModel.toggleEnabledMenu = async (id) => {
   const query = "UPDATE menu SET isEnabled = !isEnabled WHERE id = ?";
-  const queryUpdateArticle = "UPDATE articles SET isEnabled = !isEnabled WHERE menu_id = ?";
 
   try {
     const [rows, fields] = await pool.query(query, [id])
-    await pool.query(queryUpdateArticle, [id])
     return rows.affectedRows
   } catch (err) {
     throw err
@@ -55,9 +54,9 @@ menuModel.updateMenuById = async (menu, transaction) => {
 };
 
 menuModel.getArticlesByMenuId = async (id) => {
-  const query = "SELECT m.*, a.id as articleId,a.title,a.link,a.description,a.create_at,a.update_at, a.tag" +
+  const query = "SELECT m.*,a.isEnabled as articleEnabled, a.id as articleId,a.title,a.link,a.description,a.create_at,a.update_at, a.tag" +
     " FROM (" +
-    "( SELECT * FROM `menu` WHERE id = ? AND isEnabled = 1) as m JOIN articles a ON m.id = a.menu_id );"
+    "( SELECT * FROM `menu` WHERE id = ? ) as m JOIN articles a ON m.id = a.menu_id );"
   try {
     const [rows, fields] = await pool.execute(query, [id])
     return rows
@@ -88,7 +87,7 @@ menuModel.getRoleMenuByLink = async (link) => {
 };
 
 menuModel.getMenuById = async (id) => {
-  const query = "SELECT * FROM menu WHERE id = ?"
+  const query = "SELECT * FROM menu WHERE id = ? AND isEnabled = 1"
   try {
     const [rows, fields] = await pool.execute(query, [id])
     return rows[0]
@@ -97,7 +96,7 @@ menuModel.getMenuById = async (id) => {
   }
 };
 menuModel.getMenuByLink = async (link) => {
-  const query = "SELECT * FROM menu WHERE link = ?"
+  const query = "SELECT * FROM menu WHERE link = ? AND isEnabled = 1"
   try {
     const [rows, fields] = await pool.execute(query, [link])
     return rows[0]

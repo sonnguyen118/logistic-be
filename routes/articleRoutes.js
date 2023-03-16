@@ -12,6 +12,9 @@ router.post("/add", authMiddleware.authenticateRequest, authMiddleware.authorize
 router.post("/update", authMiddleware.authenticateRequest, authMiddleware.authorize, articleController.updateArticle);
 router.post("/:link", articleController.getArticleByLink);
 router.post("/", articleController.getArticleById);
+router.post("/:id/admin", authMiddleware.authenticateRequest, authMiddleware.authorize, articleController.adminGetArticleById);
+
+router.post("/:id/toggle-enable", authMiddleware.authenticateRequest, authMiddleware.authorize, articleController.toggleEnabledArticles);
 
 
 module.exports = router;
