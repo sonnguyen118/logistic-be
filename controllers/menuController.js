@@ -17,9 +17,7 @@ const menuController = {};
 menuController.getMenu = async (req, res) => {
   try {
     const result = await menuModel.getMenu();
-    const menu = result.map(e => {
-      if (e.isEnabled == 1) return e;
-    })
+    const menu = result.filter(e => e.isEnabled == 1)
     res.status(200).json(response.successResponse(menu, "OK"));
   } catch (error) {
     log.writeErrorLog(error.message)
@@ -88,9 +86,7 @@ menuController.getArticlesByMenuLink = async (req, res) => {
     const menuId = menu.id;
     await userRoleService.checkUserHavePermission(userId, roleMenu, [USER_ROLE, ADMIN_ROLE]);
     const articles = await menuModel.getArticlesByMenuId(menuId);
-    const result = articles.map(e => {
-      if (e.isEnabled == 1 && e.articleEnabled == 1) return e;
-    })
+    const result = articles.filter(e => e.isEnabled == 1 && e.articleEnabled == 1)
     res.status(200).json(response.successResponse(result, "OK"));
   } catch (error) {
     log.writeErrorLog(error.message)
