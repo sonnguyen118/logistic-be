@@ -48,7 +48,7 @@ articleModel.getArticleByLink = async (link) => {
   }
 };
 articleModel.getArticleById = async (id) => {
-  const query = "SELECT * FROM articles WHERE isEnabled = true AND id = ?";
+  const query = "SELECT * FROM articles WHERE id = ?";
   try {
     const [rows, fields] = await pool.execute(query, [id])
     return rows[0]
@@ -56,5 +56,16 @@ articleModel.getArticleById = async (id) => {
     throw err
   }
 };
+
+articleModel.toggleEnabledArticle = async (id) => {
+  const query = "UPDATE articles SET isEnabled = !isEnabled WHERE id = ?";
+  try {
+    const [rows, fields] = await pool.query(query, [id])
+    return rows.affectedRows
+  } catch (err) {
+    throw err
+  }
+};
+
 
 module.exports = articleModel;

@@ -53,7 +53,7 @@ articleController.updateArticle = async (req, res) => {
         connection.release();
     }
 }
-
+// chỉ được xem các bài đc hiển thị
 articleController.getArticleByLink = async (req, res) => {
     let userId = req.body.userId;
     userId = !userId ? null : userId;
@@ -70,8 +70,37 @@ articleController.getArticleByLink = async (req, res) => {
         res.status(200).json(response.errorResponse(error.message));
     }
 }
-
+// chỉ được xem các bài đc hiển thị
 articleController.getArticleById = async (req, res) => {
+    const { userId, id } = req.body
+    try {
+        const articles = await articleModel.getArticleById(id);
+        if (!articles || articles.isEnabled != 1) {
+            throw new Error("Bài viết không tồn tại")
+        }
+        await userRoleService.checkUserHavePermission(userId, articles.role, [USER_ROLE, ADMIN_ROLE])
+
+        res.status(200).json(response.successResponse(articles, "success"));
+    } catch (error) {
+        log.writeErrorLog(error.message)
+        res.status(200).json(response.errorResponse(error.message));
+    }
+}
+articleController.adminArticleById = async (req, res) => {
+    const id = req.params.id
+    try {
+        const articles = await articleModel.getArticleById(id);
+        if (!articles) {
+            throw new Error("Bài viết không tồn tại")
+        }
+        res.status(200).json(response.successResponse(articles, "success"));
+    } catch (error) {
+        log.writeErrorLog(error.message)
+        res.status(200).json(response.errorResponse(error.message));
+    }
+}
+// admin có thể get tất cả các bài bị ẩn
+articleController.adminGetArticleById = async (req, res) => {
     const { userId, id } = req.body
     try {
         const articles = await articleModel.getArticleById(id);
@@ -87,19 +116,29 @@ articleController.getArticleById = async (req, res) => {
 }
 articleController.handleCkeditor = async (req, res) => {
     try {
-      const file = req.file;
-      if (!file) {
-        throw new Error('No image file uploaded');
-      }
-  
-      const address_file = `/${articleStoragePath}/${file.filename}`;
-      const callback_function = req.query.CKEditorFuncNum;
-      const response = `<script>window.parent.CKEDITOR.tools.callFunction('${callback_function}', '${address_file}');</script>`;
-      return res.status(201).send(response);
+        const file = req.file;
+        if (!file) {
+            throw new Error('No image file uploaded');
+        }
+
+        const address_file = `/${articleStoragePath}/${file.filename}`;
+        const callback_function = req.query.CKEditorFuncNum;
+        const response = `<script>window.parent.CKEDITOR.tools.callFunction('${callback_function}', '${address_file}');</script>`;
+        return res.status(201).send(response);
     } catch (error) {
-      res.status(400).send(error.message);
+        res.status(400).send(error.message);
     }
-  }
+}
+// admin ẩn, hiện bài viết
+articleController.toggleEnabledArticles = async (req, res) => {
+    try {
+        const result = await articleModel.toggleEnabledArticle(req.params.id);
+        res.status(200).json(response.successResponse(result, "OK"));
+    } catch (error) {
+        log.writeErrorLog(error.message)
+        res.status(200).json(response.errorResponse(error.message));
+    }
+};
 
 
 
