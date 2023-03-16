@@ -37,16 +37,16 @@ menuModel.addMenu = async (menu, transaction) => {
 };
 
 menuModel.updateMenuById = async (menu, transaction) => {
-  //Cập nhật menu và quyền các bài viết thuộc menu
-  const queryUpdateMenu = "UPDATE menu SET name =?, link =?,description =?,role = ? WHERE id = ?";
-  const queryUpdateArticle = "UPDATE articles SET role = ? WHERE menu_id = ?";
+  //Cập nhật menu 
+  const queryUpdateMenu = "UPDATE menu SET name =?, isEnabled = ? WHERE id = ?";
+  // const queryUpdateArticle = "UPDATE articles SET role = ? WHERE menu_id = ?";
   try {
-    const paramsUpdateMenu = [menu.name, menu.link, menu.description, menu.role, menu.id]
+    const paramsUpdateMenu = [menu.name, menu.isEnabled, menu.id]
     avoidUndefined(paramsUpdateMenu)
     const updateMenu = await transaction.execute(queryUpdateMenu, paramsUpdateMenu)
-    const paramsUpdateArticle = [menu.role, menu.id]
-    avoidUndefined(paramsUpdateArticle)
-    const updateArticles = await transaction.execute(queryUpdateArticle, paramsUpdateArticle)
+    // const paramsUpdateArticle = [menu.role, menu.id]
+    // avoidUndefined(paramsUpdateArticle)
+    // const updateArticles = await transaction.execute(queryUpdateArticle, paramsUpdateArticle)
     return updateMenu[0].affectedRows > 0;
   } catch (err) {
     throw err
