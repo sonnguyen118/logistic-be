@@ -70,12 +70,12 @@ articleController.getArticleByLink = async (req, res) => {
         res.status(200).json(response.errorResponse(error.message));
     }
 }
-// chỉ được xem các bài đc hiển thị
+//người bình thường chỉ được xem các bài đc hiển thị
 articleController.getArticleById = async (req, res) => {
     const { userId, id } = req.body
     try {
         const articles = await articleModel.getArticleById(id);
-        if (!articles || articles.isEnabled != 1) {
+        if (!articles || articles.isEnabled != 1 || articles.menuIsEnabled != 1) {
             throw new Error("Bài viết không tồn tại")
         }
         await userRoleService.checkUserHavePermission(userId, articles.role, [USER_ROLE, ADMIN_ROLE])
@@ -86,28 +86,14 @@ articleController.getArticleById = async (req, res) => {
         res.status(200).json(response.errorResponse(error.message));
     }
 }
-articleController.adminArticleById = async (req, res) => {
-    const id = req.params.id
-    try {
-        const articles = await articleModel.getArticleById(id);
-        if (!articles) {
-            throw new Error("Bài viết không tồn tại")
-        }
-        res.status(200).json(response.successResponse(articles, "success"));
-    } catch (error) {
-        log.writeErrorLog(error.message)
-        res.status(200).json(response.errorResponse(error.message));
-    }
-}
+
 // admin có thể get tất cả các bài bị ẩn
 articleController.adminGetArticleById = async (req, res) => {
-    const { userId, id } = req.body
     try {
-        const articles = await articleModel.getArticleById(id);
+        const articles = await articleModel.getArticleById(req.params.id);
         if (!articles) {
             throw new Error("Bài viết không tồn tại")
         }
-        await userRoleService.checkUserHavePermission(userId, articles.role, [USER_ROLE, ADMIN_ROLE])
         res.status(200).json(response.successResponse(articles, "success"));
     } catch (error) {
         log.writeErrorLog(error.message)
