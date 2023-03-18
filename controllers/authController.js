@@ -31,6 +31,7 @@ authController.login = async (req, res) => {
         {
           id: user.id,
           email: user.email,
+          phone: user.phone,
           firstName: user.first_name,
           lastName: user.last_name,
           token: token,
@@ -48,8 +49,10 @@ authController.register = async (req, res) => {
   const connection = await pool.getConnection();
   try {
     await connection.beginTransaction();
+    // const { email, phone, password, rePassword, firstName, lastName } = req.body
     const user = {
       email: req.body.email,
+      phone: req.body.phone,
       password: req.body.password,
       rePassword: req.body.rePassword,
       firstName: req.body.firstName,
@@ -58,7 +61,7 @@ authController.register = async (req, res) => {
     await authServices.validateRegister(user);
     // Hash the password
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const hashedPassword = await bcrypt.hash(user.password, salt);
     // create verify code
     const verifyCode = crypto.randomBytes(20).toString("hex");
     const hostPrefix = `${req.protocol}://${req.get("host")}`;
@@ -81,7 +84,7 @@ authController.register = async (req, res) => {
     await connection.commit();
     res.status(200)
       .json(response.successResponse(
-        { id: insertId, email: user.email, firstName: user.firstName, lastName: user.lastName, token: token }, "success"
+        { id: insertId, email: user.email, phone: user.phone, firstName: user.firstName, lastName: user.lastName, token: token }, "success"
       )
       );
   } catch (err) {
@@ -107,6 +110,56 @@ authController.verifyRegister = async (req, res) => {
       }
     }
     res.status(200).send(htmlAfterVerify);
+    await connection.commit();
+  } catch (err) {
+    await connection.rollback();
+    log.writeErrorLog(err.message)
+    res.status(200).json(response.errorResponse(err.message));
+  } finally {
+    connection.release();
+  }
+};
+
+authController.sendRetrievalPasswordRequest = async (req, res) => {
+  const connection = await pool.getConnection();
+  const email = req.body.email
+  try {
+    await connection.beginTransaction();
+    const user = await userModel.getUserByEmail(email);
+    if (!user) {
+      throw new Error("Email không tồn tại")
+    }
+    const randomNum = Math.floor(Math.random() * 900000) + 100000;
+    emailService.sendRetrievalPasswordRequest(email, randomNum);
+    // update user
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(randomNum.toString(), salt);
+    await userModel.updatePasswordById(user.id, hashedPassword, connection);
+    const message = `Hệ thống đã gửi mật khẩu vào địa chỉ email của bạn: ${email}`
+    res.status(200).json(response.successResponse(message));
+    await connection.commit();
+  } catch (err) {
+    await connection.rollback();
+    log.writeErrorLog(err.message)
+    res.status(200).json(response.errorResponse(err.message));
+  } finally {
+    connection.release();
+  }
+};
+
+authController.modifyPassword = async (req, res) => {
+  const connection = await pool.getConnection();
+  const { userId, oldPassword, newPassword, reNewPassword } = req.body
+  console.log(req.body)
+  try {
+    await connection.beginTransaction();
+    await authServices.validateModifyPasswordForm(userId, oldPassword, newPassword, reNewPassword);
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    // console.log
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    const result = await userModel.updatePasswordById(userId, hashedPassword, connection);
+    res.status(200).json(response.successResponse(result, 'Đổi mật khẩu thành công'));
     await connection.commit();
   } catch (err) {
     await connection.rollback();

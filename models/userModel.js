@@ -15,7 +15,16 @@ userModel.getAllUsers = async () => {
 };
 
 userModel.getUserById = async (id) => {
-  const query = "SELECT first_name, last_name, gender, birthday, phone, avatar, role FROM users WHERE id = ?"
+  const query = "SELECT first_name, last_name, gender, other_name, birthday, phone, avatar, role FROM users WHERE id = ?"
+  try {
+    const [rows, fields] = await pool.execute(query, [id])
+    return rows[0];
+  } catch (err) {
+    throw err
+  }
+};
+userModel.getUserPasswordById = async (id) => {
+  const query = "SELECT password FROM users WHERE id = ?"
   try {
     const [rows, fields] = await pool.execute(query, [id])
     return rows[0];
@@ -70,14 +79,23 @@ userModel.updateVerifyCode = async (id, transaction) => {
     throw err
   }
 };
+userModel.updateRetrievalCode = async (id, transaction) => {
+  var query = "UPDATE users SET verify_code = null WHERE id = ?";
+  try {
+    const result = await transaction.execute(query, id)
+    return result[0].affectedRows > 0;
+  } catch (err) {
+    throw err
+  }
+};
 
 userModel.createUser = async (user, connection) => {
   const query =
-    "INSERT INTO `users` (`email`, `password`, `first_name`, `last_name`, `verify_code`) VALUES (?,?,?,?,?)";
+    "INSERT INTO `users` (`email`, `password`,`phone`, `first_name`, `last_name`, `verify_code`) VALUES (?,?,?,?,?,?)";
   try {
-    const params = [user.email, user.password, user.firstName, user.lastName, user.verifyCode]
+    const params = [user.email, user.password, user.phone, user.firstName, user.lastName, user.verifyCode]
     avoidUndefined(params)
-    const [rows, fields] = await connection.execute(query, [user.email, user.password, user.firstName, user.lastName, user.verifyCode])
+    const [rows, fields] = await connection.execute(query, params)
     return rows.insertId;
   } catch (err) {
     throw err
@@ -96,4 +114,13 @@ userModel.updateUserInfo = async (user, transaction) => {
   }
 };
 
+userModel.updatePasswordById = async (id, newPassword, transaction) => {
+  var query = "UPDATE users SET password = ? WHERE id = ?";
+  try {
+    const result = await transaction.execute(query, [newPassword, id])
+    return result[0].affectedRows > 0;
+  } catch (err) {
+    throw err
+  }
+};
 module.exports = userModel;
