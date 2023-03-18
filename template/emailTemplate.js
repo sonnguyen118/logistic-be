@@ -3,7 +3,7 @@ const emailTemplate = (formattedDate, user, urlVerify) => {
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Xác thực tài khoản Viet-Sino logistic</title>
+    <title>Xác thực tài khoản SinoViet Logistic</title>
     <style>
       /* Thiết kế giao diện email ở đây */
       @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
@@ -152,27 +152,28 @@ const emailTemplate = (formattedDate, user, urlVerify) => {
       <div class="email">
         <div class="email__navbar">
           <div class="email__navbar-item">${formattedDate}</div>
-          <div class="email__navbar-item">Hotline: 0981 83 9980</div>
+          <div class="email__navbar-item"> Hotline: 0833 999 095</div>
         </div>
         <div class="email__body">
           <div class="email__company">
             <img src="https://www.freepnglogos.com/uploads/company-logo-png/file-mobile-apps-development-company-logo-25.png" alt="Viet-Sino logistic" class="email__company-logo"></img>
             <div class="email__company-text">
-              <div class="email__company-text-1">Viet-Sino logistic</div>
-              <div class="email__company-text-2">Chuyên cung cấp dịch vụ vận chuyển order Trung - Việt</div>
+              <div class="email__company-text-1">SinoViet Logistics</div>
+              <div class="email__company-text-2">Vận chuyển 2 chiều Trung - Việt</div>
+              <div class="email__company-text-2">Dịch vụ order - Kí gửi - Đổi tệ</div>
+
             </div>
           </div>
           <div class="email__master">
-            <h1 class="email__title">Xác thực tài khoản Viet-Sino logistic</h1>
+            <h1 class="email__title">Xác thực tài khoản SinoViet Logistics</h1>
             <h6 class="email__subs">Chào Thành</h6>
-            <p class="email__main"> Người dùng <strong>${
-              user.lastName + " " + user.firstName
-            }</strong>
-              <br /> Email: <strong>${
-                user.email
-              }</strong> muốn đăng ký, click vào link để xác thực:
+            <p class="email__main"> 
+            Người dùng <strong>${user.lastName + " " + user.firstName}</strong>
+            <br /> Email: <strong>${user.email} </strong>
+            <br /> Phone: <strong>${user.phone} </strong> 
+            <br /> Click vào link để kích hoạt tài khoản này
             </p>
-            <a href="${urlVerify}" class="btn-verify">Xác thực tài khoản</a>
+            <a href="${urlVerify}" class="btn-verify">Kích hoạt tài khoản</a>
           </div>
         </div>
       </div>

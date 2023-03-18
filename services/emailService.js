@@ -44,18 +44,68 @@ email.sendEmailVerifyToAdmin = async (_user, _urlVerify) => {
   const mailOptions = {
     from: EMAIL_SEVER,
     to: EMAIL_ADMIN,
-    subject: "Xác thực tài khoản Viet-Sino logistic",
+    subject: "Xác thực tài khoản SinoViet Logistics",
     html: emailTemplate(formattedDate, user, urlVerify),
   };
 
   const info = transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       log.writeErrorLog(error.message)
+      throw new Error("Có lỗi trong quá trình gửi email, mời bạn quay lại sau")
     } else {
       log.writeLog("Email sent: " + info.response)
       log.writeLog("Email veify code: " + urlVerify);
     }
   });
 };
+
+email.sendRetrievalPasswordRequest = async (_email, _newPassword) => {
+  const email = await _email;
+  const newPassword = await _newPassword;
+
+  // Generate confirmation token
+  const transporter = nodemailer.createTransport({
+    service: SERVICE_MAIL,
+    auth: {
+      user: EMAIL_SEVER,
+      pass: PASSWORD_EMAIL_SEVER,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  // thêm thông tin thời gian khi gửi
+  const date = new Date();
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  };
+  const formattedDate = date.toLocaleDateString("vi-VN", options);
+  // template html email
+
+  const mailOptions = {
+    from: EMAIL_SEVER,
+    to: email,
+    subject: "Yêu cầu cấp lại mật khẩu tài khoản SinoViet Logistics",
+    html: `Mật khẩu mới của bạn là: <strong>${newPassword}</strong>`,
+  };
+
+  const info = transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      log.writeErrorLog(error.message)
+      throw new Error("Có lỗi trong quá trình gửi email, mời bạn quay lại sau")
+    } else {
+      log.writeLog("Email sent: " + info.response)
+      log.writeLog("Email veify code: " + urlVerify);
+    }
+  });
+};
+
 
 module.exports = email;

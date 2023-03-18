@@ -3,6 +3,7 @@ const response = require("../utils/response");
 const { fileConfig } = require('../configs/database');
 const mysql = require('mysql2/promise');
 const log = require("../utils/log");
+const authServices = require("../services/authServices");
 const pool = mysql.createPool(fileConfig)
 const userController = {};
 
@@ -52,8 +53,10 @@ userController.getUserRoleById = async (req, res) => {
 userController.updateUserInfo = async (req, res) => {
   const connection = await pool.getConnection();
   try {
+    const _user = req.body;
     await connection.beginTransaction();
-    const user = await userModel.updateUserInfo(req.body, connection);
+    await authServices.validateUpdateInfor(_user)
+    const user = await userModel.updateUserInfo(_user, connection);
     await connection.commit();
     res.status(200).json(response.successResponse(user, "success"));
   } catch (err) {
