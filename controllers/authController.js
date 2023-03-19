@@ -7,8 +7,8 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const mysql = require("mysql2/promise");
 const dotenv = require("dotenv");
-const succeedAfterVerify = require("../template/succeedAfterVerify");
-const account_verified_template = require("../template/account_verified_template");
+const successTemplate = require("../template/successTemplate");
+const failedTemplate = require("../template/failedTemplate");
 const log = require("../utils/log");
 const { fileConfig } = require("../configs/database");
 
@@ -104,20 +104,45 @@ authController.register = async (req, res) => {
   }
 };
 
+
 authController.verifyRegister = async (req, res) => {
   const connection = await pool.getConnection();
+  let responseTemplate = failedTemplate.createForm('Tài khoản đã được kích hoạt !');
   try {
     await connection.beginTransaction();
     const verifyCode = req.params.verifyCode;
-    let htmlAfterVerify = account_verified_template;
+    if (verifyCode == 1) {
+      throw new Error('Mã kích hoạt không hợp lệ')
+    }
     const user = await userModel.getUserByVerifyCode(verifyCode, connection);
     if (user) {
       const result = await userModel.updateVerifyCode(user.id, connection);
       if (result) {
-        htmlAfterVerify = succeedAfterVerify
+        responseTemplate = successTemplate.createForm('Kích hoạt thành công')
       }
     }
-    res.status(200).send(htmlAfterVerify);
+    res.status(200).send(responseTemplate);
+    await connection.commit();
+  } catch (err) {
+    await connection.rollback();
+    log.writeErrorLog(err.message)
+    res.status(200).send(responseTemplate);
+  } finally {
+    connection.release();
+  }
+};
+
+authController.modifyPassword = async (req, res) => {
+  const connection = await pool.getConnection();
+  const { userId, oldPassword, newPassword, reNewPassword } = req.body
+  try {
+    await connection.beginTransaction();
+    await authServices.validateModifyPasswordForm(userId, oldPassword, newPassword, reNewPassword);
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    const result = await userModel.updatePasswordById(userId, hashedPassword, connection);
+    res.status(200).json(response.successResponse(result, 'Đổi mật khẩu thành công'));
     await connection.commit();
   } catch (err) {
     await connection.rollback();
@@ -137,12 +162,19 @@ authController.sendRetrievalPasswordRequest = async (req, res) => {
     if (!user) {
       throw new Error("Email không tồn tại")
     }
-    const randomNum = Math.floor(Math.random() * 900000) + 100000;
-    emailService.sendRetrievalPasswordRequest(email, randomNum);
-    // update user
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(randomNum.toString(), salt);
-    await userModel.updatePasswordById(user.id, hashedPassword, connection);
+
+    // create verify code
+    const retrievalCode = crypto.randomBytes(20).toString("hex");
+    const hostPrefix = `${req.protocol}://${req.get("host")}`;
+    const randomPassword = Math.floor(Math.random() * 1000000).toString();
+    const retrievalLink = await authServices.createRetrievalLink(
+      hostPrefix,
+      retrievalCode,
+      randomPassword
+    );
+    // set retrieval code cho user
+    emailService.sendRetrievalPasswordRequest(email, retrievalLink, randomPassword);
+    await userModel.updateRetrievalCodeById(user.id, retrievalCode, connection);
     const message = `Hệ thống đã gửi mật khẩu vào địa chỉ email của bạn: ${email}`
     res.status(200).json(response.successResponse(message));
     await connection.commit();
@@ -155,27 +187,35 @@ authController.sendRetrievalPasswordRequest = async (req, res) => {
   }
 };
 
-authController.modifyPassword = async (req, res) => {
+authController.confirmRetrievePassword = async (req, res) => {
   const connection = await pool.getConnection();
-  const { userId, oldPassword, newPassword, reNewPassword } = req.body
+  const { retrievalCode, newPassword } = req.params
+  let responseTemplate = failedTemplate.createForm('Yêu cầu lấy lại mật khẩu không hợp lệ');
   try {
+    if (retrievalCode.trim().length == 0) {
+      throw new Error("Có lỗi xảy ra")
+    }
     await connection.beginTransaction();
-    await authServices.validateModifyPasswordForm(userId, oldPassword, newPassword, reNewPassword);
+    const user = await userModel.getUserByRetrievalCode(retrievalCode)
+    if (!user) {
+      throw new Error("Không tồn tại mã lấy lại mật khẩu")
+    }
     // Hash the password
     const salt = await bcrypt.genSalt(10);
-    // console.log
     const hashedPassword = await bcrypt.hash(newPassword, salt);
-    const result = await userModel.updatePasswordById(userId, hashedPassword, connection);
-    res.status(200).json(response.successResponse(result, 'Đổi mật khẩu thành công'));
+    const result = await userModel.updatePasswordById(user.id, hashedPassword, connection);
+    await userModel.updateRetrievalCodeById(user.id, '', connection);
+    responseTemplate = successTemplate.createForm('Bạn đã lấy lại lại mật khẩu thành công')
     await connection.commit();
   } catch (err) {
     await connection.rollback();
     log.writeErrorLog(err.message)
-    res.status(200).json(response.errorResponse(err.message));
   } finally {
     connection.release();
+    res.status(200).send(responseTemplate);
   }
 };
+
 
 authController.refreshToken = async (req, res) => {
 

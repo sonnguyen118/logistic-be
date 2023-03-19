@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const dotenv = require("dotenv");
 const emailTemplate = require("../template/emailTemplate");
+const emailRetrievePasswordTemplate = require("../template/emailRetrievePassword");
 const log = require("../utils/log");
 
 dotenv.config();
@@ -59,9 +60,11 @@ email.sendEmailVerifyToAdmin = async (_user, _urlVerify) => {
   });
 };
 
-email.sendRetrievalPasswordRequest = async (_email, _newPassword) => {
+email.sendRetrievalPasswordRequest = async (_email, _link, _password) => {
   const email = await _email;
-  const newPassword = await _newPassword;
+  const link = await _link;
+  const password = await _password;
+
 
   // Generate confirmation token
   const transporter = nodemailer.createTransport({
@@ -93,7 +96,7 @@ email.sendRetrievalPasswordRequest = async (_email, _newPassword) => {
     from: EMAIL_SEVER,
     to: email,
     subject: "Yêu cầu cấp lại mật khẩu tài khoản SinoViet Logistics",
-    html: `Mật khẩu mới của bạn là: <strong>${newPassword}</strong>`,
+    html: emailRetrievePasswordTemplate(link, password),
   };
 
   const info = transporter.sendMail(mailOptions, function (error, info) {

@@ -76,6 +76,10 @@ authService.createUrlVerifyUser = async (hostPrefix, verifyCode) => {
   return hostPrefix + "/api/auth/verify/" + verifyCode;
 };
 
+authService.createRetrievalLink = async (hostPrefix, retrievalCode, password) => {
+  return `${hostPrefix}/api/auth/retrieval-password/${retrievalCode}/${password}`;
+};
+
 
 authService.validateUpdateInfor = async (user) => {
   const pattern = /^0[0-9]{9}$|^0[0-9]{8}$/
@@ -92,7 +96,6 @@ authService.validateModifyPasswordForm = async (userId, oldPassword, newPassword
     throw new Error('User not found')
   }
   else {
-    console.log(user)
     const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
     if (!isPasswordValid) {
       throw new Error("Mật khẩu hiện tại không đúng");

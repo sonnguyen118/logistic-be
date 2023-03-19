@@ -1,5 +1,8 @@
 
-module.exports = `<html>
+const successTemplate = {}
+successTemplate.createForm = (msg) => {
+  return `<html>
+
 <head> </head>
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
@@ -12,7 +15,7 @@ module.exports = `<html>
   }
 
   h1 {
-    color: red;
+    color: #88b04b;
     font-weight: 900;
     font-size: 40px;
     margin-bottom: 10px;
@@ -26,7 +29,7 @@ module.exports = `<html>
   }
 
   i {
-    color: red;
+    color: #9abc66;
     font-size: 100px;
     line-height: 200px;
     margin-left: -15px;
@@ -43,7 +46,7 @@ module.exports = `<html>
 
   .btn {
     padding: 5px 15px;
-    background-color: red;
+    background-color: #88b04b;
     color: #fff;
     text-decoration: none;
     border-radius: 3px;
@@ -60,13 +63,16 @@ module.exports = `<html>
           background: #f8faf5;
           margin: 0 auto;
         ">
-      <i class="checkmark">✕</i>
+      <i class="checkmark">✓</i>
     </div>
-    <h1>Tài Khoản đã được kích hoạt</h1>
+    <h1>Thành Công</h1>
 
-    <p>Tài Khoản này đã được bạn kích hoạt !!!</p>
-    <a href="https://www.critistudio.top" class="btn">Nhấn vào đây để về trang chủ</a>
+    <p>${msg}</p>
   </div>
+
 </body>
 
 </html>`
+}
+
+module.exports = successTemplate

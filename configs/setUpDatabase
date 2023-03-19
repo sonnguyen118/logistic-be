@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS users(
     last_name VARCHAR(60) NOT NULL,
     other_name VARCHAR(60),
     verify_code VARCHAR(60),
+    retrieval_code VARCHAR(60),
     role INT,
     gender boolean ,
     birthday date,

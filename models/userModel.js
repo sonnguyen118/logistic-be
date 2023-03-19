@@ -79,10 +79,10 @@ userModel.updateVerifyCode = async (id, transaction) => {
     throw err
   }
 };
-userModel.updateRetrievalCode = async (id, transaction) => {
-  var query = "UPDATE users SET verify_code = null WHERE id = ?";
+userModel.updateRetrievalCodeById = async (id, retrievalCode, transaction) => {
+  var query = "UPDATE users SET retrieval_code = ? WHERE id = ?";
   try {
-    const result = await transaction.execute(query, id)
+    const result = await transaction.execute(query, [retrievalCode, id])
     return result[0].affectedRows > 0;
   } catch (err) {
     throw err
@@ -123,4 +123,14 @@ userModel.updatePasswordById = async (id, newPassword, transaction) => {
     throw err
   }
 };
+
+userModel.getUserByRetrievalCode = async (value) => {
+  var query = "SELECT id FROM users WHERE retrieval_code = ?";
+  try {
+    const [rows, fields] = await pool.execute(query, [value]);
+    return rows[0];
+  } catch (err) {
+    throw err;
+  }
+}
 module.exports = userModel;
