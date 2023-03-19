@@ -55,8 +55,6 @@ authService.validateLoginForm = async (email, password) => {
   if (!user) {
     throw new Error("Email không tồn tại");
   }
-  console.log(user.password)
-  console.log(password)
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {

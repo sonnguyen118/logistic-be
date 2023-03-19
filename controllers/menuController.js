@@ -4,6 +4,8 @@ const { fileConfig } = require('../configs/database');
 const mysql = require('mysql2/promise');
 const dotenv = require("dotenv");
 const userRoleService = require("../services/userRoleServices");
+const menuService = require("../services/menuService");
+
 const log = require("../utils/log");
 
 dotenv.config();
@@ -18,12 +20,14 @@ menuController.getMenu = async (req, res) => {
   try {
     const result = await menuModel.getMenu();
     const menu = result.filter(e => e.isEnabled == 1)
+    menuService.arrangeMenu(menu);
     res.status(200).json(response.successResponse(menu, "OK"));
   } catch (error) {
     log.writeErrorLog(error.message)
     res.status(200).json(response.errorResponse(error.message));
   }
 };
+
 // lấy danh sách menu cho admin, gồm cả những menu đã bị ẩn
 menuController.getMenuForAdmin = async (req, res) => {
   try {

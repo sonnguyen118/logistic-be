@@ -150,7 +150,6 @@ authController.sendRetrievalPasswordRequest = async (req, res) => {
 authController.modifyPassword = async (req, res) => {
   const connection = await pool.getConnection();
   const { userId, oldPassword, newPassword, reNewPassword } = req.body
-  console.log(req.body)
   try {
     await connection.beginTransaction();
     await authServices.validateModifyPasswordForm(userId, oldPassword, newPassword, reNewPassword);

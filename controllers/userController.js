@@ -10,6 +10,7 @@ const userController = {};
 userController.getAllUsers = async (req, res) => {
   try {
     const users = await userModel.getAllUsers();
+    users.forEach(user => user.password = null)
     res.status(200).json(response.successResponse(users, "success"));
   } catch (err) {
     log.writeErrorLog(err.message)
