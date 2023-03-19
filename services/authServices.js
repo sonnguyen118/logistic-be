@@ -104,4 +104,5 @@ authService.validateModifyPasswordForm = async (userId, oldPassword, newPassword
   }
   return user;
 };
+
 module.exports = authService;

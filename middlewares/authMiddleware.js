@@ -5,6 +5,8 @@ const userModel = require("../models/userModel");
 const log = require("../utils/log");
 dotenv.config();
 
+
+
 const authMiddleware = {};
 
 authMiddleware.authenticateRequest = async (req, res, next) => {
