@@ -28,8 +28,8 @@ authController.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await authServices.validateLoginForm(email, password);
-    var accessToken = jwt.sign({ id: user.id }, ACCESS_TOKEN_SECRET_KEY, { expiresIn: ACCESS_LIFE_TIME });
-    var refreshToken = jwt.sign({ id: user.id }, REFRESH_TOKEN_KEY_SECRET_KEY, { expiresIn: REFRESH_LIFE_TIME });
+    var accessToken = jwt.sign({ id: user.id }, ACCESS_TOKEN_SECRET_KEY, { expiresIn: 30 * 60 * 60 * 24 });
+    var refreshToken = jwt.sign({ id: user.id }, REFRESH_TOKEN_KEY_SECRET_KEY, { expiresIn: 30 * 60 * 60 * 24 });
     res.cookie(REFRESH_TOKEN_KEY, refreshToken, {
       maxAge: 30 * 60 * 60 * 24,
       httpOnly: true,
@@ -86,8 +86,8 @@ authController.register = async (req, res) => {
     //save user
     const insertId = await userModel.createUser(user, connection);
     // create token
-    var accessToken = jwt.sign({ id: insertId }, ACCESS_TOKEN_SECRET_KEY, { expiresIn: ACCESS_LIFE_TIME });
-    var refreshToken = jwt.sign({ id: insertId }, REFRESH_TOKEN_KEY_SECRET_KEY, { expiresIn: REFRESH_LIFE_TIME });
+    var accessToken = jwt.sign({ id: insertId }, ACCESS_TOKEN_SECRET_KEY, { expiresIn: 30 * 60 * 60 * 24 });
+    var refreshToken = jwt.sign({ id: insertId }, REFRESH_TOKEN_KEY_SECRET_KEY, { expiresIn: 30 * 60 * 60 * 24 });
     res.cookie(REFRESH_TOKEN_KEY, refreshToken, {
       maxAge: 30 * 60 * 60 * 24,
       httpOnly: true,
