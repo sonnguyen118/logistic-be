@@ -17,20 +17,14 @@ dotenv.config();
 const pool = mysql.createPool(fileConfig);
 
 const authController = {};
-const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
-const ACCESS_LIFE_TIME = process.env.ACCESS_LIFE_TIME;
-
-const REFRESH_TOKEN_KEY_SECRET_KEY = process.env.REFRESH_TOKEN_KEY_SECRET_KEY;
-const REFRESH_TOKEN_KEY = process.env.REFRESH_TOKEN_KEY;
-const REFRESH_LIFE_TIME = process.env.REFRESH_LIFE_TIME;
 
 authController.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await authServices.validateLoginForm(email, password);
-    var accessToken = jwt.sign({ id: user.id }, ACCESS_TOKEN_SECRET_KEY, { expiresIn: 30 * 60 * 60 * 24 });
-    var refreshToken = jwt.sign({ id: user.id }, REFRESH_TOKEN_KEY_SECRET_KEY, { expiresIn: 30 * 60 * 60 * 24 });
-    res.cookie(REFRESH_TOKEN_KEY, refreshToken, {
+    var accessToken = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET_KEY, { expiresIn: 30 * 60 * 60 * 24 });
+    var refreshToken = jwt.sign({ id: user.id }, process.env.REFRESH_TOKEN_KEY_SECRET_KEY, { expiresIn: 30 * 60 * 60 * 24 });
+    res.cookie(process.env.REFRESH_TOKEN_KEY, refreshToken, {
       maxAge: 30 * 60 * 60 * 24,
       httpOnly: true,
       secure: false
@@ -86,9 +80,9 @@ authController.register = async (req, res) => {
     //save user
     const insertId = await userModel.createUser(user, connection);
     // create token
-    var accessToken = jwt.sign({ id: insertId }, ACCESS_TOKEN_SECRET_KEY, { expiresIn: 30 * 60 * 60 * 24 });
-    var refreshToken = jwt.sign({ id: insertId }, REFRESH_TOKEN_KEY_SECRET_KEY, { expiresIn: 30 * 60 * 60 * 24 });
-    res.cookie(REFRESH_TOKEN_KEY, refreshToken, {
+    var accessToken = jwt.sign({ id: insertId }, process.env.ACCESS_TOKEN_SECRET_KEY, { expiresIn: 30 * 60 * 60 * 24 });
+    var refreshToken = jwt.sign({ id: insertId }, process.env.REFRESH_TOKEN_KEY_SECRET_KEY, { expiresIn: 30 * 60 * 60 * 24 });
+    res.cookie(process.env.REFRESH_TOKEN_KEY, refreshToken, {
       maxAge: 30 * 60 * 60 * 24,
       httpOnly: true,
       secure: false
