@@ -17,14 +17,24 @@ dotenv.config();
 const pool = mysql.createPool(fileConfig);
 
 const authController = {};
-const ACCESS_TOKEN = process.env.ACCESS_TOKEN_SECRET_KEY;
-const ACCESS_TOKEN_KEY = process.env.ACCESS_TOKEN_KEY;
+const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY;
+const ACCESS_LIFE_TIME = process.env.ACCESS_LIFE_TIME;
+
+const REFRESH_TOKEN_KEY_SECRET_KEY = process.env.REFRESH_TOKEN_KEY_SECRET_KEY;
+const REFRESH_TOKEN_KEY = process.env.REFRESH_TOKEN_KEY;
+const REFRESH_LIFE_TIME = process.env.REFRESH_LIFE_TIME;
 
 authController.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await authServices.validateLoginForm(email, password);
-    var token = jwt.sign({ id: user.id }, ACCESS_TOKEN);
+    var accessToken = jwt.sign({ id: user.id }, ACCESS_TOKEN_SECRET_KEY, { expiresIn: ACCESS_LIFE_TIME });
+    var refreshToken = jwt.sign({ id: user.id }, REFRESH_TOKEN_KEY_SECRET_KEY, { expiresIn: REFRESH_LIFE_TIME });
+    res.cookie(REFRESH_TOKEN_KEY, refreshToken, {
+      maxAge: 30 * 60 * 60 * 24,
+      httpOnly: true,
+      secure: false
+    });
     log.writeLog("LOGGED IN SUCCESS")
     res.status(200).json(
       response.successResponse(
@@ -34,7 +44,8 @@ authController.login = async (req, res) => {
           phone: user.phone,
           firstName: user.first_name,
           lastName: user.last_name,
-          token: token,
+          avatar: user.avatar,
+          token: accessToken,
         },
         "LOGGED IN SUCCESS"
       )
@@ -75,16 +86,19 @@ authController.register = async (req, res) => {
     //save user
     const insertId = await userModel.createUser(user, connection);
     // create token
-    var token = jwt.sign({ id: insertId }, ACCESS_TOKEN);
-    res.cookie(ACCESS_TOKEN_KEY, token, {
-      maxAge: 24 * 60 * 60 * 1000,
+    var accessToken = jwt.sign({ id: insertId }, ACCESS_TOKEN_SECRET_KEY, { expiresIn: ACCESS_LIFE_TIME });
+    var refreshToken = jwt.sign({ id: insertId }, REFRESH_TOKEN_KEY_SECRET_KEY, { expiresIn: REFRESH_LIFE_TIME });
+    res.cookie(REFRESH_TOKEN_KEY, refreshToken, {
+      maxAge: 30 * 60 * 60 * 24,
+      httpOnly: true,
+      secure: false
     });
     //send confirm email to admin
     emailService.sendEmailVerifyToAdmin(user, urlVerify);
     await connection.commit();
     res.status(200)
       .json(response.successResponse(
-        { id: insertId, email: user.email, phone: user.phone, firstName: user.firstName, lastName: user.lastName, token: token }, "success"
+        { id: insertId, email: user.email, phone: user.phone, firstName: user.firstName, lastName: user.lastName, token: accessToken }, "success"
       )
       );
   } catch (err) {
@@ -150,7 +164,6 @@ authController.sendRetrievalPasswordRequest = async (req, res) => {
 authController.modifyPassword = async (req, res) => {
   const connection = await pool.getConnection();
   const { userId, oldPassword, newPassword, reNewPassword } = req.body
-  console.log(req.body)
   try {
     await connection.beginTransaction();
     await authServices.validateModifyPasswordForm(userId, oldPassword, newPassword, reNewPassword);
@@ -168,6 +181,10 @@ authController.modifyPassword = async (req, res) => {
   } finally {
     connection.release();
   }
+};
+
+authController.refreshToken = async (req, res) => {
+
 };
 
 module.exports = authController;
