@@ -54,33 +54,62 @@ articleController.updateArticle = async (req, res) => {
     }
 }
 // chỉ được xem các bài đc hiển thị
+
 articleController.getArticleByLink = async (req, res) => {
     let userId = req.body.userId;
     userId = !userId ? null : userId;
     const link = '/' + req.params.link;
     try {
-        const articles = await articleModel.getArticleByLink(link);
-        if (!articles) {
+        const article = await articleModel.getArticleByLink(link);
+        if (!article || article.isEnabled != 1 || article.menuIsEnabled != 1) {
             throw new Error("Bài viết không tồn tại")
         }
-        await userRoleService.checkUserHavePermission(userId, articles?.role, [USER_ROLE, ADMIN_ROLE])
-        res.status(200).json(response.successResponse(articles, "success"));
+        console.log(article)
+        await userRoleService.checkUserHavePermission(userId, article.role, [USER_ROLE, ADMIN_ROLE])
+        const articles = await articleModel.getArticleByMenuId(article.menu_id);
+        articles.forEach(a => {
+            a.content = ''
+            if (a.id == article.id) {
+                a.isCurrent = true;
+            }
+        })
+        const result = {
+            menu: article.menu_name,
+            menu_link: article.menu_link,
+            content: article.content,
+            link: article.link,
+            sibling: articles
+        }
+        res.status(200).json(response.successResponse(result, "success"));
     } catch (error) {
         log.writeErrorLog(error.message)
         res.status(200).json(response.errorResponse(error.message));
     }
 }
+
 //người bình thường chỉ được xem các bài đc hiển thị
 articleController.getArticleById = async (req, res) => {
     const { userId, id } = req.body
     try {
-        const articles = await articleModel.getArticleById(id);
-        if (!articles || articles.isEnabled != 1 || articles.menuIsEnabled != 1) {
+        const article = await articleModel.getArticleById(id);
+        if (!article || article.isEnabled != 1 || article.menuIsEnabled != 1) {
             throw new Error("Bài viết không tồn tại")
         }
-        await userRoleService.checkUserHavePermission(userId, articles.role, [USER_ROLE, ADMIN_ROLE])
-
-        res.status(200).json(response.successResponse(articles, "success"));
+        await userRoleService.checkUserHavePermission(userId, article.role, [USER_ROLE, ADMIN_ROLE])
+        const articles = await articleModel.getArticleByMenuId(article.menu_id);
+        articles.forEach(a => {
+            a.content = ''
+            if (a.id == article.id) {
+                a.isCurrent = true;
+            }
+        })
+        const result = {
+            menu: article.name,
+            content: article.content,
+            link: article.link,
+            sibling: articles
+        }
+        res.status(200).json(response.successResponse(result, "success"));
     } catch (error) {
         log.writeErrorLog(error.message)
         res.status(200).json(response.errorResponse(error.message));
