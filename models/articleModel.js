@@ -39,7 +39,7 @@ articleModel.updateArticleById = async (article, transaction) => {
 };
 
 articleModel.getArticleByLink = async (link) => {
-  const query = "SELECT a.*, m.isEnabled as menuIsEnabled,m.name as menu_name, m.id as menu_id, m.link as menu_link FROM ((SELECT * FROM articles WHERE link = ?) a JOIN menu m ON a.menu_id = m.id)";
+  const query = "SELECT a.*, m.isEnabled as menuIsEnabled,m.name as menu_name,m.role as roleMenu, m.id as menu_id, m.link as menu_link FROM ((SELECT * FROM articles WHERE link = ?) a JOIN menu m ON a.menu_id = m.id)";
   try {
     const [rows, fields] = await pool.execute(query, [link])
     return rows[0]
@@ -49,7 +49,7 @@ articleModel.getArticleByLink = async (link) => {
 };
 
 articleModel.getArticleById = async (id) => {
-  const query = "SELECT a.*, m.isEnabled as menuIsEnabled,m.name as menu_name, m.id as menu_id, m.link as menu_link FROM ((SELECT * FROM articles WHERE id = ?) a JOIN menu m ON a.menu_id = m.id)";
+  const query = "SELECT a.*, m.isEnabled as menuIsEnabled,m.name as menu_name,m.role as roleMenu, m.id as menu_id, m.link as menu_link FROM ((SELECT * FROM articles WHERE id = ?) a JOIN menu m ON a.menu_id = m.id)";
   try {
     const [rows, fields] = await pool.execute(query, [id])
     return rows[0]
@@ -66,6 +66,16 @@ articleModel.getArticleByMenuId = async (menuId) => {
     throw err
   }
 };
+articleModel.getArticleByTitle = async (title) => {
+  const query = `SELECT a.*, m.isEnabled as menuIsEnabled,m.name as menu_name, m.id as menu_id,m.role as roleMenu, m.link as menu_link FROM ((SELECT * FROM articles WHERE title LIKE '%${title}%') a JOIN menu m ON a.menu_id = m.id)`;
+  try {
+    const [rows, fields] = await pool.execute(query, [title])
+    return rows
+  } catch (err) {
+    throw err
+  }
+};
+
 
 articleModel.toggleEnabledArticle = async (id) => {
   const query = "UPDATE articles SET isEnabled = !isEnabled WHERE id = ?";

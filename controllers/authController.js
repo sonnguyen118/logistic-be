@@ -132,6 +132,23 @@ authController.verifyRegister = async (req, res) => {
   }
 };
 
+authController.verifyByIds = async (req, res) => {
+  const ids = req.body.ids;
+  const connection = await pool.getConnection();
+  try {
+    await connection.beginTransaction();
+    const result = await userModel.verifyUserByIds(ids, connection);
+    await connection.commit();
+    res.status(200).json(response.successResponse(result, "OK"));
+  } catch (err) {
+    await connection.rollback();
+    log.writeErrorLog(err.message)
+    res.status(200).json(response.errorResponse(err.message));
+  } finally {
+    connection.release();
+  }
+};
+
 authController.modifyPassword = async (req, res) => {
   const connection = await pool.getConnection();
   const { userId, oldPassword, newPassword, reNewPassword } = req.body
@@ -215,6 +232,8 @@ authController.confirmRetrievePassword = async (req, res) => {
     res.status(200).send(responseTemplate);
   }
 };
+
+
 
 
 authController.refreshToken = async (req, res) => {

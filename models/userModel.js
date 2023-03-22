@@ -133,4 +133,14 @@ userModel.getUserByRetrievalCode = async (value) => {
     throw err;
   }
 }
+
+userModel.verifyUserByIds = async (ids, transaction) => {
+  var query = "UPDATE users SET verify_code = 1 WHERE id IN (?)";
+  try {
+    const result = await transaction.execute(query, ids)
+    return result[0].affectedRows > 0;
+  } catch (err) {
+    throw err
+  }
+};
 module.exports = userModel;

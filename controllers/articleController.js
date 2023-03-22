@@ -64,21 +64,25 @@ articleController.getArticleByLink = async (req, res) => {
         if (!article || article.isEnabled != 1 || article.menuIsEnabled != 1) {
             throw new Error("Bài viết không tồn tại")
         }
-        console.log(article)
-        await userRoleService.checkUserHavePermission(userId, article.role, [USER_ROLE, ADMIN_ROLE])
+        await userRoleService.checkUserHavePermission(userId, article.roleMenu, [USER_ROLE, ADMIN_ROLE])
         const articles = await articleModel.getArticleByMenuId(article.menu_id);
-        articles.forEach(a => {
+        const sibling = [];
+        for (const a of articles) {
             a.content = ''
+            if (a.isEnabled == 0) {
+                continue;
+            }
             if (a.id == article.id) {
                 a.isCurrent = true;
             }
-        })
+            sibling.push(a)
+        }
         const result = {
             menu: article.menu_name,
             menu_link: article.menu_link,
             content: article.content,
             link: article.link,
-            sibling: articles
+            sibling: sibling
         }
         res.status(200).json(response.successResponse(result, "success"));
     } catch (error) {
@@ -95,19 +99,51 @@ articleController.getArticleById = async (req, res) => {
         if (!article || article.isEnabled != 1 || article.menuIsEnabled != 1) {
             throw new Error("Bài viết không tồn tại")
         }
-        await userRoleService.checkUserHavePermission(userId, article.role, [USER_ROLE, ADMIN_ROLE])
+        await userRoleService.checkUserHavePermission(userId, article.roleMenu, [USER_ROLE, ADMIN_ROLE])
         const articles = await articleModel.getArticleByMenuId(article.menu_id);
-        articles.forEach(a => {
+        const sibling = [];
+        for (const a of articles) {
             a.content = ''
+            if (a.isEnabled == 0) {
+                continue;
+            }
             if (a.id == article.id) {
                 a.isCurrent = true;
             }
-        })
+            sibling.push(a)
+        }
         const result = {
-            menu: article.name,
+            menu: article.menu_name,
+            menu_link: article.menu_link,
             content: article.content,
             link: article.link,
-            sibling: articles
+            sibling: sibling
+        }
+        res.status(200).json(response.successResponse(result, "success"));
+    } catch (error) {
+        log.writeErrorLog(error.message)
+        res.status(200).json(response.errorResponse(error.message));
+    }
+}
+articleController.findArticleByTitle = async (req, res) => {
+    const { userId, title } = req.body
+    try {
+        let result = [];
+        const articles = await articleModel.getArticleByTitle(title);
+        console.log(articles)
+        if (articles) {
+            for (const element of articles) {
+                if (element.isEnabled == 0 || element.menuIsEnabled != 1) {
+                    continue;
+                }
+                try {
+                    await userRoleService.checkUserHavePermission(userId, element.roleMenu, [USER_ROLE, ADMIN_ROLE])
+                } catch (error) {
+                    continue;
+                }
+                const article = { title: element.title, link: element.link, description: element.description }
+                result.push(article);
+            }
         }
         res.status(200).json(response.successResponse(result, "success"));
     } catch (error) {
