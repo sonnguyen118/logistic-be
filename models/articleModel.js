@@ -38,6 +38,16 @@ articleModel.updateArticleById = async (article, transaction) => {
   }
 };
 
+articleModel.deleteArticleById = async (id, transaction) => {
+  const query = "DELETE FROM articles WHERE id = ?";
+  try {
+    const result = await transaction.execute(query, [id])
+    return result[0].affectedRows > 0;
+  } catch (err) {
+    throw err
+  }
+};
+
 articleModel.getArticleByLink = async (link) => {
   const query = "SELECT a.*, m.isEnabled as menuIsEnabled,m.name as menu_name,m.role as roleMenu, m.id as menu_id, m.link as menu_link FROM ((SELECT * FROM articles WHERE link = ?) a JOIN menu m ON a.menu_id = m.id)";
   try {

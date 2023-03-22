@@ -191,6 +191,23 @@ articleController.toggleEnabledArticles = async (req, res) => {
     }
 };
 
+articleController.deleteArticleById = async (req, res) => {
+    const connection = await pool.getConnection();
+    try {
+        await connection.beginTransaction();
+        const result = await articleModel.deleteArticleById(req.params.id, connection);
+        await connection.commit();
+        res.status(200).json(response.successResponse(result, "delete success"));
+    } catch (error) {
+        await connection.rollback();
+        log.writeErrorLog(error.message)
+        res.status(200).json(response.errorResponse(error.message));
+    } finally {
+        connection.release();
+    }
+};
+
+
 
 
 module.exports = articleController;
