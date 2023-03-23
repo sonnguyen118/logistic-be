@@ -4,7 +4,7 @@ const avoidUndefined = require("../utils/handleUndefinedValue");
 const articleModel = {};
 
 articleModel.getArticles = async () => {
-  const query = "SELECT * FROM articles WHERE isEnabled = true";
+  const query = "SELECT a.id,a.title, a.link,a.isEnabled, m.isEnabled as menuIsEnabled,m.name as menu_name,m.role as roleMenu, m.id as menu_id FROM ((SELECT * FROM articles) a JOIN menu m ON a.menu_id = m.id)";
   try {
     const [rows, fields] = await pool.query(query)
     return rows

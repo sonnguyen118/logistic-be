@@ -78,7 +78,11 @@ articleController.getArticleByLink = async (req, res) => {
             sibling.push(a)
         }
         const result = {
+            id: article.id,
+            description: article.description,
+            tag: article.tag,
             menu: article.menu_name,
+            menu_id: article.menu_id,
             menu_link: article.menu_link,
             content: article.content,
             link: article.link,
@@ -113,7 +117,11 @@ articleController.getArticleById = async (req, res) => {
             sibling.push(a)
         }
         const result = {
+            id: article.id,
+            description: article.description,
+            tag: article.tag,
             menu: article.menu_name,
+            menu_id: article.menu_id,
             menu_link: article.menu_link,
             content: article.content,
             link: article.link,
