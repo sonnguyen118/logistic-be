@@ -135,9 +135,9 @@ userModel.getUserByRetrievalCode = async (value) => {
 }
 
 userModel.verifyUserByIds = async (ids, transaction) => {
-  var query = "UPDATE users SET verify_code = 1 WHERE id IN (?)";
+  var query = `UPDATE users SET verify_code = 1 WHERE id IN (${ids.join(',')})`;
   try {
-    const result = await transaction.execute(query, ids)
+    const result = await transaction.execute(query)
     return result[0].affectedRows > 0;
   } catch (err) {
     throw err
@@ -145,9 +145,9 @@ userModel.verifyUserByIds = async (ids, transaction) => {
 };
 
 userModel.deleteUsers = async (ids, transaction) => {
-  const query = "DELETE FROM users WHERE id IN (?)";
+  const query = `DELETE FROM users WHERE id IN (${ids.join(',')})`;
   try {
-    const result = await transaction.execute(query, ids)
+    const result = await transaction.execute(query)
     return result[0].affectedRows > 0;
   } catch (err) {
     throw err
