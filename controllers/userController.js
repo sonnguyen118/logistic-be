@@ -69,4 +69,23 @@ userController.updateUserInfo = async (req, res) => {
   }
 };
 
+userController.deleteUsers = async (req, res) => {
+  const connection = await pool.getConnection();
+  try {
+    await connection.beginTransaction();
+    const ids = req.body.ids
+    if (!Array.isArray(ids) || ids.length == 0) {
+      throw new Error("params is invalid")
+    }
+    const result = await userModel.deleteUsers(ids, connection);
+    await connection.commit();
+    res.status(200).json(response.successResponse(result, "success"));
+  } catch (err) {
+    log.writeErrorLog(err.message)
+    res.status(200).json(response.errorResponse(err.message));
+  } finally {
+    connection.release();
+  }
+};
+
 module.exports = userController;

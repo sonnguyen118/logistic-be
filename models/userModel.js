@@ -143,4 +143,14 @@ userModel.verifyUserByIds = async (ids, transaction) => {
     throw err
   }
 };
+
+userModel.deleteUsers = async (ids, transaction) => {
+  const query = "DELETE FROM users WHERE id IN (?)";
+  try {
+    const result = await transaction.execute(query, ids)
+    return result[0].affectedRows > 0;
+  } catch (err) {
+    throw err
+  }
+};
 module.exports = userModel;
