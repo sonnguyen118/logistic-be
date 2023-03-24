@@ -183,7 +183,7 @@ authController.sendRetrievalPasswordRequest = async (req, res) => {
     // create verify code
     const retrievalCode = crypto.randomBytes(20).toString("hex");
     const hostPrefix = `${req.protocol}://${req.get("host")}`;
-    const randomPassword = Math.floor(Math.random() * 1000000).toString();
+    const randomPassword = Math.floor(Math.random() * 10000000).toString();
     const retrievalLink = await authServices.createRetrievalLink(
       hostPrefix,
       retrievalCode,
