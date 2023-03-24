@@ -179,8 +179,7 @@ articleController.handleCkeditor = async (req, res) => {
         if (!file) {
             throw new Error('No image file uploaded');
         }
-
-        const address_file = `/${articleStoragePath}/${file.filename}`;
+        const address_file = `${req.protocol}://${req.get("host")}/${articleStoragePath}/${file.filename}`;
         const callback_function = req.query.CKEditorFuncNum;
         const response = `<script>window.parent.CKEDITOR.tools.callFunction('${callback_function}', '${address_file}');</script>`;
         return res.status(201).send(response);
