@@ -22,6 +22,8 @@ userController.getUserById = async (req, res) => {
   const { id } = req.params;
   try {
     const user = await userModel.getUserById(id);
+    const permission = await userModel.getUserPermissionById(id)
+    user.permission = permission;
     if (!user) {
       log.writeErrorLog('User not found')
       return res.status(404).json({ message: "User not found" });
