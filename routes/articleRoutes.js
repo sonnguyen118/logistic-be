@@ -7,6 +7,7 @@ const router = express.Router();
 
 // Xử lý yêu cầu tải lên ảnh CKEditor
 router.post('/ckeditor_image', uploadArticle.single('upload'), articleController.handleCkeditor);
+router.post('/upload-images', uploadArticle.any('upload'), articleController.uploadImages);
 router.post("/find-title", articleController.findArticleByTitle);
 router.get("/get-all", authMiddleware.authenticateRequest, authMiddleware.authorize, articleController.getArticles);
 router.post("/add", authMiddleware.authenticateRequest, authMiddleware.authorize, articleController.addArticle);

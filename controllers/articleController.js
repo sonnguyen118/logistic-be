@@ -4,6 +4,7 @@ const mysql = require("mysql2/promise");
 const { fileConfig } = require("../configs/database");
 const userRoleService = require("../services/userRoleServices");
 const log = require("../utils/log");
+const path = require('path');
 
 const dotenv = require("dotenv");
 
@@ -190,6 +191,22 @@ articleController.adminGetArticleById = async (req, res) => {
     res.status(200).json(response.errorResponse(error.message));
   }
 };
+
+articleController.uploadImages = async (req, res) => {
+  try {
+    const files = req.files;
+    if (!files || files.length === 0) {
+      throw new Error("No image file uploaded");
+    }
+    const response = files.map(e => {
+      return { name: e.originalname, destination: e.destination, path: e.path }
+    })
+    return res.status(200).json(response);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
 articleController.handleCkeditor = async (req, res) => {
   try {
     const file = req.file;

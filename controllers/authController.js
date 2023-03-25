@@ -29,6 +29,7 @@ authController.login = async (req, res) => {
       httpOnly: true,
       secure: false
     });
+    const permission = await userModel.getUserPermissionById(user.id)
     log.writeLog("LOGGED IN SUCCESS")
     res.status(200).json(
       response.successResponse(
@@ -40,6 +41,7 @@ authController.login = async (req, res) => {
           lastName: user.last_name,
           avatar: user.avatar,
           token: accessToken,
+          permission
         },
         "LOGGED IN SUCCESS"
       )
