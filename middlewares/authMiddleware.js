@@ -32,11 +32,25 @@ authMiddleware.authenticateRequest = async (req, res, next) => {
 
 authMiddleware.authorize = async (req, res, next) => {
   try {
-    const result = await userModel.getUserRoleById(req.user.id);
-
-    if (result?.role != process.env.ADMIN_ROLE) {
-      log.writeErrorLog("Lỗi phân quyền")
-      return res.status(401).json(response.errorResponse("Lỗi phân quyền"));
+    const userId = req.user.id
+    const permissionId = req.body.permissionId
+    const result = await userModel.getUserRoleById(userId);
+    const isAdmin = result?.role == process.env.ADMIN_ROLE;
+    const isUser = result?.role == process.env.USER_ROLE;
+    req.user.isAdmin = isAdmin;
+    if (!isAdmin) {
+      if (isUser) {
+        const permissions = await userModel.getUserPermissionById(userId);
+        if (permissionId) {
+          if (!permissions.some(p => p.permission_id == permissionId)) {
+            throw new Error('Bạn chưa được cấp quyền thực hiện hành động này')
+          }
+        } else {
+          // trường hợp upload file thì permissionId sẽ = undefined 
+          if (permissions.length == 0) return res.status(401).json(response.errorResponse("Lỗi phân quyền"));
+          else req.user.permissions = permissions
+        }
+      }
     }
     next();
   } catch (err) {
@@ -45,4 +59,19 @@ authMiddleware.authorize = async (req, res, next) => {
   }
 };
 
+authMiddleware.authorizeUploadFile = async (req, res, next) => {
+  try {
+    if (!req.user.isAdmin) {
+      const permissionId = req.body.permissionId;
+      const userPermissions = req.user.permissions;
+      if (!userPermissions.some(p => p.permission_id == permissionId)) {
+        throw new Error('Bạn chưa được cấp quyền thực hiện hành động này')
+      }
+    }
+    next();
+  } catch (err) {
+    log.writeErrorLog(err?.message)
+    res.status(401).json(response.errorResponse(err.message));
+  }
+};
 module.exports = authMiddleware;

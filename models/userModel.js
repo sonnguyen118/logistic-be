@@ -42,6 +42,22 @@ userModel.getUserRoleById = async (id) => {
     throw err
   }
 };
+
+userModel.getUserPermissionById = async (id) => {
+  const query = `SELECT DISTINCT u.id, p.id as permission_id, p.name FROM (( SELECT id FROM users ) u
+  JOIN users_permission up ON u.id = up.user_id
+  JOIN permission p ON up.permission_id = p.id )
+  WHERE u.id = ?`;
+  try {
+    const [rows, fields] = await pool.execute(query, [id])
+    return rows;
+  }
+  catch (err) {
+    throw err
+  }
+};
+
+
 userModel.isActiveUser = async (id) => {
   try {
     const [rows, fields] = await pool.execute("SELECT id, verify_code FROM users WHERE id = ? AND verify_code = ?", [id, 1])
