@@ -252,6 +252,15 @@ authController.grantPermission = async (req, res) => {
     connection.release();
   }
 };
+authController.getAllPermissions = async (req, res) => {
+  try {
+    const result = await userModel.getAllUserPermission();
+    res.status(200).json(response.successResponse(result, "success"));
+  } catch (error) {
+    log.writeErrorLog(error.message);
+    res.status(200).json(response.errorResponse(error.message));
+  }
+};
 
 authController.refreshToken = async (req, res) => {
 

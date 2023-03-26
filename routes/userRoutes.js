@@ -5,6 +5,7 @@ const { uploadAvatar } = require("../services/uploadImageService");
 
 const router = express.Router();
 
+router.post("/user-permission", authMiddleware.authenticateRequest, authMiddleware.authorize, userController.getUserPermissionByUserId);
 router.get("/", authMiddleware.authenticateRequest, authMiddleware.authorize, userController.getAllUsers);
 router.get("/:id", authMiddleware.authenticateRequest, userController.getUserById);
 router.post("/update", authMiddleware.authenticateRequest, userController.updateUserInfo);

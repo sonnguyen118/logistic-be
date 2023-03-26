@@ -89,5 +89,14 @@ userController.deleteUsers = async (req, res) => {
     connection.release();
   }
 };
-
+userController.getUserPermissionByUserId = async (req, res) => {
+  const userId = req.body.userId;
+  try {
+    const result = await userModel.getUserPermissionById(userId)
+    res.status(200).json(response.successResponse(result, "success"));
+  } catch (err) {
+    log.writeErrorLog(err.message)
+    res.status(200).json(response.errorResponse(err.message));
+  }
+};
 module.exports = userController;

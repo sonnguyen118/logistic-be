@@ -44,10 +44,10 @@ userModel.getUserRoleById = async (id) => {
 };
 
 userModel.getUserPermissionById = async (id) => {
-  const query = `SELECT DISTINCT u.id, p.id as permission_id, p.name FROM (( SELECT id FROM users ) u
+  const query = `SELECT DISTINCT p.* FROM (( SELECT id FROM users ) u
   JOIN users_permission up ON u.id = up.user_id
   JOIN permission p ON up.permission_id = p.id )
-  WHERE u.id = ?`;
+  WHERE u.id = ? ORDER BY p.id`;
   try {
     const [rows, fields] = await pool.execute(query, [id])
     return rows;
@@ -70,6 +70,17 @@ userModel.updateUserPermission = async (userId, ids, transaction) => {
       result = await transaction.execute(insertQuery, ids)
     }
     return result
+  }
+  catch (err) {
+    throw err
+  }
+};
+
+userModel.getAllUserPermission = async () => {
+  const query = ` SELECT * FROM permission ORDER BY id`;
+  try {
+    const [rows, fields] = await pool.query(query)
+    return rows;
   }
   catch (err) {
     throw err

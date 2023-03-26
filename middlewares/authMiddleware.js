@@ -42,7 +42,7 @@ authMiddleware.authorize = async (req, res, next) => {
       if (isUser) {
         const permissions = await userModel.getUserPermissionById(userId);
         if (permissionId) {
-          if (!permissions.some(p => p.permission_id == permissionId)) {
+          if (!permissions.some(p => p.id == permissionId)) {
             throw new Error('Bạn chưa được cấp quyền thực hiện hành động này')
           }
         } else {
@@ -64,7 +64,7 @@ authMiddleware.authorizeUploadFile = async (req, res, next) => {
     if (!req.user.isAdmin) {
       const permissionId = req.body.permissionId;
       const userPermissions = req.user.permissions;
-      if (!userPermissions.some(p => p.permission_id == permissionId)) {
+      if (!userPermissions.some(p => p.id == permissionId)) {
         throw new Error('Bạn chưa được cấp quyền thực hiện hành động này')
       }
     }
