@@ -198,10 +198,10 @@ articleController.uploadImages = async (req, res) => {
     if (!files || files.length === 0) {
       throw new Error("No image file uploaded");
     }
-    const response = files.map(e => {
-      return { name: e.originalname, destination: e.destination, path: e.path }
+    const result = files.map(e => {
+      return e.originalname
     })
-    return res.status(200).json(response);
+    return res.status(200).json(response.successResponse(result, "OK"));
   } catch (error) {
     res.status(400).send(error.message);
   }

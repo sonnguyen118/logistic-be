@@ -57,6 +57,24 @@ userModel.getUserPermissionById = async (id) => {
   }
 };
 
+userModel.updateUserPermission = async (userId, ids, transaction) => {
+  try {
+    let result;
+    const deleteOldPermissions = `DELETE FROM users_permission WHERE user_id = ?`
+    result = await transaction.execute(deleteOldPermissions, [userId])
+
+    if (ids.length > 0) {
+      let params = ids.map(id => `(${userId},?)`);
+      params = params.join(',')
+      const insertQuery = `INSERT INTO users_permission(user_id,permission_id) VALUES ${params}`;
+      result = await transaction.execute(insertQuery, ids)
+    }
+    return result
+  }
+  catch (err) {
+    throw err
+  }
+};
 
 userModel.isActiveUser = async (id) => {
   try {

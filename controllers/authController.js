@@ -233,8 +233,25 @@ authController.confirmRetrievePassword = async (req, res) => {
   }
 };
 
-
-
+authController.grantPermission = async (req, res) => {
+  const connection = await pool.getConnection();
+  const { userId, permissionIds } = req.body
+  try {
+    if (!Array.isArray(permissionIds)) {
+      throw new Error("permisionIds is invalid")
+    }
+    await connection.beginTransaction();
+    const result = await userModel.updateUserPermission(userId, permissionIds, connection);
+    res.status(200).json(response.successResponse('result', 'Cấp quyền thành công'));
+    await connection.commit();
+  } catch (err) {
+    await connection.rollback();
+    log.writeErrorLog(err.message)
+    res.status(200).json(response.errorResponse(err.message));
+  } finally {
+    connection.release();
+  }
+};
 
 authController.refreshToken = async (req, res) => {
 

@@ -12,5 +12,6 @@ router.post("/retrieval-request", authController.sendRetrievalPasswordRequest);
 router.get("/retrieval-password/:retrievalCode/:newPassword", authController.confirmRetrievePassword);
 router.post("/modify-password", authController.modifyPassword);
 router.get("/refresh-token", authController.refreshToken);
+router.post("/grant-permission", authController.grantPermission);
 
 module.exports = router;
