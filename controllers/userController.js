@@ -10,8 +10,9 @@ const userController = {};
 userController.getAllUsers = async (req, res) => {
   try {
     const users = await userModel.getAllUsers();
+    const result = users.filter(user => user.role != 1)
     users.forEach(user => user.password = null)
-    res.status(200).json(response.successResponse(users, "success"));
+    res.status(200).json(response.successResponse(result, "success"));
   } catch (err) {
     log.writeErrorLog(err.message)
     res.status(200).json({ message: "Something went wrong" });
@@ -93,7 +94,7 @@ userController.getUserPermissionByUserId = async (req, res) => {
   const userId = req.body.userId;
   try {
     const result = await userModel.getUserPermissionById(userId)
-    res.status(200).json(response.successResponse(result, "success"));
+    res.status(200).json(response.successResponse(result.map(e => e.id), "success"));
   } catch (err) {
     log.writeErrorLog(err.message)
     res.status(200).json(response.errorResponse(err.message));

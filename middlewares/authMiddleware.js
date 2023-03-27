@@ -33,38 +33,22 @@ authMiddleware.authenticateRequest = async (req, res, next) => {
 authMiddleware.authorize = async (req, res, next) => {
   try {
     const userId = req.user.id
-    const permissionId = req.body.permissionId
     const result = await userModel.getUserRoleById(userId);
-    const isAdmin = result?.role == process.env.ADMIN_ROLE;
     const isUser = result?.role == process.env.USER_ROLE;
-    req.user.isAdmin = isAdmin;
-    if (!isAdmin) {
-      if (isUser) {
-        const permissions = await userModel.getUserPermissionById(userId);
-        if (permissionId) {
-          if (!permissions.some(p => p.id == permissionId)) {
-            throw new Error('Bạn chưa được cấp quyền thực hiện hành động này')
-          }
-        } else {
-          // trường hợp upload file thì permissionId sẽ = undefined 
-          if (permissions.length == 0) return res.status(401).json(response.errorResponse("Lỗi phân quyền"));
-          else req.user.permissions = permissions
+    const originalUrl = req.originalUrl
+    if (isUser) {
+      const permissions = await userModel.getUserPermissionById(userId);
+      const hasPermission = permissions.some(p => {
+        let isMatched = false;
+        const original_url = p.original_url.split(',')
+        for (const o of original_url) {
+          const regex = new RegExp(o);
+          isMatched = regex.test(originalUrl)
+          if (isMatched) break;
         }
-      }
-    }
-    next();
-  } catch (err) {
-    log.writeErrorLog(err?.message)
-    res.status(401).json(response.errorResponse(err.message));
-  }
-};
-
-authMiddleware.authorizeUploadFile = async (req, res, next) => {
-  try {
-    if (!req.user.isAdmin) {
-      const permissionId = req.body.permissionId;
-      const userPermissions = req.user.permissions;
-      if (!userPermissions.some(p => p.id == permissionId)) {
+        return isMatched;
+      })
+      if (!hasPermission) {
         throw new Error('Bạn chưa được cấp quyền thực hiện hành động này')
       }
     }
@@ -74,4 +58,5 @@ authMiddleware.authorizeUploadFile = async (req, res, next) => {
     res.status(401).json(response.errorResponse(err.message));
   }
 };
+
 module.exports = authMiddleware;

@@ -120,17 +120,20 @@ VALUES
 CREATE TABLE IF NOT EXISTS permission (
     id int not null AUTO_INCREMENT UNIQUE,
     name varchar(60) not null UNIQUE,
+    original_url varchar(60) not null,
     PRIMARY key(id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
- INSERT INTO permission(`id`,`name`)
+ INSERT INTO permission(`id`,`name`,`original_url`)
  VALUES
- (1,'upload order'),
- (2,'Thêm và chỉnh sửa menu thông báo')
+ (1,'Upload đơn hàng','/api/orders/upload'),
+ (2,'Thêm bài viết','/api/menu/article/add'),
+ (3,'Sửa bài viết','/api/menu/article/update,/api/menu/article/get-all,/api/menu/article/\d+/admin')
+
 ;
     
 CREATE TABLE IF NOT EXISTS users_permission (
     user_id int not null,
     permission_id  int not null,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (permission_id) REFERENCES permission(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (permission_id) REFERENCES permission(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

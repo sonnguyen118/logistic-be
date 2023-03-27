@@ -4,7 +4,10 @@ const authMiddleware = require('../middlewares/authMiddleware');
 const { uploadArticle } = require("../services/uploadImageService");
 
 const router = express.Router();
-
+const stack = router.stack;
+// const last = stack[stack.length - 1];
+// const callback = last.route.stack[last.route.stack.length - 1].handle;
+console.log(stack)
 // Xử lý yêu cầu tải lên ảnh CKEditor
 router.post('/ckeditor_image', uploadArticle.single('upload'), articleController.handleCkeditor);
 router.post('/upload-images', uploadArticle.any('upload'), articleController.uploadImages);

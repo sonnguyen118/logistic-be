@@ -29,6 +29,10 @@ articleController.addArticle = async (req, res) => {
   const connection = await pool.getConnection();
   try {
     await connection.beginTransaction();
+    const findArticleByLink = await articleModel.getArticleByLink(req.body.link, connection);
+    if (findArticleByLink) {
+      throw new Error('Link bài viết đã tồn tại')
+    }
     const insertId = await articleModel.addArticle(req.body, connection);
     await connection.commit();
     res.status(200).json(response.successResponse(insertId, "OK"));
@@ -42,8 +46,13 @@ articleController.addArticle = async (req, res) => {
 
 articleController.updateArticle = async (req, res) => {
   const connection = await pool.getConnection();
+  const { id, link } = req.body
   try {
     await connection.beginTransaction();
+    const article = await articleModel.getArticleByLink(link)
+    if (article && (article.link == link && id != article.id)) {
+      throw new Error('Link bài viết đã tồn tại')
+    }
     const isSuccess = await articleModel.updateArticleById(
       req.body,
       connection
@@ -148,7 +157,6 @@ articleController.findArticleByTitle = async (req, res) => {
   try {
     let result = [];
     const articles = await articleModel.getArticleByTitle(title);
-    console.log(articles);
     if (articles) {
       for (const element of articles) {
         if (element.isEnabled == 0 || element.menuIsEnabled != 1) {
