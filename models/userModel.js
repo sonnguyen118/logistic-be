@@ -5,7 +5,21 @@ const avoidUndefined = require("../utils/handleUndefinedValue");
 const userModel = {};
 
 userModel.getAllUsers = async () => {
-  const query = 'SELECT * FROM users';
+  const query = ` SELECT
+                    u.*,
+                    GROUP_CONCAT(p.name
+                  ORDER BY
+                    p.id) AS permisison
+                  FROM
+                    users u
+                  LEFT JOIN users_permission up ON
+                    up.user_id = u.id
+                  LEFT JOIN permission p ON
+                    p.id = up.permission_id
+                  GROUP BY
+                    u.email
+                  ORDER BY
+                    u.id`;
   try {
     const [rows, fields] = await pool.query(query)
     return rows
