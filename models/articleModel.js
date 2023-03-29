@@ -16,7 +16,6 @@ articleModel.getArticles = async () => {
 articleModel.addArticle = async (article, transaction) => {
   const query = "INSERT INTO articles (title, link, menu_id, content, description, isEnabled, tag) VALUE(?,?,?,?,?,?,?)";
   try {
-    article.isEnabled = true;
     const params = [article.title, article.link, article.menu_id, article.content, article.description, article.isEnabled, article.tag]
     avoidUndefined(params)
     const [rows, fields] = await transaction.execute(query, params)
